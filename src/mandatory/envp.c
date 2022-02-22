@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_shlvl.c                                       :+:      :+:    :+:   */
+/*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:10:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/13 15:13:49 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/20 21:07:45 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,42 @@ t_status	put_envp(char **envp, t_input *input)
         i++;
     }
 	return (success);	
+}
+
+static inline char **make_env_array2(t_input *input, U_INT counter, U_INT i)
+{
+	char *array;
+    char **arg;
+
+    arg = malloc(sizeof(char *) * (counter + 1));
+    if (!arg)
+		print_error(input, 12, "malloc", NULL);
+    while (i < counter)
+    {
+        if (input->envp->value[0])
+            array = ft_strjoin_for_3(input->envp->key, "=", input->envp->value, input);
+        else
+            array = modif_strdup(input->envp->key, input);
+        arg[i] = array;
+        i++;
+        input->envp = input->envp->next;
+    }
+    arg[i] = NULL;
+    return (arg);
+}
+
+void make_env_array(t_input *input, char ***full_envp)
+{
+	U_INT	counter;
+	t_env	*copy;
+
+	copy = input->envp;
+	counter = 0;
+	while (copy)
+	{
+		copy = copy->next;
+		counter++;
+	}
+    free(copy);
+    input->arg_env = make_env_array2(input, counter, 0);
 }

@@ -6,13 +6,13 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/13 19:26:51 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/19 17:57:58 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static inline void free_env(t_input *input)
+static inline void	free_env(t_input *input)
 {
 	t_env *copy;
 
@@ -29,7 +29,7 @@ static inline void free_env(t_input *input)
 	input->envp = NULL;
 }
 
-static inline void free_arg_env(t_input *input)
+static inline void	free_arg_env(t_input *input)
 {
 	U_INT	i;
 
@@ -66,4 +66,46 @@ void free_all(t_input *input) // аналог void	free_arg(t_arg *arg), но н
 	// 	free_fd(input);
 	if (input->envp)
 		free_env(input);
+}
+
+void	free_t_comm(t_input *input)
+{
+	t_comm	*copy;
+	char	*str;
+	U_INT i;
+
+	i = 0;
+	if (!input->command)
+		return ;
+	while (input->command != NULL)
+	{
+		copy = input->command;
+		input->command = input->command->next;
+		
+		while (input->command->bin[i])
+		{
+			free(input->command->bin[i]);
+			i++;
+		}
+		free(copy->bin);
+		free(copy);
+	}
+	input->command = NULL;
+}
+
+void free_direct(t_input *input)
+{
+	t_direct *copy;
+
+	if (!input->direct)
+		return ;
+	while (input->direct != NULL)
+	{
+		copy = input->direct;
+		input->direct = input->direct->next;
+		free(copy->name);
+		// free(copy->limiter); // ??????
+		free(copy);
+	}
+	input->envp = NULL;
 }

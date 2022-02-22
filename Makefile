@@ -17,7 +17,17 @@ SRC_O 				= envp.c \
 					utils_other.c \
 					utils_print.c \
 					shlvl.c \
-					check_forbidden.c
+					check_forbidden.c \
+					parser.c \
+					put_t_comm.c \
+					finder.c \
+					redirect.c \
+					quotes.c \
+					dollar.c \
+					pre_open.c \
+					
+
+					
 
 
 # SRC_B 				= envp.c \
