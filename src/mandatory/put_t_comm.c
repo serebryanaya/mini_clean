@@ -66,13 +66,13 @@ static t_comm	*create_list_comm(char *str, t_input *input, U_INT *i)
 	new->direct_in = NULL;
 	new->direct_out = NULL;
 	new->next = NULL;
-	new->number = 0;
+	new->build_number = 0;
 	counter = get_number_of_words(str, i, input); 
 	// printf("количество слов до пайпа = %d\n", counter);
-	new->bin = malloc(sizeof(char *) * (counter + 1));
-	if (!new->bin)
+	new->words = malloc(sizeof(char *) * (counter + 1));
+	if (!new->words)
 		return (NULL);
-	new->bin[0] = NULL;
+	new->words[0] = NULL;
 	return (new);
 }
 

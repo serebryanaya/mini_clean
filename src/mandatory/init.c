@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 17:54:25 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 22:48:40 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,31 @@ void	direct_init(t_direct *new, U_INT *i, U_INT j, char *str)
 	new->next = NULL;
 }
 
-void mark_direct(t_input *input)
+void mark_direct(t_input *input) // не понимаю, зачем это. пока убрала
 {
 	U_INT	i;
 
+	printf("зашел в mark_direct\n");
 	if (!input->command)
-		return ;
+		{
+			printf("я не нашел команду\n");
+			return ;
+		}
 	i = 0;
 	while (input->direct)
 	{
-		while (i++ < input->direct->value)
-			input->command = input->command->next;
+		while (i < input->direct->value)
+			{
+				input->command = input->command->next;
+				i++;
+			}
 		if (input->direct->incoming == 1)
 			input->command->direct_in = input->direct;
 		else
 			input->command->direct_out = input->direct;
 		input->direct = input->direct->next;
 	}
+	printf("вышел из mark_direct\n");
 }
 
 void choose_build(t_comm *command) // у меня е_нам, может быть можно проще написать
@@ -68,28 +76,27 @@ void choose_build(t_comm *command) // у меня е_нам, может быть
 	copy = command;
 	while (copy != NULL)
 	{
-		if (command->bin[0] == NULL)
+		if (copy->words[0] == NULL)
 			continue; // зачем???
 		else
 		{
-			if (ft_strcmp(command->bin[0], "echo") == 0)
-				command->number = 1;
-			else if (ft_strcmp(command->bin[0], "cd") == 0)
-				command->number = 2;
-			else if (ft_strcmp(command->bin[0], "pwd") == 0)
-				command->number = 3;
-			else if (ft_strcmp(command->bin[0], "export") == 0)
-				command->number = 4;
-			else if (ft_strcmp(command->bin[0], "unset") == 0)
-				command->number = 5;
-			else if (ft_strcmp(command->bin[0], "env") == 0)
-				command->number = 6;
-			else if (ft_strcmp(command->bin[0], "exit") == 0)
-				command->number = 7;
+			if (ft_strcmp(copy->words[0], "echo") == 0)
+				copy->build_number = 1;
+			else if (ft_strcmp(copy->words[0], "cd") == 0)
+				copy->build_number = 2;
+			else if (ft_strcmp(copy->words[0], "pwd") == 0)
+				copy->build_number = 3;
+			else if (ft_strcmp(copy->words[0], "export") == 0)
+				copy->build_number = 4;
+			else if (ft_strcmp(copy->words[0], "unset") == 0)
+				copy->build_number = 5;
+			else if (ft_strcmp(copy->words[0], "env") == 0)
+				copy->build_number = 6;
+			else if (ft_strcmp(copy->words[0], "exit") == 0)
+				copy->build_number = 7;
 		}
 		copy = copy->next;
-		// printf("command->bin[0] = %s, command->number = %d\n", command->bin[0], \
-		// command->number);
+		// printf("command->words[0] = %s, command->build_number = %d\n", command->words[0], \
+		// command->build_number);
 	}
-	free(copy);
 }

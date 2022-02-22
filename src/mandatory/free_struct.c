@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/19 17:57:58 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 22:44:40 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static inline void	free_env(t_input *input)
 {
-	t_env *copy;
+	t_env	*copy;
 
 	if (!input->envp)
 		return ;
@@ -58,14 +58,15 @@ void free_all(t_input *input) // аналог void	free_arg(t_arg *arg), но н
 	// 	free(input->problem);
 	if (input->token)
 		free(input->token);
-	// if (input->command)
-	// 	free_command(input);
-	// if (input->direct)
-		// free_direct(input);
+	if (input->direct)
+		free_direct(input);
 	// if (input->fd)
 	// 	free_fd(input);
 	if (input->envp)
 		free_env(input);
+	if (input->command)
+		free_t_comm(input);
+	init_input(input); // need???
 }
 
 void	free_t_comm(t_input *input)
@@ -82,12 +83,12 @@ void	free_t_comm(t_input *input)
 		copy = input->command;
 		input->command = input->command->next;
 		
-		while (input->command->bin[i])
+		while (input->command->words[i])
 		{
-			free(input->command->bin[i]);
+			free(input->command->words[i]);
 			i++;
 		}
-		free(copy->bin);
+		free(copy->words);
 		free(copy);
 	}
 	input->command = NULL;
@@ -104,7 +105,7 @@ void free_direct(t_input *input)
 		copy = input->direct;
 		input->direct = input->direct->next;
 		free(copy->name);
-		// free(copy->limiter); // ??????
+		free(copy->stop_word);
 		free(copy);
 	}
 	input->envp = NULL;

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:21:05 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 15:20:25 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:55:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 		{
 			m = *i;
 			go_through_word(str, i, input);
-			tmp->bin[k] = modif_substr(str, m, *i - m, input);
-			printf("tmp->bin[%u] = %s\n", k, tmp->bin[k]);
+			tmp->words[k] = modif_substr(str, m, *i - m, input);
+			printf("tmp->words[%u] = %s\n", k, tmp->words[k]);
 			k++;
-			tmp->bin[k] = NULL;
+			tmp->words[k] = NULL;
 		}
 	}
 	// if (!str[*i] && k == 0)
 	// {
-	// 	tmp->bin[k] = modif_substr(str, m, *i - m, input);
-	// 	printf("tmp->bin[%u] = %s\n", k, tmp->bin[k]);
+	// 	tmp->words[k] = modif_substr(str, m, *i - m, input);
+	// 	printf("tmp->words[%u] = %s\n", k, tmp->words[k]);
 	// }
 }
 

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:10:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/12 17:14:14 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:54:42 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static inline t_env *create_new_list(char *str, t_input *input)
 	if (!((str[0] >= 'A' && str[0] <= 'Z') || \
          (str[0] >= 'a' && str[0] <= 'z') ||
         str[0] == '_'))
-        // printf("%s: %s: not a valid identifier\n", input->command->(*bin), str);//??????
+        // printf("%s: %s: not a valid identifier\n", input->command->(*words), str);//??????
         print_error(input, 1, "export", "not a valid identifier");//пока не могу это протестировать
 
 	*/

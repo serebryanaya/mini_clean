@@ -25,6 +25,7 @@ SRC_O 				= envp.c \
 					quotes.c \
 					dollar.c \
 					pre_open.c \
+					one_build_in.c \
 					
 
 					

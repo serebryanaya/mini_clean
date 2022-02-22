@@ -6,15 +6,15 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:10:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 21:07:45 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:56:59 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void add_list_back(t_env *new, t_env **envp)
+static void	add_list_back(t_env *new, t_env **envp)
 {
-    t_env *copy;
+	t_env	*copy;
 
     if (*envp == NULL)
         *envp = new;
@@ -27,7 +27,7 @@ static void add_list_back(t_env *new, t_env **envp)
     }
 }
 
-static inline t_env *create_new_list(char *str, t_input *input)
+static inline t_env	*create_new_list(char *str, t_input *input)
 {
     U_INT   i;
     t_env *tmp;
@@ -40,7 +40,7 @@ static inline t_env *create_new_list(char *str, t_input *input)
 	if (!((str[0] >= 'A' && str[0] <= 'Z') || \
          (str[0] >= 'a' && str[0] <= 'z') ||
         str[0] == '_'))
-        // printf("%s: %s: not a valid identifier\n", input->command->(*bin), str);//??????
+        // printf("%s: %s: not a valid identifier\n", input->command->(*words), str);//??????
         print_error(input, 1, "export", "not a valid identifier");//пока не могу это протестировать
 
 	*/
@@ -61,8 +61,8 @@ static inline t_env *create_new_list(char *str, t_input *input)
 
 t_status	put_envp(char **envp, t_input *input)
 {
-    U_INT   i;
-    t_env   *new;
+    U_INT	i;
+    t_env	*new;
 
     i = 0;
 
@@ -79,8 +79,8 @@ t_status	put_envp(char **envp, t_input *input)
 
 static inline char **make_env_array2(t_input *input, U_INT counter, U_INT i)
 {
-	char *array;
-    char **arg;
+	char	*array;
+    char	**arg;
 
     arg = malloc(sizeof(char *) * (counter + 1));
     if (!arg)
@@ -99,7 +99,7 @@ static inline char **make_env_array2(t_input *input, U_INT counter, U_INT i)
     return (arg);
 }
 
-void make_env_array(t_input *input, char ***full_envp)
+void	make_env_array(t_input *input, char ***full_envp)
 {
 	U_INT	counter;
 	t_env	*copy;

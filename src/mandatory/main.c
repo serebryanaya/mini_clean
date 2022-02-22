@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 18:41:43 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 22:07:47 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 {
 	// *command = readline("minishell-1.0$ ");
-	*command = readline("/n/nMINISHELL-1.0$ ");// вернуть верхний вариант!
+	*command = readline("MINISHELL-1.0$ ");// вернуть верхний вариант!
 	if (*command == NULL)
 	{
 		rl_on_new_line();
@@ -70,8 +70,15 @@ int	main(int argc, char **argv, char **envp)
 		clean_direct(&input);
 		// printf("1\n");
 		make_env_array(&input, &input.arg_env);
-		// printf("2\n");
+		// // printf("2\n");
 		try_open(&input);
+		if (str_command) //по идее тут еще будет очистка fd - void	free_str(t_arg *arg, char *str)
+		{
+			free(str_command);
+			
+			// free_env(&input);
+			free_all(&input);
+		}
 	}
 	return(0);
 }

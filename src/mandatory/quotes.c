@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 18:36:20 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 22:34:33 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void clean_command(t_input *input)
 	while (copy)
 	{
 		i = 0;
-		while (copy->bin[i])
+		while (copy->words[i])
 		{
-			// printf("1before delete quotes: %s\n", copy->bin[i]);
-			delete_quotes(&copy->bin[i], input);
-			printf("pipe after delete quotes: %s\n", copy->bin[i]);
+			// printf("1before delete quotes: %s\n", copy->words[i]);
+			delete_quotes(&copy->words[i], input);
+			// printf("pipe after delete quotes: %s\n", copy->words[i]);
 			i++;
 		}
 		copy = copy->next;
@@ -122,12 +122,12 @@ void clean_direct(t_input *input)
 		// while (copy->name)
 		{
 			delete_quotes(&copy->name, input);
-			printf("redirect after delete quotes: %s\n", copy->name);
+			// printf("redirect after delete quotes: %s\n", copy->name);
 			i++;
 		}
 		copy = copy->next;
 	}
 	// free(copy);
 	add_heredoc(input);// надо ли это вообще???
-	mark_direct(input);
+	// mark_direct(input);
 }

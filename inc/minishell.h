@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 17:54:07 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 23:05:39 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,10 @@ typedef struct s_env
 
 typedef struct s_comm
 {
-	char			**bin;
+	char			**words;
 	t_direct		*direct_in;
 	t_direct		*direct_out;
-	t_build			number;
+	t_build			build_number;
 	struct s_comm	*next;
 }	t_comm;
 
@@ -237,8 +237,11 @@ void		make_env_array(t_input *input, char ***full_envp);
 /*----finder- препарсинг, поиск спецсимвлов----*/
 t_status    finder(char *str_command, t_input *input);
 
+/*----one_build_in - запуск билд-ина, если у нас всего 1 команда----*/
+void		one_build_in(t_input *input); //почему нужна отдельная функция???
+
 /*----parser - начало парсинга----*/
-t_status		parser(char *str_command, t_input *input);
+t_status	parser(char *str_command, t_input *input);
 void		go_through_word(char *str, U_INT *i, t_input *input);
 
 /*----pre_open - начало работы команд----*/
@@ -293,3 +296,14 @@ long		modif_atoi(char *s, int i, long number);
 
 // Остановилась: надо смотреть функцию void try_open(t_input *input). 
 // Аналог int		pre_open(t_arg *arg);
+
+
+/* В обработку ошибок: 
+bash-3.2$ ytjy >>> gh
+bash: syntax error near unexpected token `>'
+bash-3.2$ ytjy <<< gh
+bash: ytjy: command not found
+bash-3.2$ ytjy ||| gh
+bash: syntax error near unexpected token `|'
+
+*/
