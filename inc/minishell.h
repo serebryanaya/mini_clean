@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 21:22:21 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 17:54:07 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ typedef enum e_status
 typedef struct s_direct
 {
 	char			*name;
+	char			*stop_word;
 	int				value;
 	int				incoming;
 	int				twin;
@@ -290,5 +291,5 @@ long		modif_atoi(char *s, int i, long number);
 
 #endif
 
-Остановилась: надо смотреть функцию void try_open(t_input *input). 
-Аналог int		pre_open(t_arg *arg);
+// Остановилась: надо смотреть функцию void try_open(t_input *input). 
+// Аналог int		pre_open(t_arg *arg);

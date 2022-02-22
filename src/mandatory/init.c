@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 21:15:28 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 17:54:25 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_input(t_input *input)
 void	direct_init(t_direct *new, U_INT *i, U_INT j, char *str)
 {
 	new->name = NULL;
-	// new->limiter = NULL;//??
+	new->stop_word = NULL;
 	new->value = j;
 	new->incoming = 0;
 	new->twin = 0;

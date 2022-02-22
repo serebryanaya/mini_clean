@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 21:09:34 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 18:36:20 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void clean_direct(t_input *input)
 		}
 		copy = copy->next;
 	}
-	free(copy);
+	// free(copy);
 	add_heredoc(input);// надо ли это вообще???
 	mark_direct(input);
 }

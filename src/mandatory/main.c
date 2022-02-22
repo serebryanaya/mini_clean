@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 21:17:03 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/22 18:41:43 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 {
-	*command = readline("minishell-1.0$ ");
+	// *command = readline("minishell-1.0$ ");
+	*command = readline("/n/nMINISHELL-1.0$ ");// вернуть верхний вариант!
 	if (*command == NULL)
 	{
 		rl_on_new_line();
@@ -65,8 +66,11 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		clean_command(&input);
+		// printf("0\n");
 		clean_direct(&input);
+		// printf("1\n");
 		make_env_array(&input, &input.arg_env);
+		// printf("2\n");
 		try_open(&input);
 	}
 	return(0);
