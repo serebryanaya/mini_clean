@@ -281,6 +281,9 @@ char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 long		modif_atoi(char *s, int i, long number);
 
+/*----pipe - функции по работе с пайпами---*/
+void		my_pipe(t_input *input, U_INT i);
+void		pipes(t_input *input);
 
 //mac:     gcc file.c -L/Users/$USER/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$USER/.brew/Cellar/readline/8.1.1/include -lreadline -o filename
 //linux:   gcc -L/usr/local/lib -I/usr/local/include *.c -lreadline

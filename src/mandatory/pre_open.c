@@ -144,8 +144,8 @@ void try_open(t_input *input)
 		one_build_in(input); // почему для одинокого билд-ина нужна отдельная функция
 	
 	//ОТСЮДА ДЕЛАЕТ НАСТЯ
-	// else if (input->num_of_command > 1)
-	// 	pipes(input); //ft_pipe(arg);
-	// else if (input->num_of_command != 1 || input->command->words[0] != NULL)
-	// 	my_pipex(input, 0);
+	 else if (input->num_of_command > 1)
+	 	pipes(input); //ft_pipe(arg);
+	 else if (input->num_of_command != 1 || input->command->words[0] != NULL)
+	 	my_pipe(input, 0);
 }
