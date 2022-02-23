@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:17:22 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 23:04:37 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 17:39:46 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,17 +131,23 @@ void try_open(t_input *input)
 	// 		input->direct->name);
 	// else
 	// 	printf("не нашел input->direct\n");
+	t_comm *copy;
+	
 	if (try_open2(input) == fail)
 		return ;
-	while (input->command != NULL)
+	copy = input->command;
+	while (copy)
 	{
 		input->num_of_command++;
 	// 	printf("проверочки: num_of_command == %d, input->command->build_number == %d, first word = %s\n", \
 	// input->num_of_command, input->command->build_number, input->command->words[0]);
-		input->command = input->command->next;
+		copy = copy->next;
 	}
 	if (input->num_of_command == 1 && input->command->build_number != 0)
-		one_build_in(input); // почему для одинокого билд-ина нужна отдельная функция
+		{
+			printf("у нас 1 команда\n");
+			one_build_in(input);
+		}
 	
 	//ОТСЮДА ДЕЛАЕТ НАСТЯ
 	// else if (input->num_of_command > 1)

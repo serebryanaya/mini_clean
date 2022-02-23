@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 23:05:39 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:13:22 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,9 @@ typedef struct s_input
 // /*----сheck_forbidden-исключаем не те символы в начале команды---*/
 // t_status check_forbidden(char *str, t_input *input);
 
+/*----Билд-ины---*/ 
+U_INT	launch_echo(t_input *input);
+
 /*----init-инициализация структур---*/ 
 void		init_input(t_input *input);
 void		direct_init(t_direct *new, U_INT *i, U_INT j, char *str);
@@ -294,8 +297,9 @@ long		modif_atoi(char *s, int i, long number);
 
 #endif
 
-// Остановилась: надо смотреть функцию void try_open(t_input *input). 
-// Аналог int		pre_open(t_arg *arg);
+// Оля: -сделать запуск echo. Работает некорректно((
+//		-обработка ошибок
+//		-unlink????	
 
 
 /* В обработку ошибок: 

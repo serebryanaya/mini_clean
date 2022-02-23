@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 22:48:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 16:45:30 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void choose_build(t_comm *command) // у меня е_нам, может быть
 	copy = command;
 	while (copy != NULL)
 	{
+		// printf("command->words[0] = %s, command->build_number = %d\n", command->words[0], \
+		// command->build_number);
 		if (copy->words[0] == NULL)
 			continue; // зачем???
 		else
@@ -96,7 +98,7 @@ void choose_build(t_comm *command) // у меня е_нам, может быть
 				copy->build_number = 7;
 		}
 		copy = copy->next;
-		// printf("command->words[0] = %s, command->build_number = %d\n", command->words[0], \
-		// command->build_number);
 	}
+	// 	printf("command->words[0] = %s, command->build_number = %d\n", command->words[0], \
+	// command->build_number);
 }

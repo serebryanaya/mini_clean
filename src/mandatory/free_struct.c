@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 22:44:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:10:33 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,23 @@ void free_all(t_input *input) // аналог void	free_arg(t_arg *arg), но н
 {
 	if (input->arg_env)
 		free_arg_env(input);
+		// printf("1\n");
 	// if (input->problem)
 	// 	free(input->problem);
 	if (input->token)
 		free(input->token);
+				// printf("2\n");
 	if (input->direct)
 		free_direct(input);
+				// printf("3\n");
 	// if (input->fd)
 	// 	free_fd(input);
 	if (input->envp)
 		free_env(input);
+				// printf("4\n");
 	if (input->command)
 		free_t_comm(input);
+				// printf("5\n");
 	init_input(input); // need???
 }
 
@@ -78,17 +83,14 @@ void	free_t_comm(t_input *input)
 	i = 0;
 	if (!input->command)
 		return ;
-	while (input->command != NULL)
+
+	while (input->command)
 	{
 		copy = input->command;
-		input->command = input->command->next;
-		
-		while (input->command->words[i])
-		{
-			free(input->command->words[i]);
-			i++;
-		}
+		while (copy->words[i])
+			free(copy->words[i++]);
 		free(copy->words);
+		input->command = copy->next;
 		free(copy);
 	}
 	input->command = NULL;

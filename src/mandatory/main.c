@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 22:07:47 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:11:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int	main(int argc, char **argv, char **envp)
 		clean_command(&input);
 		// printf("0\n");
 		clean_direct(&input);
-		// printf("1\n");
+		// // printf("1\n");
 		make_env_array(&input, &input.arg_env);
-		// // printf("2\n");
+		// // // printf("2\n");
 		try_open(&input);
 		if (str_command) //по идее тут еще будет очистка fd - void	free_str(t_arg *arg, char *str)
 		{

@@ -26,9 +26,7 @@ SRC_O 				= envp.c \
 					dollar.c \
 					pre_open.c \
 					one_build_in.c \
-					
-
-					
+					build_echo.c \
 
 
 # SRC_B 				= envp.c \

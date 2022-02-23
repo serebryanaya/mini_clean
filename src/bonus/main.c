@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/12 17:42:37 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 17:31:07 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,35 @@ int main(int argc, char **argv, char **envp)
     init_input(&input);
     // printf("%d, %d \n", input.std_in, input.std_out);
     put_envp(envp, &input);
+    put_shlvl(&input); // вызов шелла в шелле - пока не работает!
+	while (1)
+	{
+		if (catch_str(&str_command, &input, 0) == fail)
+			continue ;//считываем строку через readline
+		if (finder(str_command, &input) == fail) // здесь надо дописать обработку ошибок
+		{
+			free(str_command);
+			continue ;
+		}
+		if (parser(str_command, &input) != success)
+		{
+			free(str_command);
+			continue ;
+		}
+		clean_command(&input);
+		// printf("0\n");
+		clean_direct(&input);
+		// printf("1\n");
+		make_env_array(&input, &input.arg_env);
+		// // printf("2\n");
+		try_open(&input);
+		if (str_command) //по идее тут еще будет очистка fd - void	free_str(t_arg *arg, char *str)
+		{
+			free(str_command);
+			
+			// free_env(&input);
+			free_all(&input);
+		}
+	}
     return(0);
 }

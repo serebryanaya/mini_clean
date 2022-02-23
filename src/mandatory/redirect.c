@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 17:45:43 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 22:01:14 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 17:29:02 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ void add_heredoc(t_input *input) // надо ли это вообще???
 	char		*command;
 
 	copy = input->direct;
-	if (copy)
-		printf("00copy->name = %s, copy->incoming = %d, copy->twin = %d\n", \
-	copy->name, copy->incoming, copy->twin);
+	// if (copy)
+	// 	printf("00copy->name = %s, copy->incoming = %d, copy->twin = %d\n", \
+	// copy->name, copy->incoming, copy->twin);
 	while (copy)
 	{
 		if (copy->incoming == 1 && copy->twin == 1)
@@ -103,7 +103,7 @@ void add_heredoc(t_input *input) // надо ли это вообще???
 			copy->stop_word = copy->name;
 			command = modif_itoa(copy->value, input);
 			copy->name = ft_strjoin("heredoc_", command, input);//после heredoc не должно быть знаков?
-			printf("11copy->name = %s, copy->stop_word = %s\n", copy->name, copy->stop_word);
+			// printf("11copy->name = %s, copy->stop_word = %s\n", copy->name, copy->stop_word);
 			free(command);
 		}
 		copy = copy->next;
