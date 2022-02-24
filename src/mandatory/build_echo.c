@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:57:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 18:08:09 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/24 19:40:16 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ U_INT	launch_echo(t_input *input)
 	while (input->command->words[i])
 	{
 		if (input->command->words[i + 1])
-			// printf("%s ", input->command->words[i]);
-			printf("РЕЗУЛЬТАТ: %s ", input->command->words[i]);
+			printf("%s ", input->command->words[i]);
 		else
-			// printf("%s", input->command->words[i]);
-			printf("РЕЗУЛЬТАТ: %s", input->command->words[i]);
+			printf("%s", input->command->words[i]);
 		i++;
 	}
 	if (j == 0)

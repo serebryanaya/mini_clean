@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 18:13:22 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/24 21:55:19 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ typedef struct s_input
 	char		*token; // нужен для вывода ошибки при недопустимом начале строки
 	t_comm		*command;
 	t_direct	*direct;
-	t_env		*envp; //структура дял хранения истории
+	t_env		*envp; //структура дял хранения истории. Когда ее чистить???
 	t_status	still_work;//помечаем, пора ли делать exit или продолжим работать
 }	t_input;
 
@@ -229,6 +229,7 @@ char		*find_question(char *mid, U_INT *i, t_input *input, char c);
 void		free_all(t_input *input);
 void		free_t_comm(t_input *input);
 void		free_direct(t_input *input);
+void		free_str_command(char *str_command, t_input *input, U_INT i);
 
 /*----main----*/
 int			main(int argc, char **argv, char **envp);
@@ -241,7 +242,9 @@ void		make_env_array(t_input *input, char ***full_envp);
 t_status    finder(char *str_command, t_input *input);
 
 /*----one_build_in - запуск билд-ина, если у нас всего 1 команда----*/
-void		one_build_in(t_input *input); //почему нужна отдельная функция???
+int			reverse_redir(t_input *input);
+void		reverse_redir2(t_input *input, int fd);
+U_INT		launcher(t_input *input);
 
 /*----parser - начало парсинга----*/
 t_status	parser(char *str_command, t_input *input);

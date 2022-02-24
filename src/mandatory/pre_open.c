@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:17:22 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 17:39:46 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/24 21:58:26 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ static inline t_status	try_open2(t_input *input)
 
 void try_open(t_input *input)
 {
+	int fd;
 	// if (input->direct)
 	// 	printf("00попытка открытия файла: input->direct->name == %s\n", \
 	// 		input->direct->name);
@@ -145,8 +146,9 @@ void try_open(t_input *input)
 	}
 	if (input->num_of_command == 1 && input->command->build_number != 0)
 		{
-			printf("у нас 1 команда\n");
-			one_build_in(input);
+			fd = reverse_redir(input);
+			input->num_error = launcher(input);
+			reverse_redir2(input, fd);
 		}
 	
 	//ОТСЮДА ДЕЛАЕТ НАСТЯ

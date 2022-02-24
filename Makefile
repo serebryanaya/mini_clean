@@ -27,6 +27,12 @@ SRC_O 				= envp.c \
 					pre_open.c \
 					one_build_in.c \
 					build_echo.c \
+					build_cd.c \
+					build_pwd.c \
+					build_unset.c \
+					build_export.c \
+					build_env.c \
+					build_exit.c \
 
 
 # SRC_B 				= envp.c \

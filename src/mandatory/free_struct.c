@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 18:10:33 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/24 21:17:13 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	free_t_comm(t_input *input)
 	i = 0;
 	if (!input->command)
 		return ;
-
 	while (input->command)
 	{
 		copy = input->command;
@@ -102,13 +101,31 @@ void free_direct(t_input *input)
 
 	if (!input->direct)
 		return ;
-	while (input->direct != NULL)
+	while (input->direct)
 	{
 		copy = input->direct;
 		input->direct = input->direct->next;
+		if (copy->incoming == 1 && copy->twin == 1)
+			unlink(copy->name);
 		free(copy->name);
 		free(copy->stop_word);
 		free(copy);
 	}
-	input->envp = NULL;
+	input->direct = NULL;
+}
+
+void free_str_command(char *str_command, t_input *input, U_INT i)
+{
+	free(str_command);
+	free_direct(input); // check!!! free_red_cmd(arg);
+	free_t_comm(input);
+	if (input->fd)
+	{
+		while (input->fd && input->fd[i])
+			free(input->fd[i++]);
+		free(input->fd);
+		input->fd = NULL;
+	}
+	free_arg_env(input);
+	init_input(input);
 }

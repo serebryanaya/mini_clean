@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:44:38 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/20 19:46:25 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/24 20:27:28 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_status	finder(char *str_command, t_input *input) // сейчас тут тол
     i = 0;
     if (check_quotes(input, str_command) == fail)
 		return (fail);
+	printf("1\n");
 	while (str_command[i] == ' ')
 		i++;
     if (str_command[i] == '|')
@@ -48,9 +49,15 @@ t_status	finder(char *str_command, t_input *input) // сейчас тут тол
             input->token = modif_strdup("|", input);
         return (print_token(input));
     }
-	// while (str_command[i] && str_command[i] != '|')
-	// 	i++;
-	// if (!str_command[i])
-	// 	return (fail);
+	while (str_command[i] && str_command[i] != '|')
+		i++;
+	if (!str_command[i] && (str_command[i] == '|' || \
+	str_command[i] == '&' || str_command[i] == '>' || \
+	str_command[i] == '<'))
+	{
+		input->token = modif_strdup("newline", input); //мб лучше написать четче
+		return (fail);
+	}
+	printf("3\n");
     return (success);
 }
