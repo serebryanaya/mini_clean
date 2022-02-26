@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 21:37:37 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:11:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 	// Ctrl D = вводу конца файла. Обработка НЕ через сигнал
 	signal(SIGINT, my_handler); // SIGINT = Ctrl C - перевод на новую строку
 	// *command = readline("minishell-1.0$ ");
-	*command = readline("catch_str --> MINISHELL-1.0$ ");// вернуть верхний вариант!
+	*command = readline("catch_str --> MINISHELL-1.0$ ");// вернуть верхний вариант!
 	if (*command == NULL)
 	{
 		rl_on_new_line();
@@ -29,7 +29,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 		free_all(input);
 		exit(0);
 	}
-	if(*command)
+	if(*command && *command[0])
 		add_history(*command);
 	while ((*command)[i] == ' ')
 		i++;
@@ -41,7 +41,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 	return (success);
 }
 
-static inline void go_parse_and_open(char *str_command, t_input *input)
+static inline void go_parse_and_open(char *str_command, t_input *input, char **envp)
 {
 	if (parser(str_command, input) != success)
 		return ;
@@ -49,7 +49,10 @@ static inline void go_parse_and_open(char *str_command, t_input *input)
 	// printf("0\n");
 	clean_direct(input);
 	// // printf("1\n");
+
+	put_envp(envp, input);
 	make_env_array(input, &input->arg_env);
+	// printf("nput->arg_env[0] = %s\n", input->arg_env[0]);
 	// // // printf("2\n");
 	try_open(input);
 }
@@ -135,17 +138,24 @@ int	main(int argc, char **argv, char **envp)
 	put_shlvl(&input); // вызов шелла в шелле - пока не работает!
 	while (1)
 	{
+		// printf("new_cycle\n");
+		// put_envp(envp, &input);
+		// put_shlvl(&input); // вызов шелла в шелле - пока не работает!
 		if (catch_str(&str_command, &input, 0) == fail)
 			continue ;//считываем строку через readline
-		// print_all(&input);
+//		print_all(&input);
 		if (finder(str_command, &input) != fail) // здесь надо дописать обработку ошибок
-			{
-				printf("2.2\n");
-				go_parse_and_open(str_command, &input);
-	}
-		// print_all(&input);
-		printf("334\n");
-		if (str_command)
+		{
+//				printf("2.2\n");
+				go_parse_and_open(str_command, &input, envp);
+//				printf("main\n");
+		}
+		//  print_all(&input);
+//		printf("334\n");
+
+
+
+		// if (str_command)//???
 			free_str_command(str_command, &input, 0);
 		// print_all(&input);
 	}

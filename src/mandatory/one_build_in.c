@@ -6,20 +6,20 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:04:01 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 22:05:00 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:11:57 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-U_INT	launcher(t_input *input)
+U_INT	launcher(t_input *input) //int	run_built(t_cmd *cmd, t_arg *arg)
 {
-	if (input->command->build_number == 1) // сделано!
-		return (launch_echo(input));
+	if (input->command->build_number == 1)
+		return (launch_echo(input)); //Оля сделала
 	// else if (input->command->build_number == 2)
 	// 	return (launch_cd(input));
-	// else if (input->command->build_number == 3) // есть у Насти!
-	// 	return (launch_pwd(input));
+	else if (input->command->build_number == 3)
+		return (launch_pwd(input));
 	// else if (input->command->build_number == 4)
 	// 	return (launch_export(input));
 	// else if (input->command->build_number == 5)

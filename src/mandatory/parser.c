@@ -51,7 +51,7 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 			m = *i;
 			go_through_word(str, i, input);
 			tmp->words[k] = modif_substr(str, m, *i - m, input);
-			printf("tmp->words[%u] = %s\n", k, tmp->words[k]);
+			// printf("tmp->words[%u] = %s\n", k, tmp->words[k]);
 			k++;
 			tmp->words[k] = NULL;
 		}
@@ -86,7 +86,10 @@ t_status	parser(char *str_command, t_input *input)
 	while (str_command[i])
 	{
 		if (str_command[i] != '|')
+		{
 			add_command(input, str_command, j, &i); // заполняем структуры (разделитель - пайп)
+			// printf("t_status parser\n");
+		}
 		else
 		{
 			i++;

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 21:17:13 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:10:33 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	free_t_comm(t_input *input)
 	while (input->command)
 	{
 		copy = input->command;
+		input->command = input->command->next;
 		while (copy->words[i])
 			free(copy->words[i++]);
 		free(copy->words);
-		input->command = copy->next;
 		free(copy);
 	}
 	input->command = NULL;
@@ -117,7 +117,7 @@ void free_direct(t_input *input)
 void free_str_command(char *str_command, t_input *input, U_INT i)
 {
 	free(str_command);
-	free_direct(input); // check!!! free_red_cmd(arg);
+	free_direct(input);
 	free_t_comm(input);
 	if (input->fd)
 	{
@@ -126,6 +126,14 @@ void free_str_command(char *str_command, t_input *input, U_INT i)
 		free(input->fd);
 		input->fd = NULL;
 	}
+	// i = 0;
+	// while (input->arg_env && input->arg_env[i])
+	// 	free(input->arg_env[i++]);
+	// free(input->arg_env);
+	// input->arg_env = NULL;
+	
+	input->num_of_command = 0;
+	// input->num_error = 0;
 	free_arg_env(input);
-	init_input(input);
+	// init_input(input);
 }

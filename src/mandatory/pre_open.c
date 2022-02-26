@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:17:22 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 21:58:26 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 17:39:46 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static inline t_status	try_open3(t_direct	*copy, t_input *input)
 {
 	int	fd;
 
-	printf("запуск проверки открытия файла\n");
+	// printf("запуск проверки открытия файла\n");
 	if (copy->incoming == 0 && copy->twin == 1)
 		fd = open(copy->name, O_WRONLY | O_CREAT | O_APPEND, 0644); // ">>" дозапись файла
 		//0644 = rw-r–r– - Право на чтение для всех, право на запись для владельца.
@@ -24,7 +24,7 @@ static inline t_status	try_open3(t_direct	*copy, t_input *input)
 		fd = open(copy->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(copy->name, O_RDONLY, 0644);
-	printf("запуск проверки: fd = %d\n", fd);
+	// printf("запуск проверки: fd = %d\n", fd);
 	if (fd == -1)
 	{
 		input->num_error = errno;
@@ -112,7 +112,7 @@ static inline t_status	try_open2(t_input *input)
 	{
 		if (copy->incoming == 0 || copy->twin == 0)
 		{
-			printf("попытка открытия файла: copy->incoming == %d, copy->twin == %d\n", copy->incoming, copy->twin);
+			// printf("попытка открытия файла: copy->incoming == %d, copy->twin == %d\n", copy->incoming, copy->twin);
 			if (try_open3(copy, input) == fail)
 				return (fail);
 		}
@@ -140,20 +140,35 @@ void try_open(t_input *input)
 	while (copy)
 	{
 		input->num_of_command++;
-	// 	printf("проверочки: num_of_command == %d, input->command->build_number == %d, first word = %s\n", \
-	// input->num_of_command, input->command->build_number, input->command->words[0]);
+//	 	printf("проверочки: num_of_command == %d, input->command->build_number == %d, first word = %s\n", \
+//	 input->num_of_command, input->command->build_number, input->command->words[0]);
 		copy = copy->next;
 	}
+	if (input->num_of_command > 1)
+	{
+		pipes(input); //ft_pipe(arg);
+		// printf("1num_of_command == %d, input->command->build_number == %d, first word = %s\n",
+		// 	   input->num_of_command, input->command->build_number, input->command->words[0]);
+	}
 	if (input->num_of_command == 1 && input->command->build_number != 0)
-		{
+	{
+					// printf("2num_of_command == %d, input->command->build_number == %d, first word = %s\n",
+			//    input->num_of_command, input->command->build_number, input->command->words[0]);
 			fd = reverse_redir(input);
 			input->num_error = launcher(input);
 			reverse_redir2(input, fd);
-		}
-	
+	}
+
 	//ОТСЮДА ДЕЛАЕТ НАСТЯ
-	// else if (input->num_of_command > 1)
-	// 	pipes(input); //ft_pipe(arg);
-	// else if (input->num_of_command != 1 || input->command->words[0] != NULL)
-	// 	my_pipex(input, 0);
+// 	else if (input->num_of_command > 1)
+// 	{
+// 		pipes(input); //ft_pipe(arg);
+// //		printf("input->num_of_command = %d\n", input->num_of_command);
+// 	}
+	else if (input->num_of_command != 1 || input->command->words[0] != NULL)
+	{
+		// printf("3num_of_command == %d, input->command->build_number == %d, first word = %s\n",
+			//    input->num_of_command, input->command->build_number, input->command->words[0]);
+		my_pipe(input, 0);
+	}
 }

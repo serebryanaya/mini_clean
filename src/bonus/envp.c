@@ -75,11 +75,11 @@ t_status	put_envp(char **envp, t_input *input)
         add_list_back(new, &input->envp);
         i++;
     }
-i = 0;
-   while (new != NULL)
-   {
-       printf("%d: key = %s  value = %s\n", i++, new->key, new->value);
-       new = new->next;
-   }
+// i = 0;
+//    while (new != NULL)
+//    {
+//        printf("%d: key = %s  value = %s\n", i++, new->key, new->value);
+//        new = new->next;
+//    }
 	return (success);	
 }

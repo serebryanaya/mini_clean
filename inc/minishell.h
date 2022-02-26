@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 21:55:19 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:13:22 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,18 +135,16 @@ strerror(2) - No such file or directory
  104 - State not recoverable
  105 - Previous owner died
  106 - Interface output queue is full
-
 Наши: 
 127 - command not found
 258 - command not found
-
 */
 
 typedef enum e_status
 {
-	success,
-	fail,
-	end,
+	success, //0
+	fail, //1
+	end, //2
 }	t_status;
 
 typedef struct s_direct
@@ -287,6 +285,12 @@ char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 long		modif_atoi(char *s, int i, long number);
 
+/*----builtins ---*/ 
+int			launch_pwd(t_input *input);
+
+/*----pipes ---*/ 
+void my_pipe(t_input *input, U_INT i);
+void	pipes(t_input *input);
 
 //mac:     gcc file.c -L/Users/$USER/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$USER/.brew/Cellar/readline/8.1.1/include -lreadline -o filename
 //linux:   gcc -L/usr/local/lib -I/usr/local/include *.c -lreadline
@@ -312,5 +316,4 @@ bash-3.2$ ytjy <<< gh
 bash: ytjy: command not found
 bash-3.2$ ytjy ||| gh
 bash: syntax error near unexpected token `|'
-
 */

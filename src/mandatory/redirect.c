@@ -82,7 +82,7 @@ void    find_direct_in_comm(t_input *input, char *str, U_INT j, U_INT *i)
 		n = *i;
 		go_through_word(str, i, input);
 		new->name = modif_substr(str, n, *i - n, input);
-		printf("new->name = %s\n", new->name);
+//		printf("new->name = %s\n", new->name);
 	}
 	add_direct_back(new, &input->direct);
 }
