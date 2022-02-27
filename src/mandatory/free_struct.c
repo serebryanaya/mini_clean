@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 18:10:33 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/02/27 21:18:54 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,15 @@ void	free_t_comm(t_input *input)
 	U_INT i;
 
 	i = 0;
-	if (!input->command)
+	if (!input || !input->command)
 		return ;
 	while (input->command)
 	{
 		copy = input->command;
 		input->command = input->command->next;
-		while (copy->words[i])
-			free(copy->words[i++]);
-		free(copy->words);
+		// while (copy->words[i]) // ????
+		// 	free(copy->words[i++]);
+		// free(copy->words);
 		free(copy);
 	}
 	input->command = NULL;
@@ -118,7 +118,7 @@ void free_str_command(char *str_command, t_input *input, U_INT i)
 {
 	free(str_command);
 	free_direct(input);
-	free_t_comm(input);
+	free_t_comm(input); // del?????
 	if (input->fd)
 	{
 		while (input->fd && input->fd[i])
@@ -133,6 +133,7 @@ void free_str_command(char *str_command, t_input *input, U_INT i)
 	// input->arg_env = NULL;
 	
 	input->num_of_command = 0;
+	input->still_work = success;
 	// input->num_error = 0;
 	free_arg_env(input);
 	// init_input(input);

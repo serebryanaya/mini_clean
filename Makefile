@@ -2,7 +2,8 @@ NAME_O 				= minishell
 NAME_B 				= minishell_bonus
 NAME				= minishell
 
-FLAGS 				= -Wall -Wextra -Werror -O2
+FLAGS 				= -Wall -Wextra -Werror -O2 -fsanitize=address
+#убрать санитайзер!!!!!!!!!
 
 R_FLAGS				= -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include		
 
