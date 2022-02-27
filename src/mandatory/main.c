@@ -49,7 +49,7 @@ static inline void go_parse_and_open(char *str_command, t_input *input, char **e
 	// printf("0\n");
 	clean_direct(input);
 	// // printf("1\n");
-
+ 	free_env(input);
 	put_envp(envp, input);
 	make_env_array(input, &input->arg_env);
 	// printf("nput->arg_env[0] = %s\n", input->arg_env[0]);

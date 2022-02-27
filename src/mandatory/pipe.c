@@ -224,7 +224,7 @@ char *get_path2(char *bin, t_input *input, U_INT i)
 	{
 //		printf("get_path2\n");
 		res = ft_strjoin_for_3(path[counter], "/", bin, input); //char	*ft_strjoin_for_3(char *s1, char *s2, char *s3, t_input *input)
-		// printf("res = %s\n", res);
+		printf("res = %s\n", res);
 		if (access(res, F_OK))
 		{
 			free(res);
@@ -274,7 +274,7 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 	char	*path;
 
 	copy = input->command;
-	printf("111num_error = %d, errno = %d\n", input->num_error, errno);
+	// printf("111num_error = %d, errno = %d\n", input->num_error, errno);
 	signal(SIGINT, handler_child);
 	signal(SIGQUIT, handler_child);
 	while (counter++ < i)
@@ -282,23 +282,23 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 	if (copy->words == NULL || !copy->words[0])
 		exit(0);//почему 0?
 	if (ft_strcmp(copy->words[0], "head") == 0)
-		printf("1\n");
+		// printf("1\n");
 	child_dup(input, copy, i);
 		if (ft_strcmp(copy->words[0], "head") == 0)
-		printf("2\n");
+		// printf("2\n");
 	if (copy->build_number != 0)
 	{
 		// printf("copy->build_number = %u\n", copy->build_number);
 		print_error(input, launcher(input), NULL, NULL);
 	}
 			if (ft_strcmp(copy->words[0], "head") == 0)
-			printf("519595um_error = %d, errno = %d\n", input->num_error, errno);
+			// printf("519595um_error = %d, errno = %d\n", input->num_error, errno);
 	path = get_path(copy->words[0], input, 0);
 			if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("3\n");
-			printf("222num_error = %d, errno = %d\n", input->num_error, errno);
+			// printf("222num_error = %d, errno = %d\n", input->num_error, errno);
 	if (ft_strcmp(copy->words[0], "head") == 0)	
-	printf("path = %s\n", path);
+	// printf("path = %s\n", path);
 	if (execve(path, copy->words, input->arg_env) == -1)
 //	execve() выполняет программу, заданную параметром filename.
 //	Программа должна быть или двоичным исполняемым файлом, или
@@ -310,10 +310,10 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 //	Как argv, так и envp завершаются нулевым указателем. К массиву аргументов и к окружению
 //	можно обратиться из функции main(), которая объявлена как int main(int argc, char *argv[], char *envp[]).
 		{
-			printf("5953\n");
+			// printf("5953\n");
 			print_error(input, errno, copy->words[0], NULL);
 		}
-	printf("333num_error = %d, errno = %d\n", input->num_error, errno);
+	// printf("333num_error = %d, errno = %d\n", input->num_error, errno);
 }
 
 void modif_wait(pid_t *id, U_INT counter, t_input *input, U_INT i)
@@ -323,7 +323,7 @@ void modif_wait(pid_t *id, U_INT counter, t_input *input, U_INT i)
 	while (i < counter)
 	{
 		waitpid(-1, &exit_status, 0); // -1 означает, что нужно ждать любого дочернего процесса.
-		printf("exit_status = %d\n", exit_status);
+		// printf("exit_status = %d\n", exit_status);
 		i++;
 	}
 	if (input != NULL)

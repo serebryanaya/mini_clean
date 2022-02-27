@@ -173,6 +173,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				equal;
 	struct s_env	*next;
 }	t_env;
 
@@ -223,7 +224,7 @@ char		*find_question(char *mid, U_INT *i, t_input *input, char c);
 
 
 /*----free_struct-очистка структур---*/ 
-// void		free_env(t_input *input);
+void		free_env(t_input *input);
 void		free_all(t_input *input);
 void		free_t_comm(t_input *input);
 void		free_direct(t_input *input);
@@ -287,6 +288,7 @@ long		modif_atoi(char *s, int i, long number);
 
 /*----builtins ---*/ 
 int			launch_pwd(t_input *input);
+int			launch_env(t_input *input); 
 
 /*----pipes ---*/ 
 void my_pipe(t_input *input, U_INT i);

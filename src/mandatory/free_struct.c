@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static inline void	free_env(t_input *input)
+void	free_env(t_input *input)
 {
 	t_env	*copy;
 
