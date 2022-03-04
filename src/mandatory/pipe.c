@@ -224,7 +224,7 @@ char *get_path2(char *bin, t_input *input, U_INT i)
 	{
 //		printf("get_path2\n");
 		res = ft_strjoin_for_3(path[counter], "/", bin, input); //char	*ft_strjoin_for_3(char *s1, char *s2, char *s3, t_input *input)
-		printf("res = %s\n", res);
+		// printf("res = %s\n", res);
 		if (access(res, F_OK))
 		{
 			free(res);
@@ -279,25 +279,26 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 	signal(SIGQUIT, handler_child);
 	while (counter++ < i)
 		copy = copy->next;
-	if (copy->words == NULL || !copy->words[0])
+	if (!copy || copy->words == NULL || !copy->words[0]) //if (copy->words == NULL || !copy->words[0])
 		exit(0);//почему 0?
-	if (ft_strcmp(copy->words[0], "head") == 0)
+	// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("1\n");
 	child_dup(input, copy, i);
-		if (ft_strcmp(copy->words[0], "head") == 0)
+		// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("2\n");
 	if (copy->build_number != 0)
 	{
 		// printf("copy->build_number = %u\n", copy->build_number);
-		print_error(input, launcher(input), NULL, NULL);
+		// exit (launcher(input)); //спросить у Оли
+		print_error(input, launcher(input), NULL, NULL); //сообщение об ошибке?
 	}
-			if (ft_strcmp(copy->words[0], "head") == 0)
+			// if (ft_strcmp(copy->words[0], "head") == 0)
 			// printf("519595um_error = %d, errno = %d\n", input->num_error, errno);
 	path = get_path(copy->words[0], input, 0);
-			if (ft_strcmp(copy->words[0], "head") == 0)
+			// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("3\n");
 			// printf("222num_error = %d, errno = %d\n", input->num_error, errno);
-	if (ft_strcmp(copy->words[0], "head") == 0)	
+	// if (ft_strcmp(copy->words[0], "head") == 0)	
 	// printf("path = %s\n", path);
 	if (execve(path, copy->words, input->arg_env) == -1)
 //	execve() выполняет программу, заданную параметром filename.

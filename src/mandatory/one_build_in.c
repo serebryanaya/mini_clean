@@ -20,12 +20,12 @@ U_INT	launcher(t_input *input) //int	run_built(t_cmd *cmd, t_arg *arg)
 	// 	return (launch_cd(input));
 	else if (input->command->build_number == 3)
 		return (launch_pwd(input));
-	// else if (input->command->build_number == 4)
-	// 	return (launch_export(input));
-	// else if (input->command->build_number == 5)
-	// 	return (launch_unset(input));
-	// else if (input->command->build_number == 6)
-	// 	return (launch_env(input));
+	else if (input->command->build_number == 4)
+		return (launch_export(input));
+	else if (input->command->build_number == 5)
+		return (launch_unset(input));
+	else if (input->command->build_number == 6)
+		return (launch_env(input));
 	// else if (input->command->build_number == 7)
 	// 	return (launch_exit(input));
 	return (success);

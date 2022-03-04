@@ -236,6 +236,7 @@ int			main(int argc, char **argv, char **envp);
 /*----envp - заполнение t_env *envp из argv[3]----*/
 t_status	put_envp(char **envp, t_input *input);
 void		make_env_array(t_input *input, char ***full_envp);
+t_env		*create_new_list(char *str, t_input *input);
 
 /*----finder- препарсинг, поиск спецсимвлов----*/
 t_status    finder(char *str_command, t_input *input);
@@ -289,6 +290,8 @@ long		modif_atoi(char *s, int i, long number);
 /*----builtins ---*/ 
 int			launch_pwd(t_input *input);
 int			launch_env(t_input *input); 
+int			launch_unset(t_input *input);
+int			launch_export(t_input *input);
 
 /*----pipes ---*/ 
 void my_pipe(t_input *input, U_INT i);

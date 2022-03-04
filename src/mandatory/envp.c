@@ -27,7 +27,7 @@ static void	add_list_back(t_env *new, t_env **envp)
     }
 }
 
-static inline t_env	*create_new_list(char *str, t_input *input) //t_env	*ft_env_lst_new(char *env, t_arg *arg)
+t_env   *create_new_list(char *str, t_input *input) //t_env	*ft_env_lst_new(char *env, t_arg *arg)
 {
     U_INT   i;
     t_env *tmp;
@@ -51,7 +51,8 @@ static inline t_env	*create_new_list(char *str, t_input *input) //t_env	*ft_env_
     while (str[i] && str[i] != '=')
 		i++;
     tmp->key = modif_substr(str, 0, i, input); //char	*modif_substr(char *s, U_INT start, U_INT len, t_input *input)
-    // if (str[i] && str[i] == '=') ///проверить
+    if (str[i] && str[i] == '=') ///проверить
+        tmp->equal = 1;
     // {
     //     tmp->equal = 1;
     //     i++;
@@ -61,6 +62,7 @@ static inline t_env	*create_new_list(char *str, t_input *input) //t_env	*ft_env_
         tmp->value = modif_strdup("\0", input);
     else
         tmp->value = modif_substr(str, i + 1, ft_strlen(str) - i + 1, input);
+    // printf("key = %s, equal = %d, value = %s\n", tmp->key, tmp->equal, tmp->value);    
     tmp->next = NULL;
     return(tmp);
 }

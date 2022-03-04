@@ -14,11 +14,11 @@
 
 int	launch_env(t_input *input)
 {
-	t_env	*tmp;
+	t_env	*copy;
 
     if (!input->envp)
 		return (0);
-	tmp = input->envp;
+	copy = input->envp;
 
     // printf("1launch_env input->envp->key = %s\n", input->envp->key);
 
@@ -35,11 +35,11 @@ int	launch_env(t_input *input)
 	// 	tmp = tmp->next;
 	// }
 
-    while (tmp != NULL)
+    while (copy != NULL)
 	{
-	   	if (tmp->equal == 1)
-			printf("%s%s%s\n", tmp->key, "=", tmp->value);
-		tmp = tmp->next;
+	   	if (copy->equal == 1)
+			printf("%s%s%s\n", copy->key, "=", copy->value);
+		copy = copy->next;
 	}
 	return (0);
 }
