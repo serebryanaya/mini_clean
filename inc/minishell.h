@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 20:29:00 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 00:15:45 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ U_INT			launch_cd(t_input *input, t_comm *command);
 U_INT			launch_exit(t_input *input, t_comm *command);
 
 /*----pipes ---*/ 
-void my_pipe(t_input *input, U_INT i);
+void my_pipe(t_input *input, t_comm *command, U_INT i);
 void	pipes(t_input *input);
 
 //mac:     gcc file.c -L/Users/$USER/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$USER/.brew/Cellar/readline/8.1.1/include -lreadline -o filename
@@ -327,4 +327,11 @@ bash-3.2$ ytjy <<< gh
 bash: ytjy: command not found
 bash-3.2$ ytjy ||| gh
 bash: syntax error near unexpected token `|'
+*/
+
+/*
+НЕверный экзит-статус
+ls | wc
+yes | head
+ls
 */

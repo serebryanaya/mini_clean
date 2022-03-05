@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:58 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 20:25:38 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 00:12:52 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 		return (1);
 	}
 	if (chdir(path) != success)
-		print_error(input, errno, "chdir", NULL);
-	input->num_error = errno;
+		print_error(input, 1, command->words[0], "No such file or directory"); // если 2 аргуента - отд.функция
+	input->num_error = 1;
 	free(path);
 	return (input->num_error);
 }

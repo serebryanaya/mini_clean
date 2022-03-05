@@ -224,17 +224,20 @@ char *get_path2(char *bin, t_input *input, U_INT i)
 	{
 //		printf("get_path2\n");
 		res = ft_strjoin_for_3(path[counter], "/", bin, input); //char	*ft_strjoin_for_3(char *s1, char *s2, char *s3, t_input *input)
-		// printf("res = %s\n", res);
+		// printf("00res = %s\n", res);
 		if (access(res, F_OK))
 		{
+			// printf("11res = %s\n", res);
 			free(res);
 			res = NULL;
 		}
 		counter++;
 	}
-	if (res == NULL)
-		res = bin;
+	// if (res == NULL)
+		// res = bin;
+	// printf("22res = %s\n", res);
 	clean_path(path, 0);
+
 	free(bin);
 	return (res);
 }
@@ -268,12 +271,12 @@ char *get_path(char *bin, t_input *input, U_INT i) //bin = cmd static char	*ft_p
 	return(get_path2(bin, input, i));
 }
 
-void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_arg *arg)
+void it_is_child(t_input *input, t_comm *command, U_INT i, U_INT counter) //void	child(int i, t_arg *arg)
 {
 	t_comm	*copy;
 	char	*path;
 
-	copy = input->command;
+	copy = command;
 	// printf("111num_error = %d, errno = %d\n", input->num_error, errno);
 	signal(SIGINT, handler_child);
 	signal(SIGQUIT, handler_child);
@@ -283,7 +286,7 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 		exit(0);//почему 0?
 	// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("1\n");
-	// child_dup(input, copy, i);
+	child_dup(input, copy, i);
 		// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("2\n");
 	if (copy->build_number != 0)
@@ -294,8 +297,14 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 	}
 			// if (ft_strcmp(copy->words[0], "head") == 0)
 			// printf("519595um_error = %d, errno = %d\n", input->num_error, errno);
-	child_dup(input, copy, i);
+
 	path = get_path(copy->words[0], input, 0);
+	if (!path)
+		{
+			print_error(input, 127, NULL, "command not found");
+			exit (127) ;
+		}
+	// child_dup(input, copy, i);
 			// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("3\n");
 			// printf("222num_error = %d, errno = %d\n", input->num_error, errno);
@@ -312,11 +321,28 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 //	Как argv, так и envp завершаются нулевым указателем. К массиву аргументов и к окружению
 //	можно обратиться из функции main(), которая объявлена как int main(int argc, char *argv[], char *envp[]).
 		{
-			free(path);
-			// printf("5953\n");
-			print_error(input, errno, copy->words[0], NULL);
+			// free(path);
+			printf("5953\n");
+			printf("1111errno = %d\n", errno);
+// 			if (copy->words[0])
+// printf("copy->words[0] = %s\n", copy->words[0]);
+			input->num_error = 127;
+			// write(1, "minishell: ", 11);
+			// write(2, "execve: ", 8);
+			// write(2, "command not found\n", 18);
+			
+			// exit (258) ;
+			print_error(input, 127, NULL, "command not found");
+			exit (127);
+
+			// print_error(input, errno, copy->words[0], NULL);
 		}
+	// input->num_error = 0;
+	exit (input->num_error);	
+		// free(path);
+		// printf("5953\n");
 	// printf("333num_error = %d, errno = %d\n", input->num_error, errno);
+	// free(path);
 }
 
 void modif_wait(pid_t *id, U_INT counter, t_input *input, U_INT i)
@@ -326,21 +352,27 @@ void modif_wait(pid_t *id, U_INT counter, t_input *input, U_INT i)
 	while (i < counter)
 	{
 		waitpid(-1, &exit_status, 0); // -1 означает, что нужно ждать любого дочернего процесса.
-		// printf("exit_status = %d\n", exit_status);
 		i++;
 	}
 	if (input != NULL)
 	{
-		if (WIFEXITED(exit_status)) // не равно нулю, если дочерний процесс успешно завершился.
+		if (WIFSIGNALED(exit_status)) // не равно нулю, если дочерний процесс успешно завершился.
+		
 			// input->num_error = WEXITSTATUS(exit_status); //возвращает восемь младших битов значения, которое вернул завершившийся дочерний процесс
-						input->num_error = WIFEXITED(exit_status); //возвращает восемь младших битов значения, которое вернул завершившийся дочерний процесс
+						{
+							input->num_error = WEXITSTATUS(exit_status); //возвращает восемь младших битов значения, которое вернул завершившийся дочерний процесс
+						printf("дочка завершилась хорошо - input->num_error = %d, errno = %d\n", input->num_error, errno);
+	}
 		else
-			input->num_error = WIFEXITED(exit_status) + 128; // +128 для дочек
+			{
+			input->num_error = WTERMSIG(exit_status) + 128; // +128 для дочек
+						printf("дочка завершилась ПЛОХО!!!! - input->num_error = %d, errno = %d\n", input->num_error, errno);
+}
 	}
 	free(id);
 }
 
-void my_pipe(t_input *input, U_INT i) //void	pipex(t_arg *arg)
+void my_pipe(t_input *input, t_comm *command, U_INT i) //void	pipex(t_arg *arg)
 {
 	pid_t	*id;
 
@@ -358,11 +390,12 @@ void my_pipe(t_input *input, U_INT i) //void	pipex(t_arg *arg)
 		{
 			// printf("my_pipe3\n");
 			// printf("55552getpid = %d\n", getpid());
-			it_is_child(input, i, 0);
+			it_is_child(input, command, i, 0);
 			// printf("my_pipe4\n");
 		}
 		else if (id[i] == -1)
 		{
+			printf("my_pipe3\n");
 			input->num_error = errno;
 			close_fd(input, NULL, input->num_of_command - 1, 0);
 			modif_wait(id, i, input, 0);

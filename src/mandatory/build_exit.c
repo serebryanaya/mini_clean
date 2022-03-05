@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:32 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 20:43:49 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/05 22:15:46 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ U_INT	launch_exit(t_input *input, t_comm *command)
 
 	flag = 0;
 	status = 0;
-	printf("exit\n");
+	// printf("exit\n");
 	// if (input->num_of_command != 1 && ft_strcmp(command->words[0], "exit") == success)// need???
 	// 	{
 	// 		// printf("!!!!GO OUT FROM EXIT\n");
@@ -27,7 +27,13 @@ U_INT	launch_exit(t_input *input, t_comm *command)
 	// 	}
 	// else if (input->num_of_command != 1 && ft_strcmp(input->command->words[0], "exit") != success)
 	// 	exit (-1);
+if (command->words[1])
+printf("command->words[1] = %s\n", command->words[1]);
+if (command->words[2])
+printf("command->words[2] = %s\n", command->words[2]);
 
+	if (command->next == NULL)
+		printf("exit\n");
 	if (command && command->words && command->words[1])
 	{
 		// printf("!!!!copy->words[1] = %s\n", copy->words[1]);
@@ -42,8 +48,8 @@ U_INT	launch_exit(t_input *input, t_comm *command)
 		{
 			print_error(input, 1, "exit", "too many arguments");
 		}
+		else
+			exit (status);
 	}
-	else
-		exit (status);
 	return (0);
 }
