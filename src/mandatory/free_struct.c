@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/27 21:18:54 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 20:56:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	free_t_comm(t_input *input)
 	{
 		copy = input->command;
 		input->command = input->command->next;
-		// while (copy->words[i]) // ????
+		// while (copy->words[i]) ???????
 		// 	free(copy->words[i++]);
 		// free(copy->words);
 		free(copy);
@@ -133,7 +133,7 @@ void free_str_command(char *str_command, t_input *input, U_INT i)
 	// input->arg_env = NULL;
 	
 	input->num_of_command = 0;
-	input->still_work = success;
+	input->still_work = success;//????
 	// input->num_error = 0;
 	free_arg_env(input);
 	// init_input(input);

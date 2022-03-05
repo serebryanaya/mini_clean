@@ -36,7 +36,7 @@ int	ft_isalpha(int c)
 // 	return (lst);
 // }
 
-void	ft_lstadd_back(t_env **lst, t_env *new) //lib func
+void	ft_lstadd_back(t_env **lst, t_env *new)
 {
 	t_env	*addnode;
 
@@ -49,23 +49,15 @@ void	ft_lstadd_back(t_env **lst, t_env *new) //lib func
 			addnode = addnode->next;
 	}
 	if (addnode != NULL && new != NULL)
-	{
 		addnode->next = new;
-		// printf("newkey = %s, newequal = %d, newvalue = %s\n", new->key, new->equal, new->value);
-		// printf("nodekey = %s, nodeequal = %d, nodevalue = %s\n", addnode->next->key, addnode->next->equal, addnode->next->value);
-	}
-		
 }
 
-// void	ft_lstadd_back(t_env **lst, t_env *new)
+// void	ft_env_lst_add_back(t_env **lst, t_env *new)
 // {
 // 	t_env	*tmp;
 
 // 	if (*lst)
 // 	{
-// 		// while ((*lst)->next)
-// 		// 	*lst = (*lst)->next;
-// 		// tmp = *lst;	
 // 		tmp = ft_env_lst_last(*lst);
 // 		tmp->next = new;
 // 	}
@@ -109,25 +101,25 @@ int	only_export(t_env *env) //int	if_not_cmd1(t_env *env)
 		if (copy->equal == 1)
 			printf("declare -x %s%s\"%s\"\n", (copy)->key, "=", (copy)->value);
 		else
-			printf("declare -x %s\n", (copy)->key);
+			printf("declare -x %s%s%s\n", (copy)->key, "=", (copy)->value);
 		copy = (copy)->next;
 	}
 	return (0);
 }
 
-void	change_env(t_env *env, t_env *new, t_input *input) //ft_search_dups(t_env *env, t_env *new, t_arg *arg)
+void	ft_search_dups(t_env *env, t_env *new, t_input *input) //ft_search_dups(t_env *env, t_env *new, t_arg *arg)
 {
 	t_env	*copy2;
 	t_env	*lstnew;	
 
-	while (new != NULL)
+	while (new)
 	{
 		copy2 = env;
-		while (copy2 != NULL)
+		while (copy2)
 		{
 			if (!ft_strcmp(new->key, copy2->key))
 			{
-				// printf("new->key = %s, copy2->key = %s\n",new->key, copy2->key);
+				printf("new->key = %s, copy2->key = %s\n",new->key, copy2->key);
 				free(copy2->value);
 				copy2->value = modif_strdup(new->value, input);
 				break ;
@@ -139,23 +131,17 @@ void	change_env(t_env *env, t_env *new, t_input *input) //ft_search_dups(t_env *
 			}
 		
 		}
-		if (copy2 == NULL)
+		if (!copy2)
 		{
 			// printf("!copy2\n");
 			lstnew = ft_lstnew_env(new, input);
-			// printf("lstnew key = %s, lstnew equal = %d, lstnew value = %s\n", lstnew->key, lstnew->equal, lstnew->value);
-			ft_lstadd_back(&env, new);
-			// ft_lstadd_back(&input->envp, lstnew);
-			// while (env->next)
-			// {
-			// 	env = env->next;
-			// 	// printf("123env key = %s, env equal = %d, env value = %s\n", env->key, env->equal, env->value);
-			// }
-			
-			// printf("env key = %s, env equal = %d, env value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
+			printf("lstnew key = %s, lstnew equal = %d, lstnew value = %s\n", lstnew->key, lstnew->equal, lstnew->value);
+			// ft_lstadd_back(&env, lstnew);
+			ft_lstadd_back(&input->envp, lstnew);
+			// printf("env key = %s, env equal = %d, env value = %s\n", env->key, env->equal, env->value);
+			printf("env key = %s, env equal = %d, env value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
 		}
 		new = new->next;
-		// printf("newkey = %s, newequal = %d, newvalue = %s\n", new->key, new->equal, new->value);
 	}
 }
 
@@ -176,18 +162,16 @@ void	free_new(t_env *new)
 int	launch_export(t_input *input)
 {
 	int		i;
-	t_env	*env;
 	t_env	*new;
 	t_env	*tmp;
 
-	// env = input->envp;
 	input->num_error = 0;
 	// i = 0;
 	i = 1;
 	new = NULL;
 	if (input->command->words[1] == NULL)
 	{
-		// printf("command->words[0] = %s, command->words[1] = %s\n", input->command->words[0], input->command->words[1]);
+		printf("command->words[0] = %s, command->words[1] = %s\n", input->command->words[0], input->command->words[1]);
 		return (only_export(input->envp));
 	}
 	// while (input->command->words[++i])
@@ -195,27 +179,27 @@ int	launch_export(t_input *input)
 	{
 		if (ft_isalpha(input->command->words[i][0]))
 		{
-			// printf("command[%d] = %s\n", i, input->command->words[i]);
+			// printf("command[%d] = %c\n", i, input->command->words[i][0]);
+			printf("command[%d] = %s\n", i, input->command->words[i]);
 			tmp = create_new_list(input->command->words[i], input);
-			// printf("key = %s, equal = %d, value = %s\n", tmp->key, tmp->equal, tmp->value);    
+			printf("key = %s, equal = %d, value = %s\n", tmp->key, tmp->equal, tmp->value);    
 			ft_lstadd_back(&new, tmp);
-			// printf("new key = %s, new equal = %d, new value = %s\n", new->key, new->equal, new->value);
+			printf("new key = %s, new equal = %d, new value = %s\n", new->key, new->equal, new->value);
+			// ft_lstadd_back(&input->envp, tmp);
 		}
-		else
-		{
+		// else
+		// {
 		// 	printf("command[%d] = %c\n", i, input->command->words[i][0]);
-			input->num_error = 1;
-			write(2, "export: `", 9);
-			write(2, input->command->words[i], ft_strlen(input->command->words[i]));
-			write(2, "': not a valid identifier\n", 26);
-		}
+		// 	input->num_error = 1;
+		// 	write(2, "export: `", 9);
+		// 	write(2, input->command->words[i], ft_strlen(input->command->words[i]));
+		// 	write(2, "': not a valid identifier\n", 26);
+		// }
 		i++;
 	}
-	env = input->envp;
-	// change_env(env, tmp, input);
-	change_env(env, new, input);
-	// printf("envp key = %s, envp equal = %d, envp value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
-	// free_new(new);
+	ft_search_dups(input->envp, new, input);
+	printf("envp key = %s, envp equal = %d, envp value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
+	free_new(new);
 	return (input->num_error);
-	// printf("envp key = %s, envp equal = %d, envp value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
+	printf("envp key = %s, envp equal = %d, envp value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
 }

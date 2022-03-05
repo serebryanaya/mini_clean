@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 18:11:17 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 20:58:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static inline void go_parse_and_open(char *str_command, t_input *input, char **e
 	// printf("0\n");
 	clean_direct(input);
 	// // printf("1\n");
- 	// free_env(input);
-	// put_envp(envp, input);
+ 	// free_env(input);//????
+	put_envp(envp, input);
 	make_env_array(input, &input->arg_env);
 	// printf("nput->arg_env[0] = %s\n", input->arg_env[0]);
 	// // // printf("2\n");

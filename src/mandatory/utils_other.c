@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_other.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:58:39 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/27 18:33:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 21:14:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,31 +110,31 @@ char	*modif_itoa(int n, t_input *input)
 // 	return (sign * number);
 // }
 
-long long	modif_atoi(char *s, int *flag, int i, long long number)
+long long modif_atoi(char *s, int *flag, int i, long long number)
 {
-	int	sign;
+int sign;
 
-	if (*flag != 0)
-		return (0);
-	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
-		i++;
-	if (s[i] == '-')
-		sign = -1;
-	else
-		sign = 1;
-	if (s[i] == '+' || s[i] == '-')
-		i++;
-	while (s[i] != 0 && *flag == 0)
+if (*flag != 0)
+	return (0);
+while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
+	i++;
+if (s[i] == '-')
+	sign = -1;
+else
+	sign = 1;
+if (s[i] == '+' || s[i] == '-')
+	i++;
+while (s[i] != 0 && *flag == 0)
+{
+	if (s[i] < '0' || s[i] > '9')
+		*flag = -1;
+	while (s[i] >= '0' && s[i] <= '9' && *flag == 0)
 	{
-		if (s[i] < '0' || s[i] > '9')
-			*flag = -1;
-		while (s[i] >= '0' && s[i] <= '9' && *flag == 0)
-		{
-			number = 10 * number + (s[i++] - '0');
-			if ((number > 9223372036854775807 && sign == 1) || \
+		number = 10 * number + (s[i++] - '0');
+		if ((number > 9223372036854775807 && sign == 1) || \
 			(sign == -1 && number - 1 > 9223372036854775807))
-				*flag = -1;
-		}
+			*flag = -1;
 	}
-	return (sign * number);
+}
+return (sign * number);
 }

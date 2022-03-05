@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 20:15:48 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 22:12:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <dir.h>
 # include <string.h> // for strerror
 # include <sys/errno.h>
 # include <readline/readline.h>
@@ -244,7 +245,7 @@ t_status    finder(char *str_command, t_input *input);
 /*----one_build_in - запуск билд-ина, если у нас всего 1 команда----*/
 int			reverse_redir(t_input *input);
 void		reverse_redir2(t_input *input, int fd);
-U_INT		launcher(t_input *input);
+U_INT		launcher(t_input *input, t_comm	*command);
 
 /*----parser - начало парсинга----*/
 t_status	parser(char *str_command, t_input *input);
@@ -286,16 +287,16 @@ U_INT		ft_strlen(char *s);
 char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 // long		modif_atoi(char *s, int i, long number);
-long long	modif_atoi(char *s, int *flag, int i, long long number);
+long long modif_atoi(char *s, int *flag, int i, long long number);¶
 
 /*----builtins ---*/ 
-
-U_INT		launch_exit(t_input *input);
-U_INT		launch_echo(t_input *input);
-int			launch_pwd(t_input *input);
-int			launch_env(t_input *input); 
-int			launch_unset(t_input *input);
-int			launch_export(t_input *input);
+U_INT			launch_pwd(t_input *input);
+U_INT			launch_env(t_input *input); 
+U_INT			launch_unset(t_input *input);
+U_INT			launch_export(t_input *input);
+U_INT			launch_exit(t_input *input, t_comm *command);
+U_INT			launch_echo(t_input *input);
+U_INT			launch_cd(t_input *input, t_comm *command);
 
 /*----pipes ---*/ 
 void my_pipe(t_input *input, U_INT i);
