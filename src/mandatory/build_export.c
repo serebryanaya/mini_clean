@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:48 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 20:26:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/05 21:01:32 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,8 @@ U_INT	launch_export(t_input *input)
 			printf("new key = %s, new equal = %d, new value = %s\n", new->key, new->equal, new->value);
 			// ft_lstadd_back(&input->envp, tmp);
 		}
-		// else
-		// {
+		else
+		{
 		// 	printf("command[%d] = %c\n", i, input->command->words[i][0]);
 		// 	input->num_error = 1;
 		// 	write(2, "export: `", 9);
