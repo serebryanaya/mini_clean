@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:04:01 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/27 14:39:09 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/05 20:18:09 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 U_INT	launcher(t_input *input) //int	run_built(t_cmd *cmd, t_arg *arg)
 {
 	if (input->command->build_number == 1)
-		return (launch_echo(input)); //Оля сделала
-	// else if (input->command->build_number == 2)
-	// 	return (launch_cd(input));
+		return (launch_echo(input));
+	else if (input->command->build_number == 2)
+		return (launch_cd(input));
 	else if (input->command->build_number == 3)
 		return (launch_pwd(input));
-	// else if (input->command->build_number == 4)
-	// 	return (launch_export(input));
-	// else if (input->command->build_number == 5)
-	// 	return (launch_unset(input));
-	// else if (input->command->build_number == 6)
-	// 	return (launch_env(input));
+	else if (input->command->build_number == 4)
+		return (launch_export(input));
+	else if (input->command->build_number == 5)
+		return (launch_unset(input));
+	else if (input->command->build_number == 6)
+		return (launch_env(input));
 	else if (input->command->build_number == 7)
 		return (launch_exit(input));
 	return (success);

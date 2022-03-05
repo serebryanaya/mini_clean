@@ -317,7 +317,7 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 		{
 			free(path);
 			// exit(errno);
-			// printf("5953\n");
+
 			print_error(input, errno, copy->words[0], NULL);
 		}
 	// printf("333num_error = %d, errno = %d\n", input->num_error, errno);
@@ -330,7 +330,7 @@ void modif_wait(pid_t *id, U_INT counter, t_input *input, U_INT i)
 	while (i < counter)
 	{
 		waitpid(-1, &exit_status, 0); // -1 означает, что нужно ждать любого дочернего процесса.
-		printf("exit_status = %d\n", exit_status);
+		// printf("exit_status = %d\n", exit_status);
 		i++;
 	}
 	if (input != NULL)
