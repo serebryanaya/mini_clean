@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:10:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 21:56:59 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 20:52:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,23 @@ static inline char **make_env_array2(t_input *input, U_INT counter, U_INT i)
     arg[i] = NULL;
     return (arg);
 }
+/* др. вариант со стр. 96:
+
+print_error(input, 12, "malloc", NULL);
+while (i < counter)
+{
+if (input->envp->value[0])
+array = ft_strjoin_for_3(input->envp->key, "=", yinput->envp->value, input);
+else
+array = modif_strdup(input->envp->key, input);
+arg[i] = array;
+i++;
+input->envp = input->envp->next;
+}
+arg[i] = NULL;
+return (arg);
+}
+*/
 
 void	make_env_array(t_input *input, char ***full_envp)
 {

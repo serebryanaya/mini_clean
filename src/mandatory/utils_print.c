@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:55:36 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/17 21:46:56 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 21:15:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 	write(2, "\n", 1);
 	// printf("TYPE ERROR %d\n", error_num); //???? удалить!
 	free_all(input);
-	if (input->still_work == fail)
-		exit(error_num);
+	// if (input->still_work == fail)
+	// 	exit(error_num);
 }
 
 t_status	print_token(t_input *input)

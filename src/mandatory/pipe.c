@@ -283,17 +283,18 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 		exit(0);//почему 0?
 	// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("1\n");
-	child_dup(input, copy, i);
+	// child_dup(input, copy, i);
 		// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("2\n");
 	if (copy->build_number != 0)
 	{
 		// printf("copy->build_number = %u\n", copy->build_number);
-		// exit (launcher(input)); //спросить у Оли
-		print_error(input, launcher(input), NULL, NULL); //сообщение об ошибке?
+		exit (launcher(input, copy)); //спросить у Оли
+		// print_error(input, launcher(input), NULL, NULL); //сообщение об ошибке?
 	}
 			// if (ft_strcmp(copy->words[0], "head") == 0)
 			// printf("519595um_error = %d, errno = %d\n", input->num_error, errno);
+	child_dup(input, copy, i);
 	path = get_path(copy->words[0], input, 0);
 			// if (ft_strcmp(copy->words[0], "head") == 0)
 		// printf("3\n");
@@ -311,6 +312,7 @@ void it_is_child(t_input *input, U_INT i, U_INT counter) //void	child(int i, t_a
 //	Как argv, так и envp завершаются нулевым указателем. К массиву аргументов и к окружению
 //	можно обратиться из функции main(), которая объявлена как int main(int argc, char *argv[], char *envp[]).
 		{
+			free(path);
 			// printf("5953\n");
 			print_error(input, errno, copy->words[0], NULL);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_other.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:58:39 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/22 20:59:38 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/04 21:14:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,57 @@ char	*modif_itoa(int n, t_input *input)
 	return (str);
 }
 
-long	modif_atoi(char *s, int i, long number)
-{
-	int	sign;
+// long	modif_atoi(char *s, int i, long number)
+// {
+// 	int	sign;
 
-	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
-		i++;
-	if (s[i] == '-')
-		sign = -1;
-	else
-		sign = 1;
-	if (s[i] == '+' || s[i] == '-')
-		i++;
-	while (s[i] != 0)
+// 	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
+// 		i++;
+// 	if (s[i] == '-')
+// 		sign = -1;
+// 	else
+// 		sign = 1;
+// 	if (s[i] == '+' || s[i] == '-')
+// 		i++;
+// 	while (s[i] != 0)
+// 	{
+// 		if (s[i] < '0' || s[i] > '9')
+// 			return (0);
+// 		while (s[i] >= '0' && s[i] <= '9')
+// 		{
+// 			number = 10 * number + (s[i++] - '0');
+// 			if ((number > 2147483647 && sign == 1) || sign == -1)
+// 				return (0);
+// 		}
+// 	}
+// 	return (sign * number);
+// }
+
+long long modif_atoi(char *s, int *flag, int i, long long number)
+{
+int sign;
+
+if (*flag != 0)
+	return (0);
+while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
+	i++;
+if (s[i] == '-')
+	sign = -1;
+else
+	sign = 1;
+if (s[i] == '+' || s[i] == '-')
+	i++;
+while (s[i] != 0 && *flag == 0)
+{
+	if (s[i] < '0' || s[i] > '9')
+		*flag = -1;
+	while (s[i] >= '0' && s[i] <= '9' && *flag == 0)
 	{
-		if (s[i] < '0' || s[i] > '9')
-			return (0);
-		while (s[i] >= '0' && s[i] <= '9')
-		{
-			number = 10 * number + (s[i++] - '0');
-			if ((number > 2147483647 && sign == 1) || sign == -1)
-				return (0);
-		}
+		number = 10 * number + (s[i++] - '0');
+		if ((number > 9223372036854775807 && sign == 1) || \
+			(sign == -1 && number - 1 > 9223372036854775807))
+			*flag = -1;
 	}
-	return (sign * number);
+}
+return (sign * number);
 }

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:53 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 22:03:56 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/05 20:26:16 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	find_key(t_input *input, char *str)
 	return (0);
 }
 
-int	launch_unset(t_input *input)
+U_INT	launch_unset(t_input *input)
 {
 	int		i;
 	t_env	*copy1;
