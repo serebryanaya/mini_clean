@@ -190,11 +190,12 @@ U_INT	launch_export(t_input *input)
 		else
 		{
 		// 	printf("command[%d] = %c\n", i, input->command->words[i][0]);
-		// 	input->num_error = 1;
-		// 	write(2, "export: `", 9);
-		// 	write(2, input->command->words[i], ft_strlen(input->command->words[i]));
-		// 	write(2, "': not a valid identifier\n", 26);
-		// }
+			// input->num_error = 1;
+			// write(2, "export: `", 9);
+			// write(2, input->command->words[i], ft_strlen(input->command->words[i]));
+			// write(2, "': not a valid identifier\n", 26);
+			printf("%s%s%s\n", "export: `", input->command->words[i], "': not a valid identifier");
+		}
 		i++;
 	}
 	ft_search_dups(input->envp, new, input);
