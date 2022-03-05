@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/04 22:12:06 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 20:29:00 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <dir.h>
+// # include <dir.h>
 # include <string.h> // for strerror
 # include <sys/errno.h>
 # include <readline/readline.h>
@@ -287,7 +287,7 @@ U_INT		ft_strlen(char *s);
 char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 // long		modif_atoi(char *s, int i, long number);
-long long modif_atoi(char *s, int *flag, int i, long long number);¶
+long long	modif_atoi(char *s, int *flag, int i, long long number);
 
 /*----builtins ---*/ 
 U_INT			launch_pwd(t_input *input);
@@ -297,6 +297,7 @@ U_INT			launch_export(t_input *input);
 U_INT			launch_exit(t_input *input, t_comm *command);
 U_INT			launch_echo(t_input *input);
 U_INT			launch_cd(t_input *input, t_comm *command);
+U_INT			launch_exit(t_input *input, t_comm *command);
 
 /*----pipes ---*/ 
 void my_pipe(t_input *input, U_INT i);

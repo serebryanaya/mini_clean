@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:48 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/24 22:03:51 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/05 20:26:40 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	free_new(t_env *new)
 	}
 }
 
-int	launch_export(t_input *input)
+U_INT	launch_export(t_input *input)
 {
 	int		i;
 	t_env	*new;
