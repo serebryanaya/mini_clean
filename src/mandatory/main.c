@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 21:03:39 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 15:07:41 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 	signal(SIGQUIT, SIG_IGN); // SIQuit = CTRL+\ , SIG_IGN - Сигнал   прерывания  игнорируется. \
 	В программе он должен выводить Quit: 3
 	// Ctrl D = вводу конца файла. Обработка НЕ через сигнал
-	signal(SIGINT, my_handler); // SIGINT = Ctrl C - перевод на новую строку
+	signal(SIGINT, main_handler); // SIGINT = Ctrl C - перевод на новую строку
 	// *command = readline("minishell-1.0$ ");
 	*command = readline("catch_str --> MINISHELL-1.0$ ");// вернуть верхний вариант!
 	if (*command == NULL)

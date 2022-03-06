@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:55:36 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 23:11:41 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 19:55:54 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 {
 	input->num_error = error_num;
-	if (input->still_work == success)
-		write(1, "minishell: ", 11);
+	// if (input->still_work == success)
+		write(2, "minishell: ", 11);
 	if (msg != NULL)
 	{
 		write(2, msg, ft_strlen(msg));
@@ -30,7 +30,8 @@ void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 	// printf("TYPE ERROR %d\n", error_num); //???? удалить!
 	free_all(input);
 	// if (input->still_work == fail)
-	// 	exit(error_num);
+	// if (input->still_work == success)
+		exit(error_num);
 }
 
 t_status	print_token(t_input *input)

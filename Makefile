@@ -16,6 +16,7 @@ SRC_O 				= envp.c \
 					signals.c \
 					utils_cut.c \
 					utils_other.c \
+					utils_other2.c \
 					utils_print.c \
 					shlvl.c \
 					check_forbidden.c \
@@ -35,6 +36,8 @@ SRC_O 				= envp.c \
 					build_env.c \
 					build_exit.c \
 					pipe.c \
+					child_and_dups.c \
+
 
 
 # SRC_B 				= envp.c \

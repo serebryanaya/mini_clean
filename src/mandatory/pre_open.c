@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:17:22 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/05 23:15:21 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 19:58:44 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,11 @@ void try_open(t_input *input)
 	}
 	if (input->num_of_command > 1)
 	{
-		pipes(input); //ft_pipe(arg);
+		open_pipes(input); //ft_pipe(arg);
 		// printf("1num_of_command == %d, input->command->build_number == %d, first word = %s\n",
 		// 	   input->num_of_command, input->command->build_number, input->command->words[0]);
 	}
-	if (input->num_of_command == 1 && input->command->build_number != 0)
+	if (input->num_of_command == 1 && input->command->build_number != 0) // запуск билдинов!
 	{
 					// printf("2num_of_command == %d, input->command->build_number == %d, first word = %s\n",
 			//    input->num_of_command, input->command->build_number, input->command->words[0]);
@@ -169,6 +169,6 @@ void try_open(t_input *input)
 	{
 		// printf("3num_of_command == %d, input->command->build_number == %d, first word = %s\n",
 			//    input->num_of_command, input->command->build_number, input->command->words[0]);
-		my_pipe(input, input->command, 0);
+		make_fork(input, input->command, 0); //pipex(arg);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 00:15:45 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 15:35:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,8 +207,18 @@ typedef struct s_input
 // /*----сheck_forbidden-исключаем не те символы в начале команды---*/
 // t_status check_forbidden(char *str, t_input *input);
 
-/*----Билд-ины---*/ 
-U_INT	launch_echo(t_input *input);
+/*----Все билд-ины---*/ 
+U_INT			launch_pwd(t_input *input);
+U_INT		launch_env(t_input *input); 
+U_INT		launch_unset(t_input *input);
+U_INT		launch_export(t_input *input);
+U_INT		launch_exit(t_input *input, t_comm *command);
+U_INT		launch_echo(t_input *input);
+U_INT		launch_cd(t_input *input, t_comm *command);
+U_INT		launch_exit(t_input *input, t_comm *command);
+
+/*----child_and_dups - работа с дочками, поиск пути---*/ 
+void		it_is_child(t_input *input, U_INT i, U_INT counter);
 
 /*----init-инициализация структур---*/ 
 void		init_input(t_input *input);
@@ -262,7 +272,10 @@ void		find_direct_in_comm(t_input *input, char *str, U_INT j, U_INT *i);
 void		add_heredoc(t_input *input);
 
 /*----signals - обработчики сигналов---*/ 
-void		my_handler(int signal); // для Сtrl C
+void		main_handler(int signal); // для Сtrl C
+void		in_signal(t_input *input, U_INT i, t_comm *command, U_INT counter);
+void		handler_child(int sig_num);
+void		handler_pipex(int sig_num);
 
 /*----shlvl - считаем уровень истории---*/ 
 void		put_shlvl(t_input *input);
@@ -289,20 +302,17 @@ t_status	ft_strcmp(char *s1, char *s2);
 // long		modif_atoi(char *s, int i, long number);
 long long	modif_atoi(char *s, int *flag, int i, long long number);
 
-/*----builtins ---*/ 
-U_INT			launch_pwd(t_input *input);
-U_INT			launch_env(t_input *input); 
-U_INT			launch_unset(t_input *input);
-U_INT			launch_export(t_input *input);
-U_INT			launch_exit(t_input *input, t_comm *command);
-U_INT			launch_echo(t_input *input);
-U_INT			launch_cd(t_input *input, t_comm *command);
-U_INT			launch_exit(t_input *input, t_comm *command);
+/*----utils_other2 - ПРОДОЛЖЕНИЕ: полезные функции для другой работы со строками---*/ 
+int			ft_strncmp(const char *str1, const char *str2, size_t n);
+int			words_number(char const *str, char c);
+char		*next_word(char const *str, char c);
+char		**ft_split(char const *s, char c);
 
 /*----pipes ---*/ 
-void my_pipe(t_input *input, t_comm *command, U_INT i);
-void	pipes(t_input *input);
-
+void		make_fork(t_input *input, t_comm *command, U_INT i);
+void		open_pipes(t_input *input);
+void		clean_path(char **path, U_INT i); //static void	free_path(char **path)
+void		close_fd(t_input *input, int *fd_file, U_INT counter, U_INT i);
 //mac:     gcc file.c -L/Users/$USER/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$USER/.brew/Cellar/readline/8.1.1/include -lreadline -o filename
 //linux:   gcc -L/usr/local/lib -I/usr/local/include *.c -lreadline
 

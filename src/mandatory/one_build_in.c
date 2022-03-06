@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_build_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:04:01 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/04 22:02:33 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 20:43:21 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 U_INT	launcher(t_input *input, t_comm	*command) //int	run_built(t_cmd *cmd, t_arg *arg)
 {
-	if (input->command->build_number == 1)
+	if (command->build_number == 1)
 		return (launch_echo(input));
-	else if (input->command->build_number == 2)
+	else if (command->build_number == 2)
 		return (launch_cd(input, command));
-	else if (input->command->build_number == 3)
+	else if (command->build_number == 3)
 		return (launch_pwd(input));
-	else if (input->command->build_number == 4)
+	else if (command->build_number == 4)
 		return (launch_export(input));
-	else if (input->command->build_number == 5)
+	else if (command->build_number == 5)
 		return (launch_unset(input));
-	else if (input->command->build_number == 6)
+	else if (command->build_number == 6)
 		return (launch_env(input));
-	else if (input->command->build_number == 7)
+	else if (command->build_number == 7)
 		return (launch_exit(input, command));
 	return (success);
 }
