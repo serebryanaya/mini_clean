@@ -6,34 +6,34 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 21:20:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 21:21:21 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 21:23:19 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_lstsize(t_env *env)
-{
-    size_t  i;
-    i = 0;
-    while (env != NULL)
-    {
-        env = env->next;
-        i++;
-    }
-    return (i);
-}
-t_env   *getnth(t_env *head, int n)
-{
-    int counter;
-    counter = 0;
-    while (counter < n && head)
-    {
-        head = head->next;
-        counter++;
-    }
-    return (head);
-}
+// int ft_lstsize(t_env *env)
+// {
+//     size_t  i;
+//     i = 0;
+//     while (env != NULL)
+//     {
+//         env = env->next;
+//         i++;
+//     }
+//     return (i);
+// }
+// t_env   *getnth(t_env *head, int n)
+// {
+//     int counter;
+//     counter = 0;
+//     while (counter < n && head)
+//     {
+//         head = head->next;
+//         counter++;
+//     }
+//     return (head);
+// }
 // void ft_swap(char *key1, char *key2)
 // {
 //  char tmp_key;
@@ -41,43 +41,44 @@ t_env   *getnth(t_env *head, int n)
 //  *key1 = *key2;
 //  *key2 = tmp_key;
 // }
-void    ft_swap(t_env *first, t_env *second)
-{
-    t_env   *tmp;
-    tmp = first;
-    first = second;
-    second = tmp;
-}
-t_env   *env_sort(t_env *env) //t_str   *bubble_sort(t_str *stack)
-{
-    int     i;
-    int     j;
-    int     k;
-    t_env   *tmp;
-    size_t  size;
-    i = -1;
-    tmp = env;
-    size = ft_lstsize(env);
-    printf("size = %zu\n", size);
-    while (++i < (int)size)
-    {
-        j = i;
-        while (++j < (int)size)
-        {
-            // while (getnth(tmp, i)->key)
-            // {
-                // if (ft_strcmp(getnth(tmp, i)->key[1], getnth(tmp, j)->key[1]) && getnth(tmp, i)->k
-                if (getnth(tmp, i)->key > getnth(tmp, j)->key)
-                {
-                    // printf("key[i] = %s, key[j] = %s\n", getnth(tmp, i)->key, getnth(tmp, j)->key);
-                    ft_swap(&getnth(tmp, i), &getnth(tmp, j));
-                }
-            //  k++;
-            // }
-        }
-    }
-    return (env);
-}
+// void    ft_swap(t_env *first, t_env *second)
+// {
+//     t_env   *tmp;
+//     tmp = first;
+//     first = second;
+//     second = tmp;
+// }
+// t_env   *env_sort(t_env *env) //t_str   *bubble_sort(t_str *stack)
+// {
+//     int     i;
+//     int     j;
+//     int     k;
+//     t_env   *tmp;
+//     size_t  size;
+//     i = -1;
+//     tmp = env;
+//     size = ft_lstsize(env);
+//     printf("size = %zu\n", size);
+//     while (++i < (int)size)
+//     {
+//         j = i;
+//         while (++j < (int)size)
+//         {
+//             // while (getnth(tmp, i)->key)
+//             // {
+//                 // if (ft_strcmp(getnth(tmp, i)->key[1], getnth(tmp, j)->key[1]) && getnth(tmp, i)->k
+//                 if (getnth(tmp, i)->key > getnth(tmp, j)->key)
+//                 {
+//                     // printf("key[i] = %s, key[j] = %s\n", getnth(tmp, i)->key, getnth(tmp, j)->key);
+//                     ft_swap(&getnth(tmp, i), &getnth(tmp, j));
+//                 }
+//             //  k++;
+//             // }
+//         }
+//     }
+//     return (env);
+// }
+
 int ft_isalpha(int c)
 {
     return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
