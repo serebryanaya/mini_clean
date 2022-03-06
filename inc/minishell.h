@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 15:35:17 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/06 21:19:28 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,10 +208,10 @@ typedef struct s_input
 // t_status check_forbidden(char *str, t_input *input);
 
 /*----Все билд-ины---*/ 
-U_INT			launch_pwd(t_input *input);
+U_INT		launch_pwd(t_input *input);
 U_INT		launch_env(t_input *input); 
-U_INT		launch_unset(t_input *input);
-U_INT		launch_export(t_input *input);
+U_INT		launch_unset(t_input *input, t_comm *command);
+U_INT		launch_export(t_input *input, t_comm *command);
 U_INT		launch_exit(t_input *input, t_comm *command);
 U_INT		launch_echo(t_input *input);
 U_INT		launch_cd(t_input *input, t_comm *command);
