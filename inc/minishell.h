@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 18:16:50 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/07 22:49:30 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <signal.h>
 # include <sys/wait.h>
 
+#include <sys/types.h> //для *
+#include <dirent.h> //для *
+
 #define U_INT	unsigned int
 
 /* Стандартное описание ошибок:
@@ -41,7 +44,7 @@ strerror(2) - No such file or directory
  9 - Bad file descriptor
  10 - No child processes
  11 - Resource deadlock avoided
- 12 - Cannot allocate memory
+ 12 - Cannot allocate memorymake fclean
  13 - Permission denied
  14 - Bad address
  15 - Block device required
