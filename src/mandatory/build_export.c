@@ -12,91 +12,133 @@
 
 #include "minishell.h"
 
-// int ft_lstsize(t_env *env)
-// {
-//     size_t  i;
-//     i = 0;
-//     while (env != NULL)
-//     {
-//         env = env->next;
-//         i++;
-//     }
-//     return (i);
-// }
-// t_env   *getnth(t_env *head, int n)
-// {
-//     int counter;
-//     counter = 0;
-//     while (counter < n && head)
-//     {
-//         head = head->next;
-//         counter++;
-//     }
-//     return (head);
-// }
-// void ft_swap(char *key1, char *key2)
-// {
-//  char tmp_key;
-//  tmp_key = *key1;
-//  *key1 = *key2;
-//  *key2 = tmp_key;
-// }
-// void    ft_swap(t_env *first, t_env *second)
-// {
-//     t_env   *tmp;
-//     tmp = first;
-//     first = second;
-//     second = tmp;
-// }
-// t_env   *env_sort(t_env *env) //t_str   *bubble_sort(t_str *stack)
-// {
-//     int     i;
-//     int     j;
-//     int     k;
-//     t_env   *tmp;
-//     size_t  size;
-//     i = -1;
-//     tmp = env;
-//     size = ft_lstsize(env);
-//     printf("size = %zu\n", size);
-//     while (++i < (int)size)
-//     {
-//         j = i;
-//         while (++j < (int)size)
-//         {
-//             // while (getnth(tmp, i)->key)
-//             // {
-//                 // if (ft_strcmp(getnth(tmp, i)->key[1], getnth(tmp, j)->key[1]) && getnth(tmp, i)->k
-//                 if (getnth(tmp, i)->key > getnth(tmp, j)->key)
-//                 {
-//                     // printf("key[i] = %s, key[j] = %s\n", getnth(tmp, i)->key, getnth(tmp, j)->key);
-//                     ft_swap(&getnth(tmp, i), &getnth(tmp, j));
-//                 }
-//             //  k++;
-//             // }
-//         }
-//     }
-//     return (env);
-// }
+int	modif_strncmp(char *str1, char *str2, int n)
+{
+	unsigned int	i;
+    int             len1;
+    int             len2;
+
+    len1 = ft_strlen(str1);
+    len2 = ft_strlen(str2);
+    if (len1 > len2)
+        n = len1;
+    else
+        n = len2;
+	i = 0;
+	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0' && i < n)
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)str2[i] - (unsigned char)str1[i]);
+}
+
+void	ft_lstadd_middle(t_env *new, t_env *tmp)
+{
+	t_env	*next;
+
+    // printf("middle\n");
+	next = tmp->next;
+    tmp->next = new;
+    new->next = next;
+}
+
+void	ft_lstadd_back(t_env **lst, t_env *new)
+{
+	t_env	*addnode;
+
+    // printf("back\n");
+	addnode = *lst;
+	if (*lst == NULL)
+		*lst = new;
+	if (lst != NULL && addnode != NULL)
+	{
+		while (addnode->next)
+			addnode = addnode->next;
+	}
+	if (addnode != NULL && new != NULL)
+		addnode->next = new;
+}
+
+void	ft_lstadd_front(t_env **lst, t_env *new)
+{
+    // printf("front\n");
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		new->next = *lst;
+		*lst = new;
+	}
+}
+
+t_env   *create_sort_env(t_env *old, t_input *input)
+{
+    t_env   *new;
+
+    // printf("create\n");
+    if (old->equal == 1)
+        new = create_new_list(ft_strjoin_for_3(old->key, "=", old->value, input), input);
+    else
+        new = create_new_list(modif_strdup(old->key, input), input);
+    return (new);    
+}
+
+t_env   *env_sort(t_env *list, t_env *new, t_input *input) //t_str   *bubble_sort(t_str *stack)
+{
+    int     i;
+    int     j;
+    t_env   *tmp;
+    size_t  size;
+
+    i = -1;
+    tmp = list;
+    // printf("env_sort\n");
+    while (tmp)
+    {
+        if (tmp == list && modif_strncmp(tmp->key, new->key, 1) < 0)
+        {
+            ft_lstadd_front(&list, new);
+        }
+        if (tmp->next != NULL && modif_strncmp(tmp->key, new->key, 1) > 0 &&\
+            modif_strncmp(tmp->next->key, new->key, 1) < 0)
+            ft_lstadd_middle(new, tmp);
+        if (tmp->next == NULL && modif_strncmp(tmp->key, new->key, 1) > 0)
+            ft_lstadd_back(&list, new);
+      tmp = tmp->next;
+    }
+    return (list);
+}
+
+t_env	*sort_export(t_input *input)
+{
+    U_INT   i;
+    t_env   *old;
+    t_env   *new;
+    t_env   *list;
+    
+    // printf("sort_export\n");
+    list = NULL;
+    old = input->envp;
+    while (old != NULL)
+    {
+        new = create_sort_env(old, input);
+        if (list == NULL)
+        {
+            list = new;
+            old = old->next;
+            continue ;
+        }
+        list = env_sort(list, new, input);
+        old = old->next;
+    }
+    return (list);
+}
 
 int ft_isalpha(int c)
 {
     return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
-void    ft_lstadd_back(t_env **lst, t_env *new)
-{
-    t_env   *addnode;
-    addnode = *lst;
-    if (*lst == NULL)
-        *lst = new;
-    if (lst != NULL && addnode != NULL)
-    {
-        while (addnode->next)
-            addnode = addnode->next;
-    }
-    if (addnode != NULL && new != NULL)
-        addnode->next = new;
-}
+
 t_env   *ft_lstnew_env(t_env *env, t_input *input) //t_env  *ft_one_lst(t_env *env, t_arg *arg)
 {
     t_env   *newnode;
@@ -109,25 +151,55 @@ t_env   *ft_lstnew_env(t_env *env, t_input *input) //t_env  *ft_one_lst(t_env *e
     newnode->next = NULL;
     return (newnode);
 }
-int only_export(t_env *env) //int   if_not_cmd1(t_env *env)
+
+void    free_new(t_env *new)
 {
     t_env   *copy;
-    copy = env;
-    // env_sort(copy);
+    while (new)
+    {
+        copy = new;
+        new = new->next;
+        free(copy->key);
+        free(copy->value);
+        free(copy);
+    }
+}
+
+int only_export(t_input *input) //int   if_not_cmd1(t_env *env)
+{
+    t_env   *copy;
+
+    // copy = input->envp;
+    // printf("only_export\n");
+    copy = sort_export(input);
     while (copy)
     {
         if (copy->equal == 1)
-            printf("declare -x %s%s\"%s\"\n", (copy)->key, "=", (copy)->value);
-        else
-            printf("declare -x %s%s%s\n", (copy)->key, "=", (copy)->value);
+        {
+            // printf("1sort->key = %s, sort->equal = %d, sort->value = %s\n", copy->key, copy->equal, copy->value);
+            printf("declare -x %s%s\"%s\"\n", copy->key, "=", copy->value);
+        }
+            
+        // if (copy->equal == 1 && copy->value == NULL)
+        // {
+        //     printf("value = NULL\n");
+        //     printf("declare -x %s%s\"\"\n", copy->key, "=");
+        // }
+        if (copy->equal != 1)
+        {
+            // printf("2sort->key = %s, sort->equal = %d, sort->value = %s\n", copy->key, copy->equal, copy->value);
+            printf("declare -x %s\n", copy->key);
+        }
         copy = (copy)->next;
     }
+    free_new(copy);
     return (0);
 }
-void    ft_search_dups(t_env *env, t_env *new, t_input *input) //ft_search_dups(t_env *env, t_env *new, t_arg *arg)
+void    change_env(t_env *env, t_env *new, t_input *input) //ft_search_dups(t_env *env, t_env *new, t_arg *arg)
 {
     t_env   *copy2;
     t_env   *lstnew;
+
     while (new)
     {
         copy2 = env;
@@ -150,40 +222,32 @@ void    ft_search_dups(t_env *env, t_env *new, t_input *input) //ft_search_dups(
         {
             // printf("!copy2\n");
             lstnew = ft_lstnew_env(new, input);
-            printf("lstnew key = %s, lstnew equal = %d, lstnew value = %s\n", lstnew->key, lstnew->equal, lstnew->value);
+            // printf("lstnew key = %s, lstnew equal = %d, lstnew value = %s\n", lstnew->key, lstnew->equal, lstnew->value);
             // ft_lstadd_back(&env, lstnew);
             ft_lstadd_back(&input->envp, lstnew);
             // printf("env key = %s, env equal = %d, env value = %s\n", env->key, env->equal, env->value);
-            printf("env key = %s, env equal = %d, env value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
+            // printf("env key = %s, env equal = %d, env value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
         }
         new = new->next;
     }
 }
-void    free_new(t_env *new)
-{
-    t_env   *copy;
-    while (new)
-    {
-        copy = new;
-        new = new->next;
-        free(copy->key);
-        free(copy->value);
-        free(copy);
-    }
-}
+
+
 U_INT   launch_export(t_input *input, t_comm * command)
 {
     int     i;
     t_env   *new;
     t_env   *tmp;
+    t_env   *env;
+
     input->num_error = 0;
-    // i = 0;
+    env = input->envp;
     i = 1;
     new = NULL;
     if (command->words[1] == NULL)
     {
-        printf("command->words[0] = %s, command->words[1] = %s\n", command->words[0], command->words[1]);
-        return (only_export(input->envp));
+        // printf("command->words[0] = %s, command->words[1] = %s\n", command->words[0], command->words[1]);
+        return (only_export(input));
     }
     // while (input->command->words[++i])
     while (command->words[i])
@@ -209,105 +273,9 @@ U_INT   launch_export(t_input *input, t_comm * command)
         }
         i++;
     }
-    ft_search_dups(input->envp, new, input);
+    change_env(input->envp, new, input);
     // printf("envp key = %s, envp equal = %d, envp value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
     free_new(new);
     return (input->num_error);
     // printf("envp key = %s, envp equal = %d, envp value = %s\n", input->envp->key, input->envp->equal, input->envp->value);
 }
-//сортировка слиянием
-// void merge(t_env *a, t_env *b, t_env **c)
-// {
-//     t_env tmp;
-//     *c = NULL;
-//     if (a == NULL)
-//  {
-//         *c = b;
-//         return;
-//     }
-//     if (b == NULL)
-//  {
-//         *c = a;
-//         return;
-//     }
-//     if (a->key < b->key)
-//  {
-//         *c = a;
-//         a = a->next;
-//     }
-//  else
-//  {
-//         *c = b;
-//         b = b->next;
-//     }
-//     tmp.next = *c;
-//     while (a && b)
-//  {
-//         if (a->key < b->key)
-//      {
-//             (*c)->next = a;
-//             a = a->next;
-//         }
-//      else
-//      {
-//             (*c)->next = b;
-//             b = b->next;
-//         }
-//         (*c) = (*c)->next;
-//     }
-//     if (a)
-//  {
-//         while (a)
-//      {
-//             (*c)->next = a;
-//             (*c) = (*c)->next;
-//             a = a->next;
-//         }
-//     }
-//     if (b)
-//  {
-//         while (b)
-//      {
-//             (*c)->next = b;
-//             (*c) = (*c)->next;
-//             b = b->next;
-//         }
-//     }
-//     *c = tmp.next;
-// }
-// void split(t_env *src,t_env **low,t_env **high)
-// {
-//  t_env *fast = NULL;
-//     t_env *slow = NULL;
-//     if (src == NULL || src->next == NULL)
-//  {
-//         (*low) = src;
-//         (*high) = NULL;
-//         return;
-//     }
-//     slow = src;
-//     fast = src->next;
-//     while (fast != NULL)
-//  {
-//         fast = fast->next;
-//         if (fast != NULL)
-//      {
-//             fast = fast->next;
-//             slow = slow->next;
-//         }
-//     }
-//     (*low) = src;
-//     (*high) = slow->next;
-//     slow->next = NULL;
-// }
-// void mergeSort(Node **head) {
-//     Node *low  = NULL;
-//     Node *high = NULL;
-//     if ((*head == NULL) || ((*head)->next == NULL)) {
-//         return;
-//     }
-//     split(*head, &low, &high);
-//     mergeSort(&low);
-//     mergeSort(&high);
-//     merge(low, high, head);
-// }
