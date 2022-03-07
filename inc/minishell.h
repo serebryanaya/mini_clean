@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 21:19:28 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/07 18:16:50 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ int			main(int argc, char **argv, char **envp);
 t_status	put_envp(char **envp, t_input *input);
 void		make_env_array(t_input *input, char ***full_envp);
 t_env		*create_new_list(char *str, t_input *input);
+void		add_list_back(t_env *new, t_env **envp);
 
 /*----finder- препарсинг, поиск спецсимвлов----*/
 t_status    finder(char *str_command, t_input *input);

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:58 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 21:15:47 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/07 18:54:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,57 +40,46 @@ static inline char *get_path(t_input *input, t_comm *command, t_env *copy)
 return (0);
 }
 
-void	change_old(t_input *input, char *old)
+static void	change_envp(t_input *input, char *path, t_status flag)
 {
-	t_env *copy;
-	char *tmp;
+	t_env	*copy;
+	char	*tmp;
+	t_env	*new;
+	char	*key;
 
-	copy = input->envp;
-	while (ft_strcmp(copy->key, "OLDPWD") != success)
-		copy = copy->next;
-	if (!copy)
-		{
-			tmp = ft_strjoin_for_3("OLPWD", "=", old, input);
-			create_new_list(tmp, input);
-		}
+	path = getcwd(NULL, 0);
+	if (!path)
+		print_error(input, errno, "getcwd", NULL);
+	if (flag == 0)
+		key = modif_strdup("OLDPWD", input);
 	else
-	{
-		free(copy->value);
-		copy->value = old;
-	}		
-}
-
-void	change_current(t_input *input, char *path)
-{
-	t_env *copy;
-	char *tmp;
-
+		key = modif_strdup("PWD", input);
 	copy = input->envp;
-	while (ft_strcmp(copy->key, "PWD") != success)
+	while (copy && ft_strcmp(copy->key, key) != success)
 		copy = copy->next;
 	if (!copy)
 		{
-			tmp = ft_strjoin_for_3("PWD", "=", path, input);
-			create_new_list(tmp, input);
+			tmp = ft_strjoin_for_3(key, "=", path, input);
+			new = create_new_list(tmp, input);
+			free(tmp);
+			if (!new)
+				print_error(input, 12, "malloc", NULL);
+        	add_list_back(new, &input->envp);
 		}
 	else
 	{
 		free(copy->value);
 		copy->value = path;
-	}	
-
+	}
+	free(key);	
 }
 
 U_INT	launch_cd(t_input *input, t_comm *command)
 {
 	char 	*path;
 	t_env	*copy;
-	char	*old;
 
 	path = NULL;
-	old = getcwd(NULL, 0);
-	if (!old)
-		print_error(input, errno, "getcwd", NULL); 
 	copy = input->envp;
 	if (!input || !command->words[1])
 	{
@@ -106,10 +95,10 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 		write(2, "cd: HOME not set\n", 17); // print_error(input, 1, "cd", "HOME not set");
 		return (1);
 	}
+	change_envp(input, NULL, 0);
 	if (chdir(path) != success)
 		print_error(input, 1, command->words[0], "No such file or directory"); // если 2 аргуента - отд.функция
-	change_old(input, old);
-	change_current(input, path);
+	change_envp(input, NULL, 1);
 	input->num_error = 1;
 	free(path);
 	return (input->num_error);

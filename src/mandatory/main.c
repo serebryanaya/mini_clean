@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 15:07:41 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/07 17:56:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		write(1, "exit\n", 5);
+		write(2, "exit\n", 5);
 		free_all(input);
 		exit(0);
 	}

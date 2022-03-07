@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:10:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/04 20:52:49 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/07 18:27:43 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	add_list_back(t_env *new, t_env **envp)
+void	add_list_back(t_env *new, t_env **envp)
 {
 	t_env	*copy;
 
@@ -64,6 +64,7 @@ t_env   *create_new_list(char *str, t_input *input) //t_env	*ft_env_lst_new(char
         tmp->value = modif_substr(str, i + 1, ft_strlen(str) - i + 1, input);
     // printf("key = %s, equal = %d, value = %s\n", tmp->key, tmp->equal, tmp->value);    
     tmp->next = NULL;
+    // printf("tmp->key = %s = %s\n", tmp->key, tmp->value);
     return(tmp);
 }
 
