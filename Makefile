@@ -35,6 +35,7 @@ SRC_O 				= envp.c \
 					build_export.c \
 					build_env.c \
 					build_exit.c \
+					build_star.c \
 					pipe.c \
 					child_and_dups.c \
 

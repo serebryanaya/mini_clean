@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 22:49:30 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 00:11:40 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ typedef struct s_input
 {
 	int			std_in; //сохранение первичного stdin. Del?
 	int			std_out; //сохранение первичного stdout. Del?
-	U_INT		num_of_command;
+	int			num_of_command;
 	char		**arg_env;
 	int			**fd; //fd[2]?
 	U_INT		num_error;
@@ -203,6 +203,7 @@ typedef struct s_input
 	t_comm		*command;
 	t_direct	*direct;
 	t_env		*envp; //структура дял хранения истории. Когда ее чистить???
+	t_env		*star;
 	t_status	still_work;//помечаем, пора ли делать exit или продолжим работать
 }	t_input;
 

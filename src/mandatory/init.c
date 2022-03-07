@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 16:45:30 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/07 23:24:48 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ void choose_build(t_comm *command) // у меня е_нам, может быть
 				copy->build_number = 6;
 			else if (ft_strcmp(copy->words[0], "exit") == 0)
 				copy->build_number = 7;
+			else if (ft_strcmp(copy->words[0], "*") == 0)
+				copy->build_number = -1;
+			
 		}
 		copy = copy->next;
 	}

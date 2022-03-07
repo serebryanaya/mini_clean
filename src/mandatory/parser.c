@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:21:05 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 22:40:28 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 00:19:52 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,53 +28,133 @@ void	go_through_word(char *str, U_INT *i, t_input *input)
 	}
 }
 
-static char	*find_star_in_comm(t_input *input, char *str, U_INT j, U_INT *i)
+static void find_star_in_comm(t_input *input, char *str, U_INT j, U_INT *i)
 {
 	DIR					*dir;
     struct				dirent *entry;
-	unsigned long long	min;
-	char				*name;
-
+	t_env				*new;
 
 	if (str[*i + 1] && str[*i + 1] != ' ')
-		return (NULL);
+		return ;
 	dir = opendir(getcwd(NULL, 0));
-	min = 0;
-	name = NULL;
     if (!dir)
 	{
         perror("diropen");
         exit(1);
-    };
+    }
     while (1)
 	{
         entry = readdir(dir);
 		if (entry != NULL)
 		{
-			if ((entry->d_ino < min || min == 0) && entry->d_name[0] != '.')
+			if (entry->d_name[0] != '.')
 				{
-					min = entry->d_ino;
-					free(name);
-					name = modif_strdup(entry->d_name, input);
-					printf("min = %lld\n", min);
+					new = create_new_list(ft_strjoin_for_3\
+						(modif_itoa((int)entry->d_ino, input), "=", modif_strdup(entry->d_name, input), input), input);
+					if (!input->star)
+						input->star = new;
+					else
+						add_list_back(new, &input->star);
 				}
-			printf("%lld - %s [%d] %d\n",
-            	entry->d_ino, entry->d_name, entry->d_type, entry->d_reclen);
-			// free(entry);
+			// printf("%lld - %s [%d] %d\n",
+            // 	entry->d_ino, entry->d_name, entry->d_type, entry->d_reclen);
+			// if (new)
+			// printf("new = %s %s\n",
+            // 	new->key, new->value);
+			// // free(entry);
 		}
 		else
-		{
-			printf("конец!\n");
 			break ;
-		}
-
     }
     closedir(dir);
 	(*i)++;
-	printf("name = %s\n", name);
-    return (name);
 }
 
+int	modif_strncmp(char *str1, char *str2, int n)
+{
+	unsigned int	i;
+    int             len1;
+    int             len2;
+
+    len1 = ft_strlen(str1);
+    len2 = ft_strlen(str2);
+    if (len1 > len2)
+        n = len1;
+    else
+        n = len2;
+	i = 0;
+	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0' && i < n)
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)str2[i] - (unsigned char)str1[i]);
+}
+
+// static char	*check_star(t_input *input, U_INT *k)
+// {
+// 	U_INT	m;
+// 	U_INT	i;
+// 	char	**new_arr;
+
+// 	i = 1;
+// 	while (i <= k)
+// 	{
+// 		if (ft_strcmp(input->command->words[i], "*") != success)
+// 			i++;
+// 		else
+// 		{
+// 			m = ft_lstsize(input->star) + k;
+// 			new_arr = malloc(sizeof(char *) * m);
+// 		}
+// 		input->command->words[i] != 
+// 		i++;
+// 	}
+// 	m = ft_lstsize(input->star) + k;
+// 	new_arr = malloc(sizeof(char *) * m);
+
+
+// }
+
+// char	*change_star(t_input *input, U_INT *i)
+// {
+// 	char	*command;
+// 	t_env	*copy;
+// 	t_env	*min;
+	
+// 	copy = input->star;
+// 	if (*i == 0)
+// 	{
+// 		min = copy;
+// 		while (copy)
+// 		{
+// 			if (modif_strncmp(copy->key, min->key, 1) > 0)
+// 				min = copy;
+// 			copy = copy->next;
+// 		}
+// 		return (min->value);
+// 	}
+// 	else
+// 		return (check_star(input, k));
+	// while (copy)
+	// {
+
+	// 	copy = copy->next;
+	// }
+
+// }
+
+// int	ft_lstsize(t_list *lst)
+// {
+// 	U_INT	len;
+
+// 	len = 0;
+// 	while (lst != NULL)
+// 	{
+// 		lst = lst->next;
+// 		len++;
+// 	}
+// 	return (len);
+// }
 
 static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 {
@@ -95,15 +175,22 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 		else if (str[*i] == '>' || str[*i] == '<')
 			find_direct_in_comm(input, str, j, i);
 			// printf("нашел галочку\n");
+		
+
+		
+		/* !!!Вот эту часть надо куда-то переноить, где выделяют память под слова
 		else if (str[*i] == '*')
 		{
-			path = find_star_in_comm(input, str, j, i);
-			if (path)
-			{
-				tmp->words[k++] = path;
-				tmp->words[k++] = NULL;
-			}
+			find_star_in_comm(input, str, j, i);
+			tmp->words[k] = change_star(input, &k);
+			// printf("tmp->words[k - 1] = %s\n", tmp->words[k - 1]);
+			k++;
+			tmp->words[k++] = NULL;
 		}
+		*/
+
+
+
 			// printf("нашел галочку\n");
 		else
 		{
@@ -115,6 +202,7 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 			tmp->words[k] = NULL;
 		}
 	}
+
 	// if (!str[*i] && k == 0)
 	// {
 	// 	tmp->words[k] = modif_substr(str, m, *i - m, input);
