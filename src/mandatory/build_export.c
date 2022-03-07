@@ -169,7 +169,6 @@ int only_export(t_input *input) //int   if_not_cmd1(t_env *env)
 {
     t_env   *copy;
 
-    // copy = input->envp;
     // printf("only_export\n");
     copy = sort_export(input);
     while (copy)
