@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 19:33:47 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 21:10:13 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,6 @@ typedef struct s_input
 	t_env		*envp; //структура дял хранения истории. Когда ее чистить???
 	t_env		*star;
 	t_status	still_work;//помечаем, пора ли делать exit или продолжим работать
-	t_status	stop;
 }	t_input;
 
 
@@ -264,7 +263,7 @@ void		reverse_redir2(t_input *input, int fd);
 U_INT		launcher(t_input *input, t_comm	*command);
 
 /*----parser - начало парсинга----*/
-t_status	parser(char *str_command, t_input *input);
+t_status	parser(char *str_command, t_input *input, U_INT i, U_INT j);
 void		go_through_word(char *str, U_INT *i, t_input *input);
 void		find_star_in_comm(t_input *input);
 
@@ -319,6 +318,16 @@ int			modif_strncmp(char *str1, char *str2, int n);
 int			words_number(char const *str, char c);
 char		*next_word(char const *str, char c);
 char		**ft_split(char const *s, char c);
+
+/*----utils_other3 - ПРОДОЛЖЕНИЕ: полезные функции для другой работы со строками---*/ 
+char		*ft_strchr(char *str, char c);
+void		iter_str(char *str, U_INT *i);
+
+/*----utils_list - ПРОДОЛЖЕНИЕ: полезные функции для другой работы со строками---*/ 
+void	ft_lstadd_middle(t_env *new, t_env *tmp);
+void	ft_lstadd_back(t_env **lst, t_env *new);
+void	ft_lstadd_front(t_env **lst, t_env *new);
+U_INT	ft_lstsize(t_env *lst);
 
 /*----pipes ---*/ 
 void		make_fork(t_input *input, t_comm *command, U_INT i);

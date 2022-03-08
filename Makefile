@@ -17,7 +17,9 @@ SRC_O 				= envp.c \
 					utils_cut.c \
 					utils_other.c \
 					utils_other2.c \
+					utils_other3.c \
 					utils_print.c \
+					utils_lists.c \
 					shlvl.c \
 					check_forbidden.c \
 					parser.c \

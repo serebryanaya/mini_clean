@@ -6,16 +6,16 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:58 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 18:54:17 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 21:40:57 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static inline char *get_path(t_input *input, t_comm *command, t_env *copy)
+static inline char	*get_path(t_input *input, t_comm *command, t_env *copy)
 {
-	char *path;
-	char *tmp;
+	char	*path;
+	char	*tmp;
 
 	path = NULL;
 	tmp = NULL;
@@ -34,10 +34,10 @@ static inline char *get_path(t_input *input, t_comm *command, t_env *copy)
 	{
 		tmp = modif_substr(command->words[1], 1, \
 			ft_strlen(command->words[1]) - 1, input);
-		path = ft_strjoin(copy->value, tmp, input);	
+		path = ft_strjoin(copy->value, tmp, input);
 		free(tmp);
 	}
-return (0);
+	return (0);
 }
 
 static void	change_envp(t_input *input, char *path, t_status flag)
@@ -58,20 +58,20 @@ static void	change_envp(t_input *input, char *path, t_status flag)
 	while (copy && ft_strcmp(copy->key, key) != success)
 		copy = copy->next;
 	if (!copy)
-		{
-			tmp = ft_strjoin_for_3(key, "=", path, input);
-			new = create_new_list(tmp, input);
-			free(tmp);
-			if (!new)
-				print_error(input, 12, "malloc", NULL);
-        	add_list_back(new, &input->envp);
-		}
+	{
+		tmp = ft_strjoin_for_3(key, "=", path, input);
+		new = create_new_list(tmp, input);
+		free(tmp);
+		if (!new)
+			print_error(input, 12, "malloc", NULL);
+		add_list_back(new, &input->envp);
+	}
 	else
 	{
 		free(copy->value);
 		copy->value = path;
 	}
-	free(key);	
+	free(key);
 }
 
 U_INT	launch_cd(t_input *input, t_comm *command)

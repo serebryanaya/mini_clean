@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 19:34:01 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:29:40 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ void free_str_command(char *str_command, t_input *input, U_INT i)
 	
 	input->num_of_command = 0;
 	input->still_work = success;//????
-	input->stop = 0;
 	// input->num_error = 0;
 	free_arg_env(input);
 	free_star(input);

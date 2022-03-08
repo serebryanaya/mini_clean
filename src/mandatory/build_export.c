@@ -6,70 +6,11 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 21:20:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 23:26:53 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 20:28:47 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	modif_strncmp(char *str1, char *str2, int n)
-{
-	unsigned int	i;
-    int             len1;
-    int             len2;
-
-    len1 = ft_strlen(str1);
-    len2 = ft_strlen(str2);
-    if (len1 > len2)
-        n = len1;
-    else
-        n = len2;
-	i = 0;
-	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0' && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)str2[i] - (unsigned char)str1[i]);
-}
-
-void	ft_lstadd_middle(t_env *new, t_env *tmp)
-{
-	t_env	*next;
-
-    // printf("middle\n");
-	next = tmp->next;
-    tmp->next = new;
-    new->next = next;
-}
-
-void	ft_lstadd_back(t_env **lst, t_env *new)
-{
-	t_env	*addnode;
-
-    // printf("back\n");
-	addnode = *lst;
-	if (*lst == NULL)
-		*lst = new;
-	if (lst != NULL && addnode != NULL)
-	{
-		while (addnode->next)
-			addnode = addnode->next;
-	}
-	if (addnode != NULL && new != NULL)
-		addnode->next = new;
-}
-
-void	ft_lstadd_front(t_env **lst, t_env *new)
-{
-    // printf("front\n");
-	if (*lst == NULL)
-		*lst = new;
-	else
-	{
-		new->next = *lst;
-		*lst = new;
-	}
-}
 
 t_env   *create_sort_env(t_env *old, t_input *input)
 {

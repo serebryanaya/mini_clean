@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:21:05 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 19:41:05 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 21:49:01 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	go_through_word(char *str, U_INT *i, t_input *input)
 {
-	// while (str[*i] == ' ')
-	// 	(*i)++;
 	while (str[*i] && str[*i] != '>' && str[*i] != '<' \
 		&& str[*i] != '|' && str[*i] != ' ')
 	{
@@ -25,82 +23,64 @@ void	go_through_word(char *str, U_INT *i, t_input *input)
 			go_to_end_quote(str, i, '\"', input);
 		else
 			(*i)++;
-			//!!!!сюда добавить обработку звезды в середине или конце файла и пересчет каунтера
 	}
 }
 
-
-// static int	modif_strncmp(char *str1, char *str2, int n)
+// static inline void	add_command2(t_input *input, char *str, U_INT *j, U_INT *i)
 // {
-// 	unsigned int	i;
-//     int             len1;
-//     int             len2;
-
-//     len1 = ft_strlen(str1);
-//     len2 = ft_strlen(str2);
-//     if (len1 > len2)
-//         n = len1;
-//     else
-//         n = len2;
-// 	i = 0;
-// 	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0' && i < n)
-// 		i++;
-// 	if (i == n)
-// 		return (0);
-// 	return ((unsigned char)str2[i] - (unsigned char)str1[i]);
+// 	if (str[*i] == ' ')
+// 		(*i)++;
+// 	else if (str[*i] == '>' || str[*i] == '<')
+// 		find_direct_in_comm(input, str, *j, i);
 // }
 
-
-
-
-
-
-// static void	find_star(t_comm *tmp, t_input *input, U_INT counter)
+// static inline void	add_command3(t_input *input, char *vrem, t_comm	**tmp, U_INT *k)
 // {
-// 	t_comm	*copy;
-// 	U_INT	i;
-
-// 	copy = malloc(sizeof());
-// 	while (i <= counter)
+// 	if (ft_strchr(vrem, '*') == NULL)
 // 	{
-
+// 		(*tmp)->words[*k] = modif_strdup(vrem, input);
+// 		(*k)++;
+// 		(*tmp)->words[*k] = NULL;
 // 	}
-// 	// if (tmp->words[0] == '*')
-// 	// {
-
-// 	// }
-
+// 	else
+// 		star_in_word(tmp, k, vrem, input);
 // }
 
-// static void	add_word(t_comm	*tmp, char *str, U_INT *i, t_input *input)
+// static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 // {
-// 	U_INT	m; //j
+// 	t_comm	*tmp;
+// 	U_INT	k;
+// 	U_INT	m;
+// 	char	*vrem;
 
 // 	m = 0;
-// 	m = *i;
-// 	while (str[*i] == ' ')
-// 		(*i)++;
-// 	if (str[*i] == '*')
-// 		star_in_start();
-// 	go_through_word(str, i, input);
+// 	k = 0;
+// 	tmp = input->command;
+// 	while (m++ < j)
+// 		tmp = tmp->next;
+// 	while (str[*i] && str[*i] != '|')
+// 	{
+// 		if (str[*i] == ' ' || str[*i] == '>' || str[*i] == '<')
+// 			add_command2(input, str, &j, i);
+// 		else
+// 		{
+// 			m = *i;
+// 			go_through_word(str, i, input);
+// 			vrem = modif_substr(str, m, *i - m, input);
+// 			(*i)++; //???
+// 			add_command3(input, vrem, &tmp, &k);
+// 			// if (ft_strchr(vrem, '*') == NULL)
+// 			// {
+// 			// 	tmp->words[k] = modif_strdup(vrem, input);
+// 			// 	k++;
+// 			// 	tmp->words[k] = NULL;
+// 			// }
+// 			// else
+// 			// 	star_in_word(&tmp, &k, vrem, input);
+// 			free(vrem);
+// 		}
+// 	}
 // }
-
-char	*ft_strchr(char *str, char c)
-{
-	U_INT	i;
-
-	i = 0;
-	while (*(str + i) != 0)
-	{
-		if (*(str + i) != c)
-			i++;
-		else
-			return (str + i);
-	}
-	return (NULL);
-}
-
-
 
 static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 {
@@ -173,17 +153,41 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 	// 	printf("tmp->words[%u] = %s\n", k, tmp->words[k]);
 	// }
 }
-
-
-// t_status	search_in_dir()
-// {
-	
 }
 
-t_status	parser(char *str_command, t_input *input)
+// t_status	parser(char *str_command, t_input *input, U_INT i, U_INT j)
+// {
+// 	t_status	flag;
+
+// 	flag = create_empty_t_comm(str_command, input);
+// 	if (flag == fail)
+// 	{
+// 		print_error(input, 12, "malloc", NULL);
+// 		return (fail);
+// 	}
+// 	else if (flag == end)
+// 	{
+// 		input->token = modif_strdup("newline", input);
+// 		print_token(input);
+// 		return (end);
+// 	}
+// 	while (str_command[i])
+// 	{
+// 		if (str_command[i] != '|')
+// 			add_command(input, str_command, j, &i);
+// 		else
+// 		{
+// 			i++;
+// 			j++;
+// 		}
+// 	}
+// 	return (success);
+// }
+
+t_status	parser(char *str_command, t_input *input, U_INT i, U_INT j)
 {
-	U_INT		i;
-	U_INT		j;
+	// U_INT		i;
+	// U_INT		j;
 	t_status	flag;
 
 	i = 0;
