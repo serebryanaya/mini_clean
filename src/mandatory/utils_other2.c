@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:14:22 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 15:15:34 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 18:26:44 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,26 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	if (i == n)
 		return (0);
 	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+}
+
+int	modif_strncmp(char *str1, char *str2, int n)
+{
+	unsigned int	i;
+    int             len1;
+    int             len2;
+
+    len1 = ft_strlen(str1);
+    len2 = ft_strlen(str2);
+    if (len1 > len2)
+        n = len1;
+    else
+        n = len2;
+	i = 0;
+	while (str1[i] == str2[i] && str1[i] != '\0' && str2[i] != '\0' && i < n)
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)str2[i] - (unsigned char)str1[i]);
 }
 
 int	words_number(char const *str, char c)

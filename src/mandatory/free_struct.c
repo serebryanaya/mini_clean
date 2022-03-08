@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/04 20:56:16 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:34:01 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,24 @@ void	free_env(t_input *input)
 	}
 	input->envp = NULL;
 }
+
+void	free_star(t_input *input)
+{
+	t_env	*copy;
+
+	if (!input->star)
+		return ;
+	while (input->star != NULL)
+	{
+		copy = input->star;
+		input->star = input->star->next;
+		free(copy->key);
+		free(copy->value);
+		free(copy);
+	}
+	input->star = NULL;
+}
+
 
 static inline void	free_arg_env(t_input *input)
 {
@@ -134,7 +152,9 @@ void free_str_command(char *str_command, t_input *input, U_INT i)
 	
 	input->num_of_command = 0;
 	input->still_work = success;//????
+	input->stop = 0;
 	// input->num_error = 0;
 	free_arg_env(input);
+	free_star(input);
 	// init_input(input);
 }

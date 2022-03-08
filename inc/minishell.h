@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 00:11:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:33:47 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ typedef struct s_input
 	t_env		*envp; //структура дял хранения истории. Когда ее чистить???
 	t_env		*star;
 	t_status	still_work;//помечаем, пора ли делать exit или продолжим работать
+	t_status	stop;
 }	t_input;
 
 
@@ -265,6 +266,7 @@ U_INT		launcher(t_input *input, t_comm	*command);
 /*----parser - начало парсинга----*/
 t_status	parser(char *str_command, t_input *input);
 void		go_through_word(char *str, U_INT *i, t_input *input);
+void		find_star_in_comm(t_input *input);
 
 /*----pre_open - начало работы команд----*/
 void		try_open(t_input *input);
@@ -284,6 +286,10 @@ void		handler_pipex(int sig_num);
 
 /*----shlvl - считаем уровень истории---*/ 
 void		put_shlvl(t_input *input);
+
+/*----star - обработка звезды---*/ 
+void		star_in_word(t_comm **tmp, U_INT *k, char *vrem, t_input *input);
+void		find_star_in_comm(t_input *input); // почистить в конце всей программы эту новую структуру!!!!!
 
 /*----quotes - работа с кавычками---*/ 
 t_status	go_to_end_quote(char *str, U_INT *i, char c, t_input *input);
@@ -309,6 +315,7 @@ long long	modif_atoi(char *s, int *flag, int i, long long number);
 
 /*----utils_other2 - ПРОДОЛЖЕНИЕ: полезные функции для другой работы со строками---*/ 
 int			ft_strncmp(const char *str1, const char *str2, size_t n);
+int			modif_strncmp(char *str1, char *str2, int n);
 int			words_number(char const *str, char c);
 char		*next_word(char const *str, char c);
 char		**ft_split(char const *s, char c);
