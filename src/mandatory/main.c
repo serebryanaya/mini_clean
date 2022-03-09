@@ -6,11 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/03/08 21:05:58 by pveeta           ###   ########.fr       */
-=======
-/*   Updated: 2022/03/09 21:00:44 by pveeta           ###   ########.fr       */
->>>>>>> star
+/*   Updated: 2022/03/09 22:30:14 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +41,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 static inline void	go_parse_and_open(char *str_command, \
 t_input *input, char **envp)
 {
-<<<<<<< HEAD
 	if (parser(str_command, input, 0, 0) != success)
-=======
-	
-	if (parser(str_command, input) != success)
->>>>>>> star
 		return ;
 	clean_command(input);
 	clean_direct(input);
@@ -84,11 +75,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (catch_str(&str_command, &input, 0) == fail)
 			continue ;
-<<<<<<< HEAD
 		if (finder(str_command, &input) != fail)
-=======
-		if (finder(str_command, &input) != fail) // здесь надо дописать обработку ошибок
->>>>>>> star
 			go_parse_and_open(str_command, &input, envp);
 		free_str_command(str_command, &input, 0);
 	}

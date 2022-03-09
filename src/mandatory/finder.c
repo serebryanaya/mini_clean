@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:44:38 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 20:28:42 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/09 22:31:09 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static inline t_status	check_quotes(t_input *input, char *str)
 	return (success);
 }
 
-static inline t_status	check_red2(t_input *input, char *str_comman, U_INT *i)
+static inline void	check_red2(t_input *input, char *str_comman, U_INT *i)
 {
 	while (str_comman[*i] && str_comman[*i] != '<' && \
 	 str_comman[*i] != '>')
