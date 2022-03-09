@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 22:30:04 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/09 23:18:26 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,13 @@ typedef struct s_env
 	int				equal;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_templ
+{
+	char			*value;
+	U_INT			status;
+	struct s_templ	*next;
+}	t_templ;
 
 typedef struct s_comm
 {

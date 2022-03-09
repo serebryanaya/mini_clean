@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 19:46:17 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/10 00:24:40 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,3 +318,217 @@ char	*change_star(t_comm **tmp, t_input *input, U_INT *k)
 // 	}
 // 	orig->words[*k] = NULL;
 // }
+
+void add_list_in_templ(t_templ	*templ, char *str)
+{
+	U_INT	i;
+	U_INT	m;
+	t_templ	*copy;
+
+	copy = templ;
+	while (str[i])
+	{
+		m = i;
+		if (str[0] != '*')
+		{
+			copy->status = 1;
+			while (str[i] != '*')
+				i++;
+			copy->value = modif_substr(str, m, i - m, input);
+			copy = copy->next;
+			i++;
+		}
+		else
+		{
+			while (str[i] && str[i] != '*')
+				i++;
+			copy->value = modif_substr(str, m, i - m, input);
+			if (!str[i])
+				copy->status = 3;
+				copy->next = NULL;
+			else
+			{
+				copy->status = 2;
+				copy = copy->next;
+			}
+		}
+		printf("copy->value = %d, copy->status = %u\n", copy->value, copy->status);
+	}
+}
+
+t_templ	*create_template_list(char *str)
+{
+	U_INT	num;
+	U_INT	i;
+	t_templ	*templ;
+
+	num = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '*')
+			num++;
+		while (str[i] && str[i] != '*')
+			i++;
+		while (str[i] && str[i] == '*')
+			i++;
+	}
+	templ = malloc(sizeof(templ) * num);
+	add_list_in_templ(templ, str);
+	return(temple);
+}
+
+
+t_status	check_template(t_input *input, char *str, t_templ *temple)
+{	
+	t_status	flag; // 0 - start, 1 - not, 2 - finish
+	// U_INT		start;
+	t_templ	*copy_templ;
+	U_INT	i;
+
+	// start = 0;
+	i = 0;
+	flag = 0;
+	copy_templ = temple;
+	while (copy_templ && flag == 0)
+	{
+		if (copy_templ->status == 1) // start word
+    	{
+			if (copy_templ->value[0] == str[0] && 
+			ft_strncmp(copy_templ->value, str, ft_strlen(copy_templ->value)) == 0)
+			{
+				copy_templ = copy_templ->next;
+				// start = ft_strlen(copy_templ->value) - 1; // -1 is ok????????
+			}
+			else
+				flag = 1;
+		}	
+    	// else if (copy_templ->status == 2)
+		else
+    	{
+         while (str[i] && copy_templ)
+		{
+			if (ft_strncmp(copy_templ->value, str + i, ft_strlen(copy_templ->value)) == 0)
+				copy_templ = copy_templ->next;
+			else
+				i++;
+			if (copy_templ)
+				flag = 1;
+			else if () // дописать тут случай, когда статус 2 и2, какие должны быть флаги
+		}
+		if ()
+
+
+		 if (ft_strncmp(copy_templ->value, str, ft_strlen(copy_templ->value)) == 0)
+          {
+            copy_templ = copy_templ->next;
+             Start = ft_strlen(vrem->value);
+             If (vrem == NULL)
+                 Flag = 3;
+           }
+       Else
+            Flag == 2;
+     }
+
+    Else If (vrem->status ==3)
+    {
+         if (ft_strncmp(vrem->value, copy->value + start, ft_strlen(vrem->value)) == 0)
+          {
+            Vrem=vrem->next;
+             Start = ft_strlen(vrem->value);
+             If (vrem == NULL)
+                 Flag = 3;
+           }
+       Else
+            Flag == 2;
+     }
+If (flag == 3)
+   {
+       Вырезаем в words;
+       k++;
+        If (k == 1)
+            Break ;
+    }
+Copy =copy->next;
+}
+
+
+		copy_templ = copy_templ->next;
+	}
+
+	if (flag == 2)
+		return (success);
+	else
+		return (fail);
+}
+
+char **big_circle(t_env *copy, t_templ *temple, t_input *input)
+{
+	char 	**addition;
+	// t_env	*copy_star;
+	// t_templ	*copy_terml;
+	U_INT	i; //ходим по массиву addition
+	
+	addition = malloc(sizeof(char *) * ft_lstsize(input->star));
+	while (i < ft_lstsize(input->star))
+	{
+		while (copy)
+		{
+			if (check_template(input, copy->value, templ) == success);
+				addition[i++] = modif_strdup(copy->value, input);
+			copy = copy->next;
+		}
+		addition[i++] = NULL;
+	}
+	return (addition);
+}
+
+
+char **realloc_words(char **old, t_input *input, t_input *k, t_templ *templ)
+{
+	char 		**res;
+	U_INT 		start;
+	t_env		*copy;
+	t_status	flag;
+	char		**addition;
+
+	copy = input->star;
+	start = 0;
+
+	while (old[i])
+	{
+		if (ft_strchr(old[i], '*') == NULL)
+			i++;
+		else
+		{
+			addition = big_circle(copy, temple, input);
+			i = 0;
+		}
+	}
+
+// здесь дописать именно переаллоцирование памяти
+
+}
+
+
+void	find_star(t_comm *tmp, t_input *input, t_input *k)
+{
+	U_INT	i;
+	t_templ	*templ;
+
+	i = 0;
+	while (tmp->words[i])
+	{	
+		if (ft_strchr(tmp->words[i], '*') == NULL)
+			i++;
+		else if (ft_strlen(tmp->words[i] > 1))
+		{
+			templ = create_template_list(tmp->words[i]);
+			tmp->words = realloc_words(tmp->words, input, k, templ);
+			free_templ(temple);
+			i = 0;
+		}
+		else if (ft_strlen(tmp->words[i] == 1))
+			push_all_files();
+	})
+}
