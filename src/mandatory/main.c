@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 17:56:17 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/09 21:00:44 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 
 static inline void go_parse_and_open(char *str_command, t_input *input, char **envp)
 {
+	
 	if (parser(str_command, input) != success)
 		return ;
 	clean_command(input);
@@ -55,6 +56,15 @@ static inline void go_parse_and_open(char *str_command, t_input *input, char **e
 	// printf("nput->arg_env[0] = %s\n", input->arg_env[0]);
 	// // // printf("2\n");
 	try_open(input);
+			if (input->command)
+		{
+			printf("есть  command\n");
+			int i = -1;
+			while (input->command->words[++i])
+				printf("input->command->words[%d] = %s\n", i, input->command->words[i]);
+			printf("input->command->build_number = %d\n", input->command->build_number);
+			input->command = input->command->next;
+		}
 }
 
 void print_all(t_input *input)
@@ -130,34 +140,18 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 	{
 		printf("minishell-1.0: %s: %s\n", argv[1], strerror(2));
-		// printf("from main: TYPE ERROR %d\n", 127); //???? удалить!
-		exit(127);//exit(1)??
+		exit(127);
 	}
 	init_input(&input);
 	put_envp(envp, &input);
-	put_shlvl(&input); // вызов шелла в шелле - пока не работает!
+	put_shlvl(&input);
 	while (1)
 	{
-		// printf("new_cycle\n");
-		// put_envp(envp, &input);
-		// put_shlvl(&input); // вызов шелла в шелле - пока не работает!
 		if (catch_str(&str_command, &input, 0) == fail)
-			continue ;//считываем строку через readline
-//		print_all(&input);
+			continue ;
 		if (finder(str_command, &input) != fail) // здесь надо дописать обработку ошибок
-		{
-//				printf("2.2\n");
-				go_parse_and_open(str_command, &input, envp);
-//				printf("main\n");
-		}
-		//  print_all(&input);
-//		printf("334\n");
-
-
-
-		// if (str_command)//???
-			free_str_command(str_command, &input, 0);
-		// print_all(&input);
+			go_parse_and_open(str_command, &input, envp);
+		free_str_command(str_command, &input, 0);
 	}
 	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 16:47:50 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/09 22:08:34 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,46 @@ static void	delete_quotes(char **str_command, t_input *input)
 	cut = modif_strdup(*str_command, input);
 	while (cut[i])
 	{
-		if (cut[i] == '\'' || cut[i] == '\"')
-			{
-				cut = delete_quotes2(cut, &i, input, cut[i]);
-				i = 0; //!!!!!!
-			}
+		if (cut[i] == '\'')
+			cut = delete_quotes2(cut, &i, input, cut[i]);
+		else if (cut[i] == '\"')
+			cut = delete_quotes2(cut, &i, input, cut[i]);
 		else if (cut[i] == '$')
-			{
-				cut = find_dollar(cut, &i, input);
-				i = 0; //!!!!!!
-			}
+			cut = find_dollar(cut, &i, input);
 		else
 			i++;
 	}
 	free(*str_command);
 	*str_command = cut;
 }
+
+char **del_elem_from_arr(char **old, U_INT index, t_input *input, U_INT len)
+{
+	char	**new;
+	U_INT	i;
+	U_INT	j;
+
+	i = 0;
+	j = 0;
+	while (old[len])
+		len++;
+	new = malloc(sizeof(char *) * len);
+	while (old[j])
+	{
+		if (j != index)
+		{
+			new[i++] = modif_strdup(old[j], input);
+			free(old[j]);
+		}
+		else
+			free(old[j]);
+        j++;
+	}
+	free(old);
+	new[i] = NULL;
+	return (new);
+}
+
 void clean_command(t_input *input)
 {
 	U_INT   i;
@@ -99,10 +123,13 @@ void clean_command(t_input *input)
 		i = 0;
 		while (copy->words[i])
 		{
-			// printf("1before delete quotes: %s\n", copy->words[i]);
 			delete_quotes(&copy->words[i], input);
-			// printf("pipe after delete quotes: %s\n", copy->words[i]);
-			i++;
+			if (copy->words[i] && copy->words[i][0] == '\0')
+			{
+				copy->words = del_elem_from_arr(copy->words, i, input, 0);
+			}
+			else
+				i++;
 		}
 		copy = copy->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:21:05 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 19:41:05 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/09 21:04:43 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,35 +124,39 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 		{
 			m = *i;
 			go_through_word(str, i, input);
-			vrem = modif_substr(str, m, *i - m, input);
-			(*i)++; //???
-			printf("vrem = %s\n", vrem);
-			if (ft_strchr(vrem, '*') == NULL)
-			{
-				tmp->words[k] = modif_strdup(vrem, input);
-				printf("нет звездыб tmp->words[ k = %d] = %s\n", k, vrem);
-				k++;
-				tmp->words[k] = NULL;
-			}
-			else
-				{
-					printf("есть звезда: tmp->words[ k = %d] = %s\n", k, vrem);
-					star_in_word(&tmp, &k, vrem, input);
-					// if (k == 0)
-					// 	{
-					// 		input->stop = 1;
-					// 		tmp->words[k + 1] = NULL;		
-					// 		while (str[*i] && str[*i] != '|')
-					// 			(*i)++;				
-					// 	}			
-
-				}
-			// if (input->stop == 1)
+			tmp->words[k] = modif_substr(str, m, *i - m, input);
+			// printf("tmp->words[k = %d] = %s\n", k, tmp->words[k]);
+			k++;
+			tmp->words[k] = NULL;
+			// vrem = modif_substr(str, m, *i - m, input);
+			// (*i)++; //???
+			// printf("vrem = %s\n", vrem);
+			// if (ft_strchr(vrem, '*') == NULL)
 			// {
-			// 	while (str[*i] && str[*i] != '|')
-			// 	(*i)++;
+			// 	tmp->words[k] = modif_strdup(vrem, input);
+			// 	printf("нет звездыб tmp->words[ k = %d] = %s\n", k, vrem);
+			// 	k++;
+			// 	tmp->words[k] = NULL;
 			// }
-			free(vrem);
+			// else
+			// 	{
+			// 		printf("есть звезда: tmp->words[ k = %d] = %s\n", k, vrem);
+			// 		star_in_word(&tmp, &k, vrem, input);
+			// 		// if (k == 0)
+			// 		// 	{
+			// 		// 		input->stop = 1;
+			// 		// 		tmp->words[k + 1] = NULL;		
+			// 		// 		while (str[*i] && str[*i] != '|')
+			// 		// 			(*i)++;				
+			// 		// 	}			
+
+			// 	}
+			// // if (input->stop == 1)
+			// // {
+			// // 	while (str[*i] && str[*i] != '|')
+			// // 	(*i)++;
+			// // }
+			// free(vrem);
 			// int z = 0;
 			// while (z <= k)
 			// {
