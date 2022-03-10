@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-void    remove_env(t_env *env) //void   ft_del_env(t_env *env)
-{
-    t_env   *copy;
-    copy = env->next;
-    env->next = copy->next;
-    free(copy->key);
-    free(copy->value);
-    free(copy);
-}
 int find_key(t_env **env, char *str) //int  ft_check_first(t_env **env, char *str)
 {
     t_env   *copy;
@@ -35,16 +26,37 @@ int find_key(t_env **env, char *str) //int  ft_check_first(t_env **env, char *st
     }
     return (0);
 }
+
+void    remove_env(t_env *env) //void   ft_del_env(t_env *env)
+{
+    t_env   *copy;
+    copy = env->next;
+    env->next = copy->next;
+    free(copy->key);
+    free(copy->value);
+    free(copy);
+}
+
 U_INT   launch_unset(t_input *input, t_comm *command)
 {
     int     i;
     t_env   *copy1;
     t_env   *copy2;
-    i = 0;
-    while (command->words[++i])
+
+    i = 1;
+    while (command->words[i])
     {
         if (!input->envp)
             break ;
+        if (!ft_isalpha(command->words[i][0]))
+        {
+            // printf("command->words[1][0]=%c, command->words[2][0]=%c, command->words[3][0]=%c\n", command->words[1][0], command->words[2][0], command->words[3][0]);
+            input->num_error = 1;
+            // write(2, "export: `", 9);
+            // write(2, input->command->words[i], ft_strlen(input->command->words[i]));
+            // write(2, "': not a valid identifier\n", 26);
+            printf("%s%s%s\n", "unset: `", command->words[i], "': not a valid identifier");
+        }
         if (command->words[i][0] == '_')
             continue ;
         if (find_key(&input->envp, command->words[i]))
@@ -58,6 +70,7 @@ U_INT   launch_unset(t_input *input, t_comm *command)
         }
         if (copy2)
             remove_env(copy1);
+        i++;    
     }
     return (0);
 }

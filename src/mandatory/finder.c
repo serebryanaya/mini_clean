@@ -84,7 +84,8 @@ t_status	finder(char *str_command, t_input *input) // сейчас тут тол
     i = 0;
     if (check_quotes(input, str_command) == fail || \
 	check_red(input, str_command) == fail)
-		return (fail);
+	// if (check_quotes(input, str_command) == fail)
+	// 	return (fail);
 	while (str_command[i] == ' ')
 		i++;
     if (str_command[i] == '|')

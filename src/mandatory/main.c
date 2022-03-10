@@ -49,7 +49,7 @@ t_input *input, char **envp)
 	try_open(input);
 			if (input->command)
 		{
-			printf("есть  command\n");
+			// printf("есть  command\n");
 			int i = -1;
 			while (input->command->words[++i])
 				printf("input->command->words[%d] = %s\n", i, input->command->words[i]);

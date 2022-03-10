@@ -311,6 +311,7 @@ char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 // long		modif_atoi(char *s, int i, long number);
 long long	modif_atoi(char *s, int *flag, int i, long long number);
+int			ft_isalpha(int c);
 
 /*----utils_other2 - ПРОДОЛЖЕНИЕ: полезные функции для другой работы со строками---*/ 
 int			ft_strncmp(const char *str1, const char *str2, size_t n);
