@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/10 00:24:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/11 00:22:56 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,51 +319,85 @@ char	*change_star(t_comm **tmp, t_input *input, U_INT *k)
 // 	orig->words[*k] = NULL;
 // }
 
-void add_list_in_templ(t_templ	*templ, char *str)
+void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 {
 	U_INT	i;
 	U_INT	m;
 	t_templ	*copy;
 
 	copy = templ;
+	i = 0;
+	// printf("str[i = %d] = %s\n", i, str + i);
 	while (str[i])
 	{
 		m = i;
 		if (str[0] != '*')
 		{
+			printf("status = 1\n");
 			copy->status = 1;
-			while (str[i] != '*')
-				i++;
-			copy->value = modif_substr(str, m, i - m, input);
-			copy = copy->next;
-			i++;
-		}
-		else
-		{
 			while (str[i] && str[i] != '*')
 				i++;
 			copy->value = modif_substr(str, m, i - m, input);
-			if (!str[i])
-				copy->status = 3;
+			printf("copy->value = %s\n", copy->value);
+			if (str + i + 1)
+				copy = copy->next;
+			else
 				copy->next = NULL;
+			i++;
+		}
+		printf("1\n");
+		if (str[0] == '*')
+		{
+			// printf("status = 3\n");
+			copy->status = 3;
+			i = 1;
+			m = 1;
+			while (str[i] && str[i] != '*')
+				i++;
+			copy->value = modif_substr(str, m, i - m, input);
+			// printf("copy->value = %s\n", copy->value);
+			if (str[i + 1])
+				copy = copy->next;
+			else
+				copy->next = NULL;
+			i++;
+		}
+		else if (str[i])
+		{
+			printf("1,5; str + i = %s\n", str + i);
+			while (str[i] && str[i] != '*')
+				i++;
+			copy->value = modif_substr(str, m, i - m, input);
+			// printf("not 1 status; copy->value = %s\n", copy->value);
+			if (!str[i])
+				{
+					// printf("status = 3\n");
+					copy->status = 3;
+					copy->next = NULL;
+				}
 			else
 			{
+				// printf("status = 2\n");
 				copy->status = 2;
 				copy = copy->next;
 			}
 		}
-		printf("copy->value = %d, copy->status = %u\n", copy->value, copy->status);
+		printf("2\n");
+		// printf("copy->value = %s, copy->status = %u\n", copy->value, copy->status);
 	}
 }
 
-t_templ	*create_template_list(char *str)
+
+t_templ	*create_template_list(char *str, t_input *input)
 {
 	U_INT	num;
 	U_INT	i;
 	t_templ	*templ;
+	t_templ	*copy;
 
 	num = 0;
 	i = 0;
+	templ = NULL;
 	while (str[i])
 	{
 		if (str[i] != '*')
@@ -373,17 +407,41 @@ t_templ	*create_template_list(char *str)
 		while (str[i] && str[i] == '*')
 			i++;
 	}
-	templ = malloc(sizeof(templ) * num);
-	add_list_in_templ(templ, str);
-	return(temple);
+	// printf("str = %s, list size = %u\n", str, num);
+	while (num--)
+	{
+		copy = malloc(sizeof(t_templ));
+		copy->next = NULL;
+		if (!templ)
+			templ = copy;
+		else
+			lstadd_back(&templ, copy);
+	}
+	// printf("dddddd\n");
+	add_list_in_templ(templ, str, input, num);
+	return(templ);
 }
 
+void free_temple(t_templ *temple)
+{
+	t_templ	*copy;
+
+	while (temple)
+	{
+		copy = temple;
+		temple = temple->next;
+		printf("очистка листка с шаблоном: copy->value = %s\n", copy->value);
+		free(copy->value);
+		free(copy);
+	}
+}
 
 t_status	check_template(t_input *input, char *str, t_templ *temple)
 {	
 	t_status	flag; // 0 - start, 1 - not, 2 - finish
 	// U_INT		start;
 	t_templ	*copy_templ;
+	t_templ	*last;
 	U_INT	i;
 
 	// start = 0;
@@ -394,141 +452,212 @@ t_status	check_template(t_input *input, char *str, t_templ *temple)
 	{
 		if (copy_templ->status == 1) // start word
     	{
+			printf("ищем статус 1\n");
 			if (copy_templ->value[0] == str[0] && 
 			ft_strncmp(copy_templ->value, str, ft_strlen(copy_templ->value)) == 0)
 			{
-				copy_templ = copy_templ->next;
+				i += ft_strlen(copy_templ->value);
+				printf("успех! у нас совпало начало и строки! Начнем дальше с i = %d, str[i] = %s\n", i, str + i);
+				if (copy_templ->next)
+					copy_templ = copy_templ->next;
+				else
+					return (success);
 				// start = ft_strlen(copy_templ->value) - 1; // -1 is ok????????
 			}
 			else
 				flag = 1;
+			printf("прошли статус 1. Флаг = %d\n", flag);
 		}	
-    	// else if (copy_templ->status == 2)
-		else
+		else if (copy_templ->status == 2)
     	{
-         while (str[i] && copy_templ)
-		{
-			if (ft_strncmp(copy_templ->value, str + i, ft_strlen(copy_templ->value)) == 0)
-				copy_templ = copy_templ->next;
-			else
-				i++;
+			// printf("ищем статус 2\n");
+			// printf("462!!! смотрим на str + %u = %s\n", i, str + i); 
+			// printf("463!!! copy_templ->value = %s\n", copy_templ->value); 
+			while (str + i && copy_templ && copy_templ->value)
+			{
+				// printf("466: смотрим на str + %u = %s\n", i, str + i); 
+				// printf("ft_strlen(copy_templ->value) = %u\n", ft_strlen(copy_templ->value));
+				// printf("2\n");
+				if (ft_strncmp(copy_templ->value, str + i, ft_strlen(copy_templ->value)) == 0)
+					{
+						i += ft_strlen(copy_templ->value);
+						last = copy_templ;
+						// printf("last->value = %s, i = %u, str + i = %s\n", last->value, i, str + i);
+						copy_templ = copy_templ->next;
+					}
+				else
+					++i;
+			}
 			if (copy_templ)
 				flag = 1;
-			else if () // дописать тут случай, когда статус 2 и2, какие должны быть флаги
 		}
-		if ()
-
-
-		 if (ft_strncmp(copy_templ->value, str, ft_strlen(copy_templ->value)) == 0)
-          {
-            copy_templ = copy_templ->next;
-             Start = ft_strlen(vrem->value);
-             If (vrem == NULL)
-                 Flag = 3;
-           }
-       Else
-            Flag == 2;
-     }
-
-    Else If (vrem->status ==3)
-    {
-         if (ft_strncmp(vrem->value, copy->value + start, ft_strlen(vrem->value)) == 0)
-          {
-            Vrem=vrem->next;
-             Start = ft_strlen(vrem->value);
-             If (vrem == NULL)
-                 Flag = 3;
-           }
-       Else
-            Flag == 2;
-     }
-If (flag == 3)
-   {
-       Вырезаем в words;
-       k++;
-        If (k == 1)
-            Break ;
-    }
-Copy =copy->next;
-}
-
-
-		copy_templ = copy_templ->next;
+		else if (copy_templ->status == 3)
+		{
+			// printf("ищем статус 3\n");
+			while (str[i] && copy_templ && copy_templ->value)
+			{
+				// printf("466: смотрим на str + %u = %s\n", i, str + i); 
+				// printf("ft_strlen(copy_templ->value) = %u\n", ft_strlen(copy_templ->value));
+				// printf("2\n");
+				if (ft_strncmp(copy_templ->value, str + i, ft_strlen(copy_templ->value)) == 0)
+					{
+						// printf("!!!str + i = %s\n", str + i);
+						i += ft_strlen(copy_templ->value);
+						// printf("222!!!str + i = %s\n", str + i);
+						// copy_templ = copy_templ->next;
+						// if (str + i)
+						// 	++i;
+						if (!str[i])
+						{
+							printf("33!!!str + i = %s\n", str + i);
+							last = copy_templ;
+							printf("last->value = %s, i = %u\n", last->value, i);
+							return (success);
+						}
+					}
+				else
+					++i;
+			}
+			if (copy_templ || (str && str + i))
+				flag = 1;
+			else
+				flag = 2;
+		}
+	// printf("finish : Флаг = %d\n", flag);
 	}
-
+	// free_temple(temple);
 	if (flag == 2)
 		return (success);
 	else
 		return (fail);
 }
 
-char **big_circle(t_env *copy, t_templ *temple, t_input *input)
+char **big_circle(t_templ *temple, t_input *input, U_INT *len)
 {
 	char 	**addition;
-	// t_env	*copy_star;
+	t_env	*copy; //copy_star;
 	// t_templ	*copy_terml;
-	U_INT	i; //ходим по массиву addition
+	// U_INT	i; //ходим по массиву addition
 	
+	printf("lstsize = %u, *len = %u\n", ft_lstsize(input->star), *len);
 	addition = malloc(sizeof(char *) * ft_lstsize(input->star));
-	while (i < ft_lstsize(input->star))
-	{
+	copy = input->star;
+	// while (*len < ft_lstsize(input->star))
+	// {
 		while (copy)
 		{
-			if (check_template(input, copy->value, templ) == success);
-				addition[i++] = modif_strdup(copy->value, input);
+			if (check_template(input, copy->value, temple) == success)
+				{
+					printf("505 - copy->value = %s\n", copy->value);
+					addition[*len] = modif_strdup(copy->value, input);
+					printf("записали в новый массив: addition[i = %d] = %s\n", *len, addition[*len]);
+					++(*len);
+				}
 			copy = copy->next;
 		}
-		addition[i++] = NULL;
-	}
+		addition[*len] = NULL;
+		// free_temple(&temple);
+	// }
 	return (addition);
 }
 
 
-char **realloc_words(char **old, t_input *input, t_input *k, t_templ *templ)
+char **realloc_words(char **old, t_input *input, U_INT k, t_templ *templ)
 {
 	char 		**res;
-	U_INT 		start;
-	t_env		*copy;
-	t_status	flag;
+	U_INT 		i; // индексация old **
 	char		**addition;
+	U_INT len;
+	U_INT		j; // индексация res
+	U_INT		n;
+	U_INT		m;
 
-	copy = input->star;
-	start = 0;
+	// copy = input->star;
+	i = 0;
+	j = 0;
+	n = 0;
+	len = 0;
+	m = 0;
 
 	while (old[i])
 	{
-		if (ft_strchr(old[i], '*') == NULL)
-			i++;
-		else
+		// printf("\n\n\nold[i = %u] = %s\n\n\n", i, old[i]);
+		while (ft_strchr(old[i], '*') == NULL)
+			++i;
+		if (old[i] && ft_strchr(old[i], '*') != NULL)
 		{
-			addition = big_circle(copy, temple, input);
-			i = 0;
+			addition = big_circle(templ, input, &len);
+			printf("579^ res size = %u ----- %u(k) + %u(len)\n", (k + len), k, len);
+			printf("579^ addition[0] = %s)\n", addition[0]);
+			res = malloc(sizeof(char *) * (k + len));
+			n = 0;
+			while (n != i)
+			{
+				res[j++] = modif_strdup(old[n], input);
+				// printf("res[j = %d] = %s; old[n = %d] = %s\n", j - 1, res[j - 1], n, old[n]);
+				free(old[n]);
+				++n;
+			}
+			// printf("n = %d, i = %u, addition[m = %d] = %s\n", n, i, m, addition[m]);
+			if (n == i && addition[m])
+			{
+
+				res[j++] = addition[m++];
+				// printf("res[j = %u] = %s, addition[m = %u] = %s\n", j - 1, res[j - 1], m - 1, addition[m - 1]);
+				free(old[i]);
+				++i;
+			}
+			// while (old[i])
+			// {
+			// 	res[j++] = modif_strdup(old[i], input);
+			// 	printf("res[j = %d] = %s\n", j - 1, res[j - 1]);
+			// 	free(old[i]);
+			// 	++i;
+			// }
 		}
 	}
-
-// здесь дописать именно переаллоцирование памяти
-
+	res[j] = NULL;
+	free(old);
+	return(res);
 }
 
 
-void	find_star(t_comm *tmp, t_input *input, t_input *k)
+void	find_star(t_comm *tmp, t_input *input, U_INT k)
 {
 	U_INT	i;
 	t_templ	*templ;
 
 	i = 0;
-	while (tmp->words[i])
+	// printf("!ищем звезду: tmp->words[0] = %s, k = %u\n", tmp->words[0], k);
+	while (tmp && tmp->words && tmp->words[i])
 	{	
-		if (ft_strchr(tmp->words[i], '*') == NULL)
-			i++;
-		else if (ft_strlen(tmp->words[i] > 1))
+		printf("!ищем звезду: tmp->words[i = %u] = %s, k = %u\n", i, tmp->words[i], k);
+		// if (ft_strchr(tmp->words[i], '*') == NULL)
+		// 	{
+		// 		// printf("нет звездыу: tmp->words[i = %u] = %s\n", i, tmp->words[i]);
+		// 		++i;
+		// 		continue ;
+		// 	}
+		// else if (ft_strlen(tmp->words[i]) > 1)
+		if (ft_strchr(tmp->words[i], '*') != NULL && ft_strlen(tmp->words[i]) > 1)
 		{
-			templ = create_template_list(tmp->words[i]);
+			printf("1\n");
+			// printf("есть звездыу: tmp->words[i = %u] = %s\n", i, tmp->words[i]);
+			templ = create_template_list(tmp->words[i], input);
 			tmp->words = realloc_words(tmp->words, input, k, templ);
-			free_templ(temple);
-			i = 0;
+			free_temple(templ);
+			printf("2\n");
+			// i = 0;
 		}
-		else if (ft_strlen(tmp->words[i] == 1))
-			push_all_files();
-	})
+		else if (ft_strchr(tmp->words[i], '*') != NULL && ft_strlen(tmp->words[i]) == 1)
+			{
+				printf("3\n");
+				printf("заглушка для случая, когда пришла только *\n");
+			// tmp->words = push_all_files();
+			printf("4\n");
+			}
+		printf("647 - ищем звезду: tmp->words[i = %u] = %s, k = %u\n", i, tmp->words[i], k);
+		++i;
+		printf("5, i = %u\n", i);
+	}
 }

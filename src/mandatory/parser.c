@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:21:05 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 22:39:33 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/10 20:59:34 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 			m = *i;
 			go_through_word(str, i, input);
 			tmp->words[k] = modif_substr(str, m, *i - m, input);
-			// printf("tmp->words[k = %d] = %s\n", k, tmp->words[k]);
+			printf("tmp->words[k = %d] = %s\n", k, tmp->words[k]);
 			k++;
 			tmp->words[k] = NULL;
 			// vrem = modif_substr(str, m, *i - m, input);
@@ -149,7 +149,6 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 		// 	tmp->words[k] = NULL;
 		// }
 	}
-	find_star(tmp, input, k);
 
 	// if (!str[*i] && k == 0)
 	// {
@@ -157,6 +156,8 @@ static void	add_command(t_input *input, char *str, U_INT j, U_INT *i)
 	// 	printf("tmp->words[%u] = %s\n", k, tmp->words[k]);
 	// }
 }
+	printf("будем искать звезду: tmp->words[0] = %s, k = %u\n", tmp->words[0], k);
+	find_star(tmp, input, k);
 }
 
 // t_status	parser(char *str_command, t_input *input, U_INT i, U_INT j)
