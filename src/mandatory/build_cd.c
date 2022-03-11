@@ -16,6 +16,7 @@ static void	cd_print_error(t_input *input, U_INT error_num, char *msg, char *des
 {
 	input->num_error = error_num;
 	
+	// printf("cd_print_error\n");
 	write(2, "minishell: ", 11);
 	if (msg != NULL)
 	{
@@ -56,7 +57,8 @@ static inline char	*get_path(t_input *input, t_comm *command, t_env *copy)
 		path = ft_strjoin(copy->value, tmp, input);
 		free(tmp);
 	}
-	return (path);
+	// printf("%s\n", path);
+	return (0);
 }
 
 static void	change_envp(t_input *input, char *path, t_status flag)
@@ -108,14 +110,10 @@ char	*cd_oldpwd(t_input *input, t_comm *command, t_env *copy)
 			ft_strlen(command->words[1]) - 1, input);
 		path = ft_strjoin(copy->value, tmp, input);
 		free(tmp);
+		return (path);
 		// printf("%s\n", path);
 	}
-	// if (!path)
-	// {
-	// 	write(2, "cd: OLDPWD not set\n", 17); // print_error(input, 1, "cd", "HOME not set");
-	// 	return (1);
-	// }
-	return (path);
+	return (0);
 }
 
 U_INT	launch_cd(t_input *input, t_comm *command)
@@ -127,19 +125,16 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 	copy = input->envp;
 	if (!input || !command->words[1])
 	{
-		// printf("command->words[1]=%s\n", command->words[1]);
 		while (copy && ft_strcmp(copy->key, "HOME"))
 			copy = copy->next;
 		if (copy)
-			path = modif_strdup(copy->value, input);	
+		{
+			path = modif_strdup(copy->value, input);
+			// printf("cd_printf\n");
+		}
 	}
-	else
-		// path = get_path(input, command, copy);
-	if (command->words[1][0] == '-')
-	{
-		printf("command->words[1]=%c\n", command->words[1][0]);
-		cd_oldpwd(input, command, copy);
-	}
+	// else
+	// 	// path = get_path(input, command, copy);
 	else
 	{
 		if (command->words[1][0] == '-')
@@ -147,7 +142,7 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 			path = cd_oldpwd(input, command, copy);
 			if (!path)
 			{
-				write(2, "cd: OLDPWD not set\n", 17); // print_error(input, 1, "cd", "HOME not set");
+				write(2, "cd: OLDPWD not set\n", 17);
 				return (1);
 			}
 			else
@@ -155,6 +150,7 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 		}
 		else
 		{
+			printf("command->words[1]=%s\n", command->words[1]);
 			path = get_path(input, command, copy);
 			if (!path)
 			{
