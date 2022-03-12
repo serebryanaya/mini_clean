@@ -227,6 +227,11 @@ U_INT		launch_exit(t_input *input, t_comm *command);
 U_INT		launch_echo(t_input *input);
 U_INT		launch_cd(t_input *input, t_comm *command);
 U_INT		launch_exit(t_input *input, t_comm *command);
+void		cd_print_error(t_input *input, U_INT error_num, char *msg, char *descrip);
+char		*get_path_cd(t_input *input, t_comm *command, t_env *copy);
+t_env		*create_sort_env(t_env *old, t_input *input);
+t_env		*env_sort(t_env *list, t_env *new, t_input *input);
+t_env		*sort_export(t_input *input);
 
 /*----child_and_dups - работа с дочками, поиск пути---*/ 
 void		it_is_child(t_input *input, U_INT i, U_INT counter);

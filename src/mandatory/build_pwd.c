@@ -25,9 +25,9 @@ U_INT	launch_pwd(t_input *input)
 		printf("%s\n", copy->value);
 		return (0);
 	}
-	pwd = getcwd(NULL, 0); //получаем абсолютный путь к рабочему каталогу
+	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		print_error(input, errno, "getcwd", NULL); 
+		print_error(input, errno, "getcwd", NULL);
 	printf("%s\n", pwd);
 	free(pwd);
 	return (0);

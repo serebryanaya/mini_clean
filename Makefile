@@ -32,9 +32,11 @@ SRC_O 				= envp.c \
 					one_build_in.c \
 					build_echo.c \
 					build_cd.c \
+					build_cd2.c \
 					build_pwd.c \
 					build_unset.c \
 					build_export.c \
+					build_export2.c \
 					build_env.c \
 					build_exit.c \
 					star.c \
