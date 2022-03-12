@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 00:28:07 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 17:20:54 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,20 +296,24 @@ int check_status_one(t_templ **copy_templ, U_INT *i, char *str) // не рабо
 {
 	t_templ	*last;
 
-	last = *copy_templ;
-	// printf("ищем статус 1\n");
-	if (last->value[0] != str[0] || 
-	ft_strncmp(last->value, str, ft_strlen(last->value)) != 0)
+	// last = *copy_templ;
+	printf("ищем статус 1\n");
+	if ((*copy_templ)->value[0] != str[0] || 
+	ft_strncmp((*copy_templ)->value, str, ft_strlen((*copy_templ)->value)) != 0)
 		return (fail);
-	*i += ft_strlen(last->value);
-	if (!last->next)
+	*i += ft_strlen((*copy_templ)->value);
+	printf("успех! у нас совпало начало строки! Начнем дальше с i = %d, *copy_templ = %s, str[i] = %s\n", *i, (*copy_templ)->value, str + *i);
+	if (!(*copy_templ)->next)
 	{
 		printf("\n\nуспех! у нас совпало начало и строки! Выходим. str[i] = %s\n", str + *i);
 		return (success);
 	}
 
-	if (last->next)
-		last = last->next;
+	if ((*copy_templ)->next)
+		{
+			printf("last->next = %s\n", (*copy_templ)->next->value);
+			*copy_templ = (*copy_templ)->next;
+		}
 	return (3);
 }
 
@@ -318,13 +322,13 @@ int check_status_two(t_templ **copy_templ, U_INT *i, char *str)
 	t_templ	*last;
 
 	last = *copy_templ;
-	// printf("ищем статус 2\n");
+	printf("ищем статус 2\n");
 	while (str[*i] && last && last->value)
 	{
 		if (ft_strncmp(last->value, str + *i, ft_strlen(last->value)) == 0)
 		{
 			*i += ft_strlen(last->value);
-			// printf("успех! у нас совпало начало и строки! Начнем дальше с i = %d, str[i] = %s\n", *i, str + *i);
+			printf("успех! у нас совпало середина! Начнем дальше с i = %d, last->value = %s, str[i] = %s\n", *i, last->value, str + *i);
 			if (!last->next)
 				return (success);
 			else if (last->next)
@@ -346,14 +350,14 @@ int check_status_three(t_templ **copy_templ, U_INT *i, char *str)
 	t_templ	*last;
 
 	last = *copy_templ;
-	// printf("\n\nищем статус 3, str + i = %s, last->value = %s\n", str + *i, last->value);
+	printf("\n\nищем статус 3, str + i = %s, last->value = %s\n", str + *i, last->value);
 	while (str[*i] && last && last->value)
 	{
 		if (ft_strncmp(last->value, str + *i, ft_strlen(last->value)) == 0)
 		{
 			// printf("возможно, слово подойдет!\n");
 			*i += ft_strlen(last->value);
-			// printf("успех! у нас совпало начало и строки! Начнем дальше с i = %d, str[i] = %s\n", *i, str + *i);
+			printf("успех! у нас совпало конце строки! Начнем дальше с i = %d, last->value = %s, str[i] = %s\n", *i, last->value, str + *i);
 			if (!last->next && !str[*i])
 				{
 					// printf("слово подощло! last->value = %s\n", last->value);
@@ -426,11 +430,12 @@ U_INT check_tmp_in_dir(t_templ *templ, t_input *input, U_INT len, U_INT i)
 	// copy_templ = templ;
 	while (copy)
 	{
-		printf ("результат проверки template = %u\n\n\n\n", check_template(input, copy->value, templ));
+		// printf ("результат проверки template = %u\n\n\n\n", check_template(input, copy->value, templ));
 		if (check_template(input, copy->value, templ) == success)
 			{
 				++len;
 				copy->equal = 1;
+				printf ("результат проверки template; copy->value = %s, copy->equal = %d\n", copy->value, copy->equal);
 			}
 		copy = copy->next;
 	}
