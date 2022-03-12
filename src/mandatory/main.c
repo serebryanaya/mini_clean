@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 18:45:02 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 00:18:20 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ t_input *input, char **envp)
 	clean_direct(input);
 	make_env_array(input, &input->arg_env);
 	try_open(input);
-			if (input->command)
-		{
-			// printf("есть  command\n");
-			int i = -1;
-			while (input->command->words[++i])
-				printf("input->command->words[%d] = %s\n", i, input->command->words[i]);
-			printf("input->command->build_number = %d\n", input->command->build_number);
-			input->command = input->command->next;
-		}
+		// 	if (input->command)
+		// {
+		// 	// printf("есть  command\n");
+		// 	int i = -1;
+		// 	while (input->command->words[++i])
+		// 		printf("input->command->words[%d] = %s\n", i, input->command->words[i]);
+		// 	printf("input->command->build_number = %d\n", input->command->build_number);
+		// 	input->command = input->command->next;
+		// }
 }
 
 int	main(int argc, char **argv, char **envp)

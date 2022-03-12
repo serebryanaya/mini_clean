@@ -6,23 +6,23 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 22:45:24 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 00:24:20 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*create_new_env(t_env **new, DIR *dir, struct dirent *entry, t_input *input)
+static inline void	create_new_env(t_env **new, DIR *dir, \
+struct dirent *entry, t_input *input)
 {
 	*new = create_new_list(ft_strjoin_for_3 \
-		(modif_itoa((int)entry->d_ino, input), "=", \
-		modif_strdup(entry->d_name, input), input), input);
+	(modif_itoa((int)entry->d_ino, input), "=", \
+	modif_strdup(entry->d_name, input), input), input);
 	(*new)->equal = 0;
 	if (!input->star)
 		input->star = *new;
 	else
 		add_list_back(*new, &input->star);
-	return(*new);
 }
 
 void	find_star_in_comm(t_input *input)
@@ -40,17 +40,7 @@ void	find_star_in_comm(t_input *input)
 		if (entry != NULL)
 		{
 			if (entry->d_name[0] != '.')
-				// new = create_new_env(&new, dir, entry, input);
-			{
-			new = create_new_list(ft_strjoin_for_3 \
-			(modif_itoa((int)entry->d_ino, input), "=", \
-			modif_strdup(entry->d_name, input), input), input);
-			new->equal = 0;
-			if (!input->star)
-				input->star = new;
-			else
-				add_list_back(new, &input->star);
-			}
+				create_new_env(&new, dir, entry, input);
 		}
 		else
 			break ;
@@ -58,14 +48,13 @@ void	find_star_in_comm(t_input *input)
 	closedir(dir);
 }
 
-
 char	*change_star(t_comm **tmp, t_input *input, U_INT *k)
 {
 	t_env	*copy;
 	t_env	*min;
-	t_comm		*orig;
+	// t_comm		*orig;
 	
-	orig = *tmp;
+	// orig = *tmp;
 	copy = input->star;
 	if (*k == 0)
 	{
@@ -76,7 +65,7 @@ char	*change_star(t_comm **tmp, t_input *input, U_INT *k)
 				min = copy;
 			copy = copy->next;
 		}
-		orig->words[*k] = modif_strdup(min->value, input);
+		(*tmp)->words[*k] = modif_strdup(min->value, input);
 		(*k)++;
 		return (modif_strdup(min->value, input));
 	}
@@ -84,14 +73,46 @@ char	*change_star(t_comm **tmp, t_input *input, U_INT *k)
 		{
 			while (copy)
 			{
-				orig->words[*k] = modif_strdup(copy->value, input);
+				(*tmp)->words[*k] = modif_strdup(copy->value, input);
 				(*k)++;
 				copy = copy->next;
 			}
-			return (orig->words[*k]);
+			return ((*tmp)->words[*k]);
 
 		}
 }
+
+static void add_list_support(char *str, U_INT *i, t_templ **copy, t_status flag)
+{
+	while (str[*i] && str[*i] == '*')
+		++(*i);
+	--(*i);
+	if (flag == 0)
+	{
+		if (str[*i])
+		{
+			printf("NOW SRT[i = %d] = %c\n", *i, str[*i]);
+			*copy = (*copy)->next;
+			++(*i);
+		}
+		else
+			(*copy)->next = NULL;
+	}
+	else
+	{
+		// while (str[*i] && str[*i] == '*')
+		// 	++(*i);
+		// --(*i);
+		if (str[*i + 1] && str[*i + 1] != '*')
+			*copy = (*copy)->next;
+		else
+		{
+			(*copy)->next = NULL;
+			++(*i);
+		}
+	}
+}
+
 
 void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 {
@@ -114,18 +135,26 @@ void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 				++i;
 			copy->value = modif_substr(str, m, i - m, input);
 			printf("copy->value = %s\n", copy->value);
-			while (str[i] && str[i] == '*')
-				++i;
-			--i;
-			if (str[i])
+			// add_list_support(str, &i, &copy, 0);
+		// 	while (str[i] && str[i] == '*')
+		// 		++i;
+		// 	--i;
+			printf("153; str[i + 1] = %c\n", str[i + 1]);
+			if (str[i + 1])
 				copy = copy->next;
 			else
-				copy->next = NULL;
+				{
+					copy->next = NULL;
+				return ;
+				}
 			// i++;
 		}
-		// printf("1\n");
+		// // printf("1\n");
+		printf("160; status = %u\n", copy->status);
+		printf("1601; str + i = %s\n", str + i);
 		if (str[i] == '*')
 		{
+			printf("162; status = %u, str + i = %s\n", copy->status, str + i);
 			while (str[i] == '*')
 				++i;
 			n = i;
@@ -143,13 +172,14 @@ void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 				i++;
 			copy->value = modif_substr(str, m, i - m, input);
 			printf("copy->value = %s\n", copy->value);
-			if (str[i + 1])
-				copy = copy->next;
-			else
-				copy->next = NULL;
+			// if (str[i + 1])
+			// 	copy = copy->next;
+			// else
+			// 	copy->next = NULL;
+			add_list_support(str, &i, &copy, 1);
 			
 		}
-		++i;
+		// ++i;
 		
 		// else if (str[i])
 		// {
@@ -171,7 +201,7 @@ void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 		// 		copy = copy->next;
 		// 	}
 		// }
-		printf("2\n");
+		// printf("2\n");
 		// printf("copy->value = %s, copy->status = %u\n", copy->value, copy->status);
 	}
 }
@@ -227,7 +257,7 @@ t_templ	*create_template_list(char *str, t_input *input)
 
 int check_status_one(t_templ **copy_templ, U_INT *i, char *str) // не работает ls m**e - он не идет проверять е, останавливается на проверке m
 {
-	t_templ	*last;
+	// t_templ	*last;
 
 	// last = *copy_templ;
 	printf("ищем статус 1\n");
@@ -236,17 +266,16 @@ int check_status_one(t_templ **copy_templ, U_INT *i, char *str) // не рабо
 		return (fail);
 	*i += ft_strlen((*copy_templ)->value);
 	printf("успех! у нас совпало начало строки! Начнем дальше с i = %d, *copy_templ = %s, str[i] = %s\n", *i, (*copy_templ)->value, str + *i);
-	if (!(*copy_templ)->next)
-	{
-		printf("\n\nуспех! у нас совпало начало и строки! Выходим. str[i] = %s\n", str + *i);
-		return (success);
-	}
-
 	if ((*copy_templ)->next)
 		{
 			printf("last->next = %s\n", (*copy_templ)->next->value);
 			*copy_templ = (*copy_templ)->next;
 		}
+	else
+	{
+		printf("\n\nуспех! у нас совпало начало и строки! Выходим. str[i] = %s\n", str + *i);
+		return (success);
+	}
 	return (3);
 }
 
@@ -254,23 +283,29 @@ int check_status_two(t_templ **copy_templ, U_INT *i, char *str)
 {
 	t_templ	*last;
 
-	last = *copy_templ;
+	// last = *copy_templ;
 	printf("ищем статус 2\n");
-	while (str[*i] && last && last->value)
+	while (str[*i] && *copy_templ && (*copy_templ)->value && (*copy_templ)->status == 2)
 	{
-		if (ft_strncmp(last->value, str + *i, ft_strlen(last->value)) == 0)
+		if (ft_strncmp((*copy_templ)->value, str + *i, ft_strlen((*copy_templ)->value)) == 0)
 		{
-			*i += ft_strlen(last->value);
-			printf("успех! у нас совпало середина! Начнем дальше с i = %d, last->value = %s, str[i] = %s\n", *i, last->value, str + *i);
-			if (!last->next)
+			*i += ft_strlen((*copy_templ)->value);
+			printf("успех! у нас совпало середина! Начнем дальше с i = %d, last->value = %s, str[i] = %s\n", *i, (*copy_templ)->value, str + *i);
+			if (!((*copy_templ)->next))
 				return (success);
-			else if (last->next)
-				last = last->next;
+			else if ((*copy_templ)->next)
+			{
+				(*copy_templ) = (*copy_templ)->next;
+				printf("у нас есть  LAST дальше в шаблоне, file = %s, last->value = %s, last->status = %u\n\n", str, (*copy_templ)->value, (*copy_templ)->status);
+				if ((*copy_templ)->status == 3)
+					return (4);
+			}
 		}
 		else
 			++(*i);
 	}
-	if (last)
+	printf("!! Дальше смотрим на file = %s, last->value = %s, last->status = %u\n\n", str, (*copy_templ)->value, (*copy_templ)->status);
+	if ((*copy_templ) && (*copy_templ)->status != 3)
 		{
 			// printf("в шаблоне что-то осталось. Выход с ошибкой\n");
 			return (fail);
@@ -280,31 +315,31 @@ int check_status_two(t_templ **copy_templ, U_INT *i, char *str)
 
 int check_status_three(t_templ **copy_templ, U_INT *i, char *str)
 {
-	t_templ	*last;
+	// t_templ	*last;
 
-	last = *copy_templ;
-	printf("\n\nищем статус 3, str + i = %s, last->value = %s\n", str + *i, last->value);
-	while (str[*i] && last && last->value)
+	// last = *copy_templ;
+	printf("\n\nищем статус 3, str + i = %s, last->value = %s\n", str + *i, (*copy_templ)->value);
+	while (str[*i] && *copy_templ && (*copy_templ)->value)
 	{
-		if (ft_strncmp(last->value, str + *i, ft_strlen(last->value)) == 0)
+		if (ft_strncmp((*copy_templ)->value, str + *i, ft_strlen((*copy_templ)->value)) == 0)
 		{
 			// printf("возможно, слово подойдет!\n");
-			*i += ft_strlen(last->value);
-			printf("успех! у нас совпало конце строки! Начнем дальше с i = %d, last->value = %s, str[i] = %s\n", *i, last->value, str + *i);
-			if (!last->next && !str[*i])
+			*i += ft_strlen((*copy_templ)->value);
+			// printf("успех! у нас совпало конце строки! Начнем дальше с i = %d, last->value = %s, str[i] = %s\n", *i, (*copy_templ)->value, str + *i);
+			if (!((*copy_templ))->next && !str[*i])
 				{
 					// printf("слово подощло! last->value = %s\n", last->value);
 					return (success);
 				}
-			else if (last->next)
-				last = last->next;
+			else if ((*copy_templ)->next)
+				(*copy_templ) = (*copy_templ)->next;
 		}
 		else
 			++(*i);
 	}
-	if (last || str[*i])
+	if ((*copy_templ) || str[*i])
 		{
-			// printf("в шаблоне или строке что-то осталось. Выход с ошибкой\n");
+			printf("в шаблоне или строке что-то осталось. Выход с ошибкой\n");
 			return (fail);
 		}
 	// printf("слово подощло! last->value = %s\n", last->value);
@@ -335,12 +370,14 @@ t_status	check_template(t_input *input, char *str, t_templ *temple)
 			if (itog == fail || itog == success)
 				return (itog);
 		}
-		if (copy_templ->status == 2)
+		while (copy_templ->status == 2)
 		{
+			printf("382; Начинаем с copy_templ->status = %d, copy_templ->valye = %s\n\n", copy_templ->status, copy_templ->value);
 			itog = check_status_two(&copy_templ, &i, str);
 			if (itog == fail || itog == success)
 				return (itog);
 		}
+		printf("386; Закончили со copy_templ->status = %d, copy_templ->valye = %s\n\n", copy_templ->status, copy_templ->value);
 		if (copy_templ->status == 3)
 		{
 			itog = check_status_three(&copy_templ, &i, str);
@@ -402,7 +439,7 @@ char **big_circle(t_templ *temple, t_input *input, U_INT size_good_temp)
 	
 	i = 0;
 	printf("size_good_temp = %u\n", size_good_temp);
-	addition = malloc(sizeof(char *) * (size_good_temp));
+	addition = malloc(sizeof(char *) * (size_good_temp) + 1);
 	copy = input->star;
 	// while (*len < ft_lstsize(input->star))
 	// {
@@ -750,8 +787,8 @@ void	find_star(t_comm *tmp, t_input *input, U_INT k)
 	// printf("!ищем звезду: tmp->words[0] = %s, k = %u\n", tmp->words[0], k);
 	while (tmp && tmp->words && tmp->words[i])
 	{	
-		printf("!ищем звезду: i = %d, k = %u\n", i, k);
-		printf("!ищем звезду: tmp->words[i = %u] = %s\n", i, tmp->words[i]);
+		// printf("!ищем звезду: i = %d, k = %u\n", i, k);
+		// printf("!ищем звезду: tmp->words[i = %u] = %s\n", i, tmp->words[i]);
 		// if (ft_strchr(tmp->words[i], '*') == NULL)
 		// 	{
 		// 		// printf("нет звездыу: tmp->words[i = %u] = %s\n", i, tmp->words[i]);
@@ -761,11 +798,11 @@ void	find_star(t_comm *tmp, t_input *input, U_INT k)
 		// else if (ft_strlen(tmp->words[i]) > 1)
 		if (ft_strchr(tmp->words[i], '*') != NULL && only_star(tmp->words[i]) == success)
 		{
-			printf("1\n");
+			// printf("1\n");
 			// printf("есть звездыу: tmp->words[i = %u] = %s\n", i, tmp->words[i]);
 			templ = create_template_list(tmp->words[i], input);
 			len = check_tmp_in_dir(templ, input, 0, 0);
-			printf("есть звездa, но шаблон не подошел[len = %u\n", len);
+			// printf("есть звездa, но шаблон не подошел[len = %u\n", len);
 			if (len)
 				{
 					tmp->words = realloc_words(tmp->words, input, len, templ);
@@ -778,27 +815,27 @@ void	find_star(t_comm *tmp, t_input *input, U_INT k)
 			// 	free_temple(templ);
 			// put_nol_in_equal(input);
 			
-			printf("2\n");
+			// printf("2\n");
 			// i = 0;
 		}
 		else if (ft_strchr(tmp->words[i], '*') != NULL && only_star(tmp->words[i]) == fail)
 			{
 				put_one_in_equal(input);
-				printf("3\n");
+				// printf("3\n");
 				tmp->words = easy_realloc(tmp->words, input, ft_lstsize(input->star), templ);
 				i = 0;
 				put_nol_in_equal(input);
 
 				// printf("заглушка для случая, когда пришла только *\n");
 			// tmp->words = push_all_files();
-			printf("4\n");
+			// printf("4\n");
 			// ++i;
 			}
 		else if (ft_strchr(tmp->words[i], '*') == NULL)
 			++i;
 		// printf("647 - ищем звезду: tmp->words[i = %u] = %s, k = %u\n", i, tmp->words[i], k);
 		
-		printf("5, i = %u\n", i);
+		// printf("5, i = %u\n", i);
 	}
 	// if (templ)
 	// 	free_temple(templ);
