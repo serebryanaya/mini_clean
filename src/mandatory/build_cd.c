@@ -151,9 +151,13 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 		else
 		{
 			printf("command->words[1]=%s\n", command->words[1]);
-			path = get_path(input, command, copy);
+			if (command->words[1][0] == '~')
+				path = path_home(input, command);
+			else
+				path = get_path(input, command, copy);
 			if (!path)
 			{
+				printf("111cd HOME not set\n");
 				write(2, "cd: HOME not set\n", 17); // print_error(input, 1, "cd", "HOME not set");
 				return (1);
 			}

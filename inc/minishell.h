@@ -344,6 +344,9 @@ void		make_fork(t_input *input, t_comm *command, U_INT i);
 void		open_pipes(t_input *input);
 void		clean_path(char **path, U_INT i); //static void	free_path(char **path)
 void		close_fd(t_input *input, int *fd_file, U_INT counter, U_INT i);
+
+char		*path_home(t_input *input, t_comm *command);
+
 //mac:     gcc file.c -L/Users/$USER/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$USER/.brew/Cellar/readline/8.1.1/include -lreadline -o filename
 //linux:   gcc -L/usr/local/lib -I/usr/local/include *.c -lreadline
 
