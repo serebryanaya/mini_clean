@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 20:13:19 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 22:45:24 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,7 @@ void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 				++i;
 			--i;
 			if (str[i])
-				{
-					copy = copy->next;
-					++i;
-				}
+				copy = copy->next;
 			else
 				copy->next = NULL;
 			// i++;
@@ -146,24 +143,13 @@ void add_list_in_templ(t_templ	*templ, char *str, t_input *input, U_INT num)
 				i++;
 			copy->value = modif_substr(str, m, i - m, input);
 			printf("copy->value = %s\n", copy->value);
-			while (str[i] && str[i] == '*')
-				++i;
-			--i;
-			// if (str[i + 1])
-			if (str[i])
-				{
-					++i;
-					copy = copy->next;
-				}
+			if (str[i + 1])
+				copy = copy->next;
 			else
-				{
-					copy->next = NULL;
-					// ++i;
-				}
-			// ++i;
+				copy->next = NULL;
 			
 		}
-		// ++i;
+		++i;
 		
 		// else if (str[i])
 		// {
@@ -416,7 +402,7 @@ char **big_circle(t_templ *temple, t_input *input, U_INT size_good_temp)
 	
 	i = 0;
 	printf("size_good_temp = %u\n", size_good_temp);
-	addition = malloc(sizeof(char *) * (size_good_temp + 1));
+	addition = malloc(sizeof(char *) * (size_good_temp));
 	copy = input->star;
 	// while (*len < ft_lstsize(input->star))
 	// {
