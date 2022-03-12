@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:32 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 20:44:54 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 19:24:45 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ U_INT	launch_exit(t_input *input, t_comm *command)
 	status = 0;
 	if (command && command->words && command->words[1])
 	{
-		status = modif_atoi(command->words[1], &flag, 0, 0);
+		status = modif_atoi(command->words[1], &flag, 0);
 		if (launch_exit2(input, command, flag) == 1)
 			return (1);
 		else

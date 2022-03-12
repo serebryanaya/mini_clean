@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:58:39 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 20:56:00 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 19:25:00 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,14 @@ char	*modif_itoa(int n, t_input *input)
 	return (str);
 }
 
-long long	modif_atoi(char *s, int *flag, int i, long long number)
+long long	modif_atoi(char *s, int *flag, int i)
 {
-	int	sign;
+	int					sign;
+	unsigned long long	number;
 
+	number = 0;
 	if (*flag != 0)
 		return (0);
-	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
-		i++;
 	if (s[i] == '-')
 		sign = -1;
 	else
@@ -110,5 +110,5 @@ long long	modif_atoi(char *s, int *flag, int i, long long number)
 				*flag = -1;
 		}
 	}
-	return (sign * number);
+	return ((long long)sign * number);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 18:32:46 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/04 21:09:51 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/12 19:24:51 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static inline void put_shlvl2(t_input *input, U_INT level) // эту штуку 
 		}
 		else if (ft_strcmp(copy->key, "SHLVL") == 0 && copy->value[0] != '\0')
 		{
-			level += modif_atoi(copy->value, &flag, 0, 0);
+			level += modif_atoi(copy->value, &flag, 0);
 			free(copy->value);
 			copy->value = modif_strdup(modif_itoa(level, input), input); 
 			return ;   
