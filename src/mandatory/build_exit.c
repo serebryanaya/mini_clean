@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:32 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/06 20:44:54 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 19:24:45 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ U_INT	launch_exit(t_input *input, t_comm *command)
 	{
 		// printf("!!!!copy->words[1] = %s\n", copy->words[1]);
 		// input->still_work = fail;
-		status = modif_atoi(command->words[1], &flag, 0, 0);
+		status = modif_atoi(command->words[1], &flag, 0); // !!!!!!
 		if (flag == -1)
 		{
-			if (input->num_of_command == 1)
-				write(2, "exit\n", 5);
+			// if (input->num_of_command == 1) //НЕ УДАЛЯТЬ!!!
+			// 	write(2, "exit\n", 5); //НЕ УДАЛЯТЬ!!!
 			str = ft_strjoin_for_3("minishell: exit: ", command->words[1], ": numeric argument required\n", input);
 			write(2, str, ft_strlen(str));
 			free(str);
@@ -54,9 +54,8 @@ U_INT	launch_exit(t_input *input, t_comm *command)
 		}
 		else if (command->words[2])
 		{
-			if (input->num_of_command == 1)
-				write(2, "exit\n", 5);
-			// printf("!!!!exit\n");
+			// if (input->num_of_command == 1)//НЕ УДАЛЯТЬ!!!
+			// 	write(2, "exit\n", 5); //НЕ УДАЛЯТЬ!!!
 			str = ft_strjoin("minishell: exit: ", "too many arguments\n", input);
 			write(2, str, ft_strlen(str));
 			free(str);
