@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 22:30:04 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:48:44 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,13 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_templ
+{
+	char			*value;
+	U_INT			status;
+	struct s_templ	*next;
+}	t_templ;
+
 typedef struct s_comm
 {
 	char			**words;
@@ -287,8 +294,9 @@ void		handler_pipex(int sig_num);
 void		put_shlvl(t_input *input);
 
 /*----star - обработка звезды---*/ 
-void		star_in_word(t_comm **tmp, U_INT *k, char *vrem, t_input *input);
-void		find_star_in_comm(t_input *input); // почистить в конце всей программы эту новую структуру!!!!!
+// void		star_in_word(t_comm **tmp, U_INT *k, char *vrem, t_input *input);
+// void		find_star_in_comm(t_input *input); // почистить в конце всей программы эту новую структуру!!!!!
+void		find_star(t_comm *tmp, t_input *input, U_INT k);
 
 /*----quotes - работа с кавычками---*/ 
 t_status	go_to_end_quote(char *str, U_INT *i, char c, t_input *input);
@@ -329,6 +337,7 @@ void	ft_lstadd_middle(t_env *new, t_env *tmp);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 void	ft_lstadd_front(t_env **lst, t_env *new);
 U_INT	ft_lstsize(t_env *lst);
+void	lstadd_back(t_templ **lst, t_templ *new);
 
 /*----pipes ---*/ 
 void		make_fork(t_input *input, t_comm *command, U_INT i);

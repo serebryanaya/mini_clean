@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:26:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 20:44:50 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:25:28 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,34 @@ void	ft_lstadd_middle(t_env *new, t_env *tmp)
 
 void	ft_lstadd_back(t_env **lst, t_env *new)
 {
-	t_env	*addnode;
+	t_env	*copy;
 
-	addnode = *lst;
-	if (*lst == NULL)
-		*lst = new;
-	if (lst != NULL && addnode != NULL)
+	if (!lst || !new)
+		return ;
+	if (*lst != NULL)
 	{
-		while (addnode->next)
-			addnode = addnode->next;
+		copy = *lst;
+		while (copy->next != NULL)
+			copy = copy->next;
+		copy->next = new;
 	}
-	if (addnode != NULL && new != NULL)
-		addnode->next = new;
+	else
+		*lst = new;
 }
+// {
+// 	t_env	*addnode;
+
+// 	addnode = *lst;
+// 	if (*lst == NULL)
+// 		*lst = new;
+// 	if (lst != NULL && addnode != NULL)
+// 	{
+// 		while (addnode->next)
+// 			addnode = addnode->next;
+// 	}
+// 	if (addnode != NULL && new != NULL)
+// 		addnode->next = new;
+// }
 
 void	ft_lstadd_front(t_env **lst, t_env *new)
 {
@@ -59,4 +74,22 @@ U_INT	ft_lstsize(t_env *lst)
 		len++;
 	}
 	return (len);
+}
+
+
+void	lstadd_back(t_templ **lst, t_templ *new)
+{
+	t_templ	*copy;
+
+	if (!lst || !new)
+		return ;
+	if (*lst != NULL)
+	{
+		copy = *lst;
+		while (copy->next != NULL)
+			copy = copy->next;
+		copy->next = new;
+	}
+	else
+		*lst = new;
 }
