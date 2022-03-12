@@ -6,52 +6,56 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 18:27:11 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 19:52:30 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void find_star_in_comm(t_input *input) // заполняет input->star
-// почистить в конце всей программы эту новую структуру!!!!!
+t_env	*create_new_env(t_env **new, DIR *dir, struct dirent *entry, t_input *input)
 {
-	DIR					*dir;
-    struct				dirent *entry;
-	t_env				*new;
+	*new = create_new_list(ft_strjoin_for_3 \
+		(modif_itoa((int)entry->d_ino, input), "=", \
+		modif_strdup(entry->d_name, input), input), input);
+	(*new)->equal = 0;
+	if (!input->star)
+		input->star = *new;
+	else
+		add_list_back(*new, &input->star);
+	return(*new);
+}
+
+void	find_star_in_comm(t_input *input)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	t_env			*new;
 
 	dir = opendir(getcwd(NULL, 0));
-    if (!dir)
+	if (!dir)
 		return ;
-	// {
-    //     perror("diropen");
-    //     exit(1);
-    // }
-    while (1)
+	while (1)
 	{
-        entry = readdir(dir);
+		entry = readdir(dir);
 		if (entry != NULL)
 		{
 			if (entry->d_name[0] != '.')
-				{
-					new = create_new_list(ft_strjoin_for_3\
-						(modif_itoa((int)entry->d_ino, input), "=", modif_strdup(entry->d_name, input), input), input);
-					new->equal = 0;
-					if (!input->star)
-						input->star = new;
-					else
-						add_list_back(new, &input->star);
-				}
-			// printf("%lld - %s [%d] %d\n",
-            // 	entry->d_ino, entry->d_name, entry->d_type, entry->d_reclen);
-			// if (new)
-			// printf("new = %s %s\n",
-            // 	new->key, new->value);
-			// // free(entry);
+				// new = create_new_env(&new, dir, entry, input);
+			{
+			new = create_new_list(ft_strjoin_for_3 \
+			(modif_itoa((int)entry->d_ino, input), "=", \
+			modif_strdup(entry->d_name, input), input), input);
+			new->equal = 0;
+			if (!input->star)
+				input->star = new;
+			else
+				add_list_back(new, &input->star);
+			}
 		}
 		else
 			break ;
-    }
-    closedir(dir);
+	}
+	closedir(dir);
 }
 
 
