@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:44:38 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 23:39:53 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:00:55 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ t_status	finder(char *str_command, t_input *input) // сейчас тут тол
     U_INT i;
 
     i = 0;
-    // if (check_quotes(input, str_command) == fail || \
-	// check_red(input, str_command) == fail)
-	if (check_quotes(input, str_command) == fail)
-		return (fail);
+    if (check_quotes(input, str_command) == fail || \
+	check_red(input, str_command) == fail)
+	// if (check_quotes(input, str_command) == fail)
+	// 	return (fail);
 	while (str_command[i] == ' ')
 		i++;
     if (str_command[i] == '|')

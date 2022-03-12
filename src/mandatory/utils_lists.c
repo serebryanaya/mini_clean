@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:26:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/10 21:24:13 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:25:28 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ void	ft_lstadd_back(t_env **lst, t_env *new)
 	else
 		*lst = new;
 }
+// {
+// 	t_env	*addnode;
+
+// 	addnode = *lst;
+// 	if (*lst == NULL)
+// 		*lst = new;
+// 	if (lst != NULL && addnode != NULL)
+// 	{
+// 		while (addnode->next)
+// 			addnode = addnode->next;
+// 	}
+// 	if (addnode != NULL && new != NULL)
+// 		addnode->next = new;
+// }
 
 void	ft_lstadd_front(t_env **lst, t_env *new)
 {

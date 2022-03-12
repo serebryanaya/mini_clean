@@ -6,11 +6,34 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:57:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 18:08:09 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:41:12 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*path_home(t_input *input, t_comm *command)
+{
+	char 	*path;
+	char	*tmp;
+	t_env	*copy;
+
+	copy = input->envp;
+	path = NULL;
+	while (copy && ft_strcmp(copy->key, "HOME"))
+		copy = copy->next;
+	// printf("key=%s\n", copy->key);	
+	if (copy)
+	{
+		tmp = modif_substr(command->words[1], 1, \
+			ft_strlen(command->words[1]) - 1, input);
+		path = ft_strjoin(copy->value, tmp, input);
+		free(tmp);
+		return (path);
+		// printf("%s\n", path);
+	}
+	return (0);
+}
 
 static inline void	find_options(t_comm *command, U_INT *i, t_input *input)
 {
@@ -46,9 +69,18 @@ U_INT	launch_echo(t_input *input)
 	while (input->command->words[i])
 	{
 		if (input->command->words[i + 1])
+		{
+			// printf("1launch_echo\n");
 			printf("%s ", input->command->words[i]);
+		}
 		else
-			printf("%s", input->command->words[i]);
+		{
+			if (input->command->words[i][0] != '~')
+			{
+				// printf("2launch_echo\n");
+				printf("%s", input->command->words[i]);
+			}
+		}
 		i++;
 	}
 	if (j == 0)

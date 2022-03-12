@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 21:20:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 20:28:47 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:42:32 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ U_INT   launch_export(t_input *input, t_comm * command)
     // while (input->command->words[++i])
     while (command->words[i])
     {
-        if (ft_isalpha(command->words[i][0]))
+        if (command->words[i][0] == '_' || ft_isalpha(command->words[i][0]))
         {
             // printf("command[%d] = %c\n", i, input->command->words[i][0]);
             // printf("command[%d] = %s\n", i, input->command->words[i]);
@@ -205,7 +205,7 @@ U_INT   launch_export(t_input *input, t_comm * command)
         else
         {
         //  printf("command[%d] = %c\n", i, input->command->words[i][0]);
-            // input->num_error = 1;
+            input->num_error = 1;
             // write(2, "export: `", 9);
             // write(2, input->command->words[i], ft_strlen(input->command->words[i]));
             // write(2, "': not a valid identifier\n", 26);

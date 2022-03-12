@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/10 21:17:56 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:48:44 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,7 @@ char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 // long		modif_atoi(char *s, int i, long number);
 long long	modif_atoi(char *s, int *flag, int i, long long number);
+int			ft_isalpha(int c);
 
 /*----utils_other2 - ПРОДОЛЖЕНИЕ: полезные функции для другой работы со строками---*/ 
 int			ft_strncmp(const char *str1, const char *str2, size_t n);

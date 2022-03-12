@@ -6,83 +6,11 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 23:26:00 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 17:20:54 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/12 18:27:11 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strstr(char *haystack, char *needle)
-{
-	U_INT	i;
-	U_INT	j;
-	U_INT	len;
-
-	len = ft_strlen(haystack);	
-	i = 0;
-	j = 0;
-	printf("ned = %s, hay = %s\n", needle, haystack);
-	if (ft_strlen(needle) > len)
-		return (NULL);
-	if (haystack[i] & needle[i] && haystack[i] == needle[i]) //???? может и без этого работает
-	{
-		while (haystack[i] && needle[i] && haystack[i] == needle[i])
-			i++;
-			// printf("1\n");
-		if (needle[i])
-			return (NULL);
-		else
-			return (&haystack[i]);
-			// printf("2\n");
-	}
-	while (i < len && haystack[i + j] != '\0')
-	{
-		// printf("3\n");
-		while (haystack[i + j] == needle[j] && ((i + j) < len) && \
-				needle[j] != '\0')
-			j++;
-			// printf("4\n");
-		if (!needle[j])
-			return (&haystack[i]);
-		if (haystack[i + j] != '\0' && needle[j] == '\0')
-			return (NULL);
-			// printf("5\n");
-		if (j == ft_strlen(needle))
-			return (&haystack[i]);
-		i++;
-		j = 0;
-		// printf("6\n");
-	}
-	return (NULL);
-}
-
-// static char	*check_star(t_input *input, U_INT *k)
-// {
-// 	U_INT	m;
-// 	U_INT	i;
-// 	char	**new_arr;
-// 	U_INT	start;
-
-// 	i = 1;
-// 	while (i <= k)
-// 	{
-// 		if (ft_strcmp(input->command->words[i], "*") != success)
-// 			i++;
-// 		else
-// 		{
-// 			m = ft_lstsize(input->star) + k;
-// 			new_arr = malloc(sizeof(char *) * m);
-// 		}
-// 		input->command->words[i] != 
-// 		i++;
-// 	}
-// 	m = ft_lstsize(input->star) + k;
-// 	new_arr = malloc(sizeof(char *) * m);
-
-
-
-// }
-
 
 void find_star_in_comm(t_input *input) // заполняет input->star
 // почистить в конце всей программы эту новую структуру!!!!!
@@ -93,10 +21,11 @@ void find_star_in_comm(t_input *input) // заполняет input->star
 
 	dir = opendir(getcwd(NULL, 0));
     if (!dir)
-	{
-        perror("diropen");
-        exit(1);
-    }
+		return ;
+	// {
+    //     perror("diropen");
+    //     exit(1);
+    // }
     while (1)
 	{
         entry = readdir(dir);
@@ -469,7 +398,7 @@ char **big_circle(t_templ *temple, t_input *input, U_INT size_good_temp)
 	
 	i = 0;
 	printf("size_good_temp = %u\n", size_good_temp);
-	addition = malloc(sizeof(char *) * (size_good_temp + 1));
+	addition = malloc(sizeof(char *) * (size_good_temp));
 	copy = input->star;
 	// while (*len < ft_lstsize(input->star))
 	// {
