@@ -14,7 +14,7 @@
 
 char	*path_home(t_input *input, t_comm *command)
 {
-	char 	*path;
+	char	*path;
 	char	*tmp;
 	t_env	*copy;
 
@@ -22,7 +22,6 @@ char	*path_home(t_input *input, t_comm *command)
 	path = NULL;
 	while (copy && ft_strcmp(copy->key, "HOME"))
 		copy = copy->next;
-	// printf("key=%s\n", copy->key);	
 	if (copy)
 	{
 		tmp = modif_substr(command->words[1], 1, \
@@ -30,7 +29,6 @@ char	*path_home(t_input *input, t_comm *command)
 		path = ft_strjoin(copy->value, tmp, input);
 		free(tmp);
 		return (path);
-		// printf("%s\n", path);
 	}
 	return (0);
 }
@@ -43,13 +41,10 @@ static inline void	find_options(t_comm *command, U_INT *i, t_input *input)
 	w = 1;
 	while (command->words[w])
 	{
-		if (command->words[w][0] == '~')
-		{
-			// printf("find_options~\n");
-			printf("%s\n", path_home(input, command));
-		}
 		if (command->words[w][0] != '-')
 			break ;
+		if (command->words[w][0] == '~')
+			printf("%s\n", path_home(input, command));
 		l = 1;
 		while (command->words[w][l] == 'n')
 			l++;
@@ -74,17 +69,11 @@ U_INT	launch_echo(t_input *input)
 	while (input->command->words[i])
 	{
 		if (input->command->words[i + 1])
-		{
-			// printf("1launch_echo\n");
 			printf("%s ", input->command->words[i]);
-		}
 		else
 		{
 			if (input->command->words[i][0] != '~')
-			{
-				// printf("2launch_echo\n");
 				printf("%s", input->command->words[i]);
-			}
 		}
 		i++;
 	}
