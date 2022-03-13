@@ -15,9 +15,10 @@
 void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 {
 	input->num_error = error_num;
-	write(2, "minishell: ", 11);
+	write(2, "", 11);
 	if (msg != NULL)
 	{
+		printf("1print_error\n");
 		write(2, msg, ft_strlen(msg));
 		write(2, ": ", 2);
 	}
@@ -27,6 +28,7 @@ void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 		write(2, descrip, ft_strlen(descrip));
 	write(2, "\n", 1);
 	free_all(input);
+	printf("qwe\n");
 	exit(error_num);
 }
 

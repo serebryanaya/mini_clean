@@ -46,10 +46,10 @@ void mark_direct(t_input *input) // не понимаю, зачем это. по
 {
 	U_INT	i;
 
-	// printf("зашел в mark_direct\n");
+	printf("зашел в mark_direct\n");
 	if (!input->command)
 		{
-			// printf("я не нашел команду\n");
+			printf("я не нашел команду\n");
 			return ;
 		}
 	i = 0;
@@ -57,16 +57,20 @@ void mark_direct(t_input *input) // не понимаю, зачем это. по
 	{
 		while (i < input->direct->value)
 			{
+				printf("direct->value=%d\n", input->direct->value);
 				input->command = input->command->next;
 				i++;
 			}
 		if (input->direct->incoming == 1)
+		{
+			printf("direct_incoming=%d\n", input->direct->incoming);
 			input->command->direct_in = input->direct;
+		}
 		else
 			input->command->direct_out = input->direct;
 		input->direct = input->direct->next;
 	}
-	// printf("вышел из mark_direct\n");
+	printf("вышел из mark_direct\n");
 }
 
 void choose_build(t_comm *command) // у меня е_нам, может быть можно проще написать

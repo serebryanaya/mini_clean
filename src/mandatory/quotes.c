@@ -156,5 +156,5 @@ void clean_direct(t_input *input)
 	}
 	// free(copy);
 	add_heredoc(input);// надо ли это вообще???
-	// mark_direct(input);
+	mark_direct(input);
 }

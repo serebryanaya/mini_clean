@@ -24,9 +24,10 @@ static inline t_status	try_open3(t_direct	*copy, t_input *input)
 		fd = open(copy->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(copy->name, O_RDONLY, 0644);
-	// printf("запуск проверки: fd = %d\n", fd);
+	printf("запуск проверки: fd = %d\n", fd);
 	if (fd == -1)
 	{
+		// printf("try_open3_error\n");
 		input->num_error = errno;
 		print_error(input, input->num_error, copy->name, strerror(input->num_error));
 		return (fail);
@@ -152,11 +153,15 @@ void try_open(t_input *input)
 	}
 	if (input->num_of_command == 1 && input->command->build_number != 0) // запуск билдинов!
 	{
-					// printf("2num_of_command == %d, input->command->build_number == %d, first word = %s\n",
-			//    input->num_of_command, input->command->build_number, input->command->words[0]);
+					printf("2num_of_command == %d, input->command->build_number == %d, first word = %s\n",
+			   input->num_of_command, input->command->build_number, input->command->words[0]);
 			fd = reverse_redir(input);
+			// reverse_redir(input);
 			input->num_error = launcher(input, input->command);
+			// close(fd);
 			reverse_redir2(input, fd);
+			// free_all(input);
+			// exit(input->num_error);
 	}
 
 	//ОТСЮДА ДЕЛАЕТ НАСТЯ
@@ -167,8 +172,8 @@ void try_open(t_input *input)
 // 	}
 	else if (input->num_of_command != 1 || input->command->words[0] != NULL)
 	{
-		// printf("3num_of_command == %d, input->command->build_number == %d, first word = %s\n",
-			//    input->num_of_command, input->command->build_number, input->command->words[0]);
+		printf("3num_of_command == %d, input->command->build_number == %d, first word = %s\n",
+			   input->num_of_command, input->command->build_number, input->command->words[0]);
 		make_fork(input, input->command, 0); //pipex(arg);
 	}
 }
