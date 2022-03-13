@@ -33,7 +33,6 @@ void	go_through_redirect(char *str, U_INT *i, char c, t_input *input)
 
 U_INT	get_number_of_words(char *str, U_INT *i, t_input *input, U_INT counter)
 {
-	find_star_in_comm(input);
 	while (str[*i] != '\0' && str[*i] != '|')
 	{
 		if (str[*i] == ' ')
@@ -48,8 +47,8 @@ U_INT	get_number_of_words(char *str, U_INT *i, t_input *input, U_INT counter)
 				counter++;
 			else
 				counter += ft_lstsize(input->star);
-			// iter_str(str, i);
-			while (str[*i] && str[*i] != '\0' && str[*i] != '|' && str[*i] != ' ')
+			while (str[*i] && str[*i] != '\0' && str[*i] != '|' \
+			&& str[*i] != ' ')
 				(*i)++;
 		}
 		else
@@ -73,6 +72,7 @@ static t_comm	*create_list_comm(char *str, t_input *input, U_INT *i)
 	new->direct_out = NULL;
 	new->next = NULL;
 	new->build_number = 0;
+	find_star_in_comm(input);
 	counter = get_number_of_words(str, i, input, 0);
 	new->words = malloc(sizeof(char *) * (counter + 1));
 	if (!new->words)

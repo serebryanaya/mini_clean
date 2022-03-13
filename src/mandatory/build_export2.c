@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_export.c                                     :+:      :+:    :+:   */
+/*   build_export2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 21:20:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 18:42:32 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 20:24:04 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,12 @@ static void	change_env(t_env *env, t_env *new, t_input *input)
 	}
 }
 
-U_INT	launch_export(t_input *input, t_comm *command)
+U_INT	launch_export(t_input *input, t_comm *command, U_INT i)
 {
-	int		i;
-	t_env	*env;
 	t_env	*new;
 	t_env	*tmp;
 
 	input->num_error = 0;
-	env = input->envp;
-	i = 1;
 	new = NULL;
 	if (command->words[1] == NULL)
 		return (only_export(input));

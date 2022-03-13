@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 22:03:53 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/12 18:43:31 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 20:28:31 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,25 @@ int	find_key(t_env **env, char *str)
 void	remove_env(t_env *env)
 {
 	t_env	*copy;
+
 	copy = env->next;
 	env->next = copy->next;
 	free(copy->key);
 	free(copy->value);
 	free(copy);
+}
+
+t_status	launch_unset2(t_input *input, char *str)
+{
+	if (!input->envp)
+		return (fail);
+	if (!ft_isalpha(str[0]))
+	{
+		input->num_error = 1;
+		printf("%s%s%s\n", "unset: `", str, \
+		"': not a valid identifier");
+	}
+	return (success);
 }
 
 U_INT	launch_unset(t_input *input, t_comm *command)
@@ -47,13 +61,8 @@ U_INT	launch_unset(t_input *input, t_comm *command)
 	i = 1;
 	while (command->words[i])
 	{
-		if (!input->envp)
+		if (launch_unset2(input, command->words[i]) == fail)
 			break ;
-		if (!ft_isalpha(command->words[i][0]))
-		{
-			input->num_error = 1;
-			printf("%s%s%s\n", "unset: `", command->words[i], "': not a valid identifier");
-		}
 		if (command->words[i][0] == '_')
 			continue ;
 		if (find_key(&input->envp, command->words[i]))

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/09 22:08:34 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 20:55:20 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ t_status	go_to_end_quote(char *str, U_INT *i, char c, t_input *input)
 		else
 			m++;
 	}
-	input->token = modif_strdup("newline", input);
-	print_token(input);
+	print_token(input, "newline");
 	(*i)++;
 	return (fail);
 }
 
-static inline char *delete_quotes2(char *tmp, U_INT *i, t_input *input, char c)
+static inline char	*delete_quotes2(char *tmp, U_INT *i, t_input *input, char c)
 {
 	U_INT	j;
 	char	*start;
@@ -46,7 +45,7 @@ static inline char *delete_quotes2(char *tmp, U_INT *i, t_input *input, char c)
 	if (!tmp[*i])
 		*i = j + 1;
 	start = modif_substr(tmp, 0, j, input);
-	mid = modif_substr(tmp, j + 1, *i - 1 -j, input);
+	mid = modif_substr(tmp, j + 1, *i - 1 - j, input);
 	if (c == '\"')
 		mid = once_more_find_dollar(mid, input, 0);
 	end = ft_strjoin(start, mid, input);
@@ -85,7 +84,7 @@ static void	delete_quotes(char **str_command, t_input *input)
 	*str_command = cut;
 }
 
-char **del_elem_from_arr(char **old, U_INT index, t_input *input, U_INT len)
+char	**del_elem_from_arr(char **old, U_INT index, t_input *input, U_INT len)
 {
 	char	**new;
 	U_INT	i;
@@ -105,17 +104,17 @@ char **del_elem_from_arr(char **old, U_INT index, t_input *input, U_INT len)
 		}
 		else
 			free(old[j]);
-        j++;
+		j++;
 	}
 	free(old);
 	new[i] = NULL;
 	return (new);
 }
 
-void clean_command(t_input *input)
+void	clean_command(t_input *input)
 {
-	U_INT   i;
-	t_comm  *copy;
+	U_INT	i;
+	t_comm	*copy;
 
 	copy = input->command;
 	while (copy)

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 20:29:36 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 20:58:33 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	init_input(t_input *input)
 {
-	input->std_in = STDIN_FILENO;
-	input->std_out = STDOUT_FILENO;
 	input->num_of_command = 0;
 	input->arg_env = NULL;
 	input->fd = NULL;
@@ -25,7 +23,6 @@ void	init_input(t_input *input)
     input->command = NULL;
 	input->direct = NULL;
 	input->envp = NULL;
-	input->still_work = success;
 	// signal(SIGQUIT, SIG_IGN); // SIQuit = CTRL+\ , SIG_IGN - Сигнал   прерывания  игнорируется. \
 	// В программе он должен выводить Quit: 3
 	// // Ctrl D = вводу конца файла. Обработка НЕ через сигнал

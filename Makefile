@@ -11,6 +11,7 @@ SRC_O_DIR			= src/mandatory/
 SRC_B_DIR			= src/bonus/
 SRC_O 				= envp.c \
 					free_struct.c \
+					free_struct2.c \
 					init.c \
 					main.c \
 					signals.c \
@@ -21,7 +22,6 @@ SRC_O 				= envp.c \
 					utils_print.c \
 					utils_lists.c \
 					shlvl.c \
-					check_forbidden.c \
 					parser.c \
 					put_t_comm.c \
 					finder.c \
@@ -40,8 +40,15 @@ SRC_O 				= envp.c \
 					build_env.c \
 					build_exit.c \
 					star.c \
+					star2.c \
+					star3.c \
+					star4.c \
+					star5.c \
+					star6.c \
 					pipe.c \
 					child_and_dups.c \
+					heredoc.c \
+					get_path.c
 
 
 

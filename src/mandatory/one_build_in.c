@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:04:01 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/07 23:30:31 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 20:24:24 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ U_INT	launcher(t_input *input, t_comm	*command) //int	run_built(t_cmd *cmd, t_ar
 	else if (command->build_number == 3)
 		return (launch_pwd(input));
 	else if (command->build_number == 4)
-		return (launch_export(input, command));
+		return (launch_export(input, command, 1));
 	else if (command->build_number == 5)
 		return (launch_unset(input, command));
 	else if (command->build_number == 6)
 		return (launch_env(input));
 	else if (command->build_number == 7)
 		return (launch_exit(input, command));
-	// else if (command->build_number == -1)
-	// 	return (launch_star(input, command));
 	return (success);
 }
 

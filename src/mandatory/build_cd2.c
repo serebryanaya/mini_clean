@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rriddler <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 22:30:35 by rriddler          #+#    #+#             */
-/*   Updated: 2022/03/12 22:30:40 by rriddler         ###   ########.fr       */
+/*   Updated: 2022/03/13 20:21:39 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,22 @@ char	*cd_oldpwd(t_input *input, t_comm *command, t_env *copy)
 
 U_INT	launch_cd2(t_input *input, t_comm **command, char sign, char **path)
 {
-	t_env	*copy;
-
-	copy = input->envp;
 	if (sign == '-')
 	{
-		*path = cd_oldpwd(input, *command, copy);
+		*path = cd_oldpwd(input, *command, input->envp);
 		if (!*path)
 		{
 			write(2, "cd: OLDPWD not set\n", 17);
 			return (1);
 		}
-		else
-			printf("%s\n", *path);
+		printf("%s\n", *path);
 	}
 	else
 	{
 		if (sign == '~')
 			*path = path_home(input, *command);
 		else
-			*path = get_path_cd(input, *command, copy);
+			*path = get_path_cd(input, *command, input->envp);
 		if (!*path)
 		{
 			write(2, "cd: HOME not set\n", 17);
@@ -123,9 +119,10 @@ U_INT	launch_cd(t_input *input, t_comm *command)
 	}
 	change_envp(input, NULL, 0);
 	if (chdir(path) != success)
-		cd_print_error(input, 1, command->words[0], "No such file or directory");
+		cd_print_error(input, 1, command->words[0], \
+		"No such file or directory");
 	change_envp(input, NULL, 1);
 	input->num_error = 1;
 	free(path);
-	return(input->num_error);
+	return (input->num_error);
 }

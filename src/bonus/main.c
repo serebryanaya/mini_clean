@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/02/23 17:31:07 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/13 19:43:15 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		if (catch_str(&str_command, &input, 0) == fail)
 			continue ;//считываем строку через readline
-		if (finder(str_command, &input) == fail) // здесь надо дописать обработку ошибок
+		if (finder(str_command, &input, 0) == fail) // здесь надо дописать обработку ошибок
 		{
 			free(str_command);
 			continue ;
