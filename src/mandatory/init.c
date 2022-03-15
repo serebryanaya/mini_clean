@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 20:58:33 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/15 22:37:17 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,11 @@ void	init_input(t_input *input)
 	input->arg_env = NULL;
 	input->fd = NULL;
 	input->num_error = 0;
-	// input->problem = NULL;
 	input->token = NULL;
     input->command = NULL;
 	input->direct = NULL;
-	input->envp = NULL;
-	// signal(SIGQUIT, SIG_IGN); // SIQuit = CTRL+\ , SIG_IGN - Сигнал   прерывания  игнорируется. \
-	// В программе он должен выводить Quit: 3
-	// // Ctrl D = вводу конца файла. Обработка НЕ через сигнал
-	// signal(SIGINT, my_handler); // SIGINT = Ctrl C - перевод на новую строку
+	// input->envp = NULL;
+	input->have_star = 0;
 }
 
 void	direct_init(t_direct *new, U_INT *i, U_INT j, char *str)
@@ -39,44 +35,43 @@ void	direct_init(t_direct *new, U_INT *i, U_INT j, char *str)
 	new->next = NULL;
 }
 
-void mark_direct(t_input *input) // не понимаю, зачем это. пока убрала
+void mark_direct(t_input *input)
 {
 	U_INT	i;
-
-	// printf("зашел в mark_direct\n");
+	t_direct	*copy;
+	
+	copy = input->direct;
 	if (!input->command)
-		{
-			// printf("я не нашел команду\n");
-			return ;
-		}
+		return ;
+	// printf("mark_direct: value=%d, incoming=%d\n", input->direct->value, input->direct->incoming);
 	i = 0;
-	while (input->direct)
+	while (copy)
 	{
-		while (i < input->direct->value)
+		while (i < copy->value)
 			{
 				input->command = input->command->next;
 				i++;
 			}
-		if (input->direct->incoming == 1)
+		if (copy->incoming == 1)
 			input->command->direct_in = input->direct;
 		else
 			input->command->direct_out = input->direct;
-		input->direct = input->direct->next;
+		copy = copy->next;
 	}
-	// printf("вышел из mark_direct\n");
 }
 
-void choose_build(t_comm *command) // у меня е_нам, может быть можно проще написать
+void choose_build(t_comm *command)
 {
 	t_comm *copy;
 
 	copy = command;
 	while (copy != NULL)
 	{
-		// printf("command->words[0] = %s, command->build_number = %d\n", command->words[0], \
-		// command->build_number);
 		if (copy->words[0] == NULL)
-			continue; // зачем???
+		{
+			copy = copy->next;
+			continue ;
+		}
 		else
 		{
 			if (ft_strcmp(copy->words[0], "echo") == 0)
@@ -93,12 +88,7 @@ void choose_build(t_comm *command) // у меня е_нам, может быть
 				copy->build_number = 6;
 			else if (ft_strcmp(copy->words[0], "exit") == 0)
 				copy->build_number = 7;
-			else if (ft_strcmp(copy->words[0], "*") == 0)
-				copy->build_number = -1;
-			
 		}
 		copy = copy->next;
 	}
-	// 	printf("command->words[0] = %s, command->build_number = %d\n", command->words[0], \
-	// command->build_number);
 }

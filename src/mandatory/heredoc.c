@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 20:16:58 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 20:17:45 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/15 22:50:33 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_status	launch_heredoc(t_direct *copy, t_input *input, int fd)
 			err = ft_strjoin(new_line, "\n", input);
 			if (write(fd, err, ft_strlen(err)) == -1)
 				return (launch_heredoc3(copy, input, &err));
+			free(err);
 		}
 		else
 		{

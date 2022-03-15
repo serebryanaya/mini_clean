@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   star6.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 19:30:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 19:31:23 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/14 01:42:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	free_temple(t_templ *temple)
 	{
 		copy = temple;
 		temple = temple->next;
-		printf("очистка листка с шаблоном: copy->value = %s\n", copy->value);
 		free(copy->value);
 		free(copy);
 	}

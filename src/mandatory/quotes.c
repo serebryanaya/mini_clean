@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 20:55:20 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/14 22:27:30 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_status	go_to_end_quote(char *str, U_INT *i, char c, t_input *input)
 		else
 			m++;
 	}
-	print_token(input, "newline");
 	(*i)++;
 	return (fail);
 }
@@ -49,14 +48,14 @@ static inline char	*delete_quotes2(char *tmp, U_INT *i, t_input *input, char c)
 	if (c == '\"')
 		mid = once_more_find_dollar(mid, input, 0);
 	end = ft_strjoin(start, mid, input);
-	free(start);
-	free(mid);
+	free(start); //ft_cmd_gap2
+	free(mid); //ft_cmd_gap2
 	mid = modif_strdup(tmp + 1 + *i, input);
 	start = ft_strjoin(end, mid, input);
 	*i = ft_strlen(end);
-	free(tmp);
-	free(mid);
-	free(end);
+	free(tmp); //ft_cmd_gap2->ft_free
+	free(mid); //ft_cmd_gap2->ft_free
+	free(end); //ft_cmd_gap2->ft_free
 	return (start);
 }
 
@@ -80,7 +79,7 @@ static void	delete_quotes(char **str_command, t_input *input)
 		else
 			i++;
 	}
-	free(*str_command);
+	free(*str_command); //ft_clean_quotes ||ft_clean_red
 	*str_command = cut;
 }
 
@@ -155,5 +154,5 @@ void clean_direct(t_input *input)
 	}
 	// free(copy);
 	add_heredoc(input);// надо ли это вообще???
-	// mark_direct(input);
+	mark_direct(input);
 }

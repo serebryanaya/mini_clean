@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:22:34 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 20:47:50 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/15 00:14:20 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	free_star(t_input *input)
 {
 	t_env	*copy;
 
-	if (!input->star)
+	if (input->have_star == 0 || !input->star)
 		return ;
+	input->have_star = 0;
 	while (input->star != NULL)
 	{
 		copy = input->star;
@@ -29,7 +30,7 @@ void	free_star(t_input *input)
 	input->star = NULL;
 }
 
-static inline void	free_arg_env(t_input *input)
+void	free_arg_env(t_input *input)
 {
 	U_INT	i;
 
@@ -93,5 +94,6 @@ void	free_str_command(char *str_command, t_input *input, U_INT i)
 	}
 	input->num_of_command = 0;
 	free_arg_env(input);
-	free_star(input);
+	if (input->star)
+		free_star(input);
 }

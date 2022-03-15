@@ -2,8 +2,8 @@ NAME_O 				= minishell
 NAME_B 				= minishell_bonus
 NAME				= minishell
 
-FLAGS 				= -Wall -Wextra -Werror -O2 -fsanitize=address
-#убрать санитайзер!!!!!!!!!
+# FLAGS 			= -Wall -Wextra -Werror -O2 -fsanitize=address
+FLAGS 				= -Wall -Wextra -Werror
 
 R_FLAGS				= -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include		
 
@@ -37,6 +37,7 @@ SRC_O 				= envp.c \
 					build_unset.c \
 					build_export.c \
 					build_export2.c \
+					build_export3.c \
 					build_env.c \
 					build_exit.c \
 					star.c \

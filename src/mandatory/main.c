@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 19:47:53 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/15 17:20:52 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 {
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, main_handler);
 	*command = readline("minishell-1.0$ ");
 	if (*command == NULL)
 	{
@@ -54,6 +52,7 @@ int	main(int argc, char **argv, char **envp)
 	t_input		input;
 	char		*str_command;
 
+	rl_outstream = stderr; //test!!!!
 	if (argc != 1)
 	{
 		printf("minishell-1.0: %s: %s\n", argv[1], strerror(2));
@@ -64,6 +63,8 @@ int	main(int argc, char **argv, char **envp)
 	put_shlvl(&input);
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, main_handler);
 		if (catch_str(&str_command, &input, 0) == fail)
 			continue ;
 		if (finder(str_command, &input, 0) != fail)

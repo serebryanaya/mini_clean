@@ -6,26 +6,66 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 16:10:51 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/08 20:44:40 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/15 14:36:07 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_list_back(t_env *new, t_env **envp)
+// void	add_list_back(t_env **new, t_env **envp)
+// {
+// 	t_env	*copy;
+
+// 	if (!(*envp))
+// 		*envp = *new;
+// 	else
+// 	{
+// 		copy = *envp;
+// 		while (copy->next)
+// 			copy = copy->next;
+// 		copy->next = *new;
+// 		(*new)->next = NULL;
+// 	}
+// }
+
+void	add_list_back(t_env **new, t_input	*input)
 {
 	t_env	*copy;
 
-	if (*envp == NULL)
-		*envp = new;
+	if (input->envp == NULL)
+	{
+		input->envp = *new;
+		return ;
+	}
 	else
 	{
-		copy = *envp;
-		while (copy->next != NULL)
+		copy = input->envp;
+		while (copy->next)
 			copy = copy->next;
-		copy->next = new;
+		copy->next = *new;
+		(*new)->next = NULL;
 	}
 }
+
+void	add_list_back_star(t_env **new, t_input	*input)
+{
+	t_env	*copy;
+
+	if (input->star == NULL)
+	{
+		input->star = *new;
+		return ;
+	}
+	else
+	{
+		copy = input->star;
+		while (copy->next)
+			copy = copy->next;
+		copy->next = *new;
+		(*new)->next = NULL;
+	}
+}
+
 
 t_env	*create_new_list(char *str, t_input *input)
 {
@@ -65,12 +105,12 @@ t_status	put_envp(char **envp, t_input *input)
 	t_env	*new;
 
 	i = 0;
-	while (envp[i] != NULL)
+	while (envp[i])
 	{
 		new = create_new_list(envp[i], input);
 		if (!new)
 			print_error(input, 12, "malloc", NULL);
-		add_list_back(new, &input->envp);
+		add_list_back(&new, input);
 		i++;
 	}
 	return (success);
@@ -92,7 +132,7 @@ static inline char	**make_env_array2(t_input *input, U_INT counter, U_INT i)
 			array = ft_strjoin_for_3(copy->key, "=", copy->value, input);
 		else
 			array = modif_strdup(copy->key, input);
-		arg[i] = array;
+		arg[i] = array; //free(array)
 		i++;
 		copy = copy->next;
 	}

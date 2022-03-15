@@ -43,7 +43,7 @@ U_INT	get_number_of_words(char *str, U_INT *i, t_input *input, U_INT counter)
 			go_through_redirect(str, i, '>', input);
 		else if (str[*i] == '*')
 		{
-			if (counter == 0)
+			if (counter == 0 || input->have_star == 0)
 				counter++;
 			else
 				counter += ft_lstsize(input->star);
@@ -60,6 +60,23 @@ U_INT	get_number_of_words(char *str, U_INT *i, t_input *input, U_INT counter)
 	return (counter);
 }
 
+t_status star_in_str(char *str,  t_input *input)
+{
+	U_INT	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '*')
+			{
+				input->have_star = 1;
+				return (success);
+			}
+		++i;
+	}
+	return (fail);
+}
+
 static t_comm	*create_list_comm(char *str, t_input *input, U_INT *i)
 {
 	U_INT	counter;
@@ -72,7 +89,8 @@ static t_comm	*create_list_comm(char *str, t_input *input, U_INT *i)
 	new->direct_out = NULL;
 	new->next = NULL;
 	new->build_number = 0;
-	find_star_in_comm(input);
+	if (star_in_str(str, input) == success)
+		find_star_in_comm(input);
 	counter = get_number_of_words(str, i, input, 0);
 	new->words = malloc(sizeof(char *) * (counter + 1));
 	if (!new->words)

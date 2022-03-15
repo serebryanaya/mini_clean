@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/13 21:24:16 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/15 23:19:32 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_input
 	t_direct	*direct;
 	t_env		*envp;
 	t_env		*star;
+	t_status	have_star;
 }	t_input;
 
 /*----Все билд-ины---*/
@@ -96,8 +97,11 @@ void		cd_print_error(t_input *input, U_INT error_num, \
 			char *msg, char *descrip);
 char		*get_path_cd(t_input *input, t_comm *command, t_env *copy);
 t_env		*create_sort_env(t_env *old, t_input *input);
-t_env		*env_sort(t_env *list, t_env *new, t_input *input);
 t_env		*sort_export(t_input *input);
+void		free_new(t_env **new);
+int			only_export(t_input *input);
+void		ft_lstadd_back2(t_env **lst, t_env *new, t_input *input);
+t_env		*ft_lstnew_env(t_env *env, t_input *input);
 
 /*----child_and_dups - работа с дочками, поиск пути---*/
 void		it_is_child(t_input *input, U_INT i, U_INT counter);
@@ -126,6 +130,7 @@ void		free_all(t_input *input);
 void		free_t_comm(t_input *input);
 void		free_direct(t_input *input);
 void		free_str_command(char *str_command, t_input *input, U_INT i);
+void		free_arg_env(t_input *input);
 
 /*----main----*/
 int			main(int argc, char **argv, char **envp);
@@ -134,7 +139,8 @@ int			main(int argc, char **argv, char **envp);
 t_status	put_envp(char **envp, t_input *input);
 void		make_env_array(t_input *input, char ***full_envp);
 t_env		*create_new_list(char *str, t_input *input);
-void		add_list_back(t_env *new, t_env **envp);
+void		add_list_back(t_env **new, t_input *input);
+void		add_list_back_star(t_env **new, t_input	*input);
 
 /*----finder- препарсинг, поиск спецсимвлов----*/
 t_status	finder(char *str_command, t_input *input, U_INT i);
@@ -147,7 +153,6 @@ U_INT		launcher(t_input *input, t_comm	*command);
 /*----parser - начало парсинга----*/
 t_status	parser(char *str_command, t_input *input, U_INT i, U_INT j);
 void		go_through_word(char *str, U_INT *i, t_input *input);
-void		find_star_in_comm(t_input *input);
 
 /*----pre_open - начало работы команд----*/
 void		try_open(t_input *input);
@@ -196,10 +201,11 @@ char		*ft_strjoin(char *s1, char *s2, t_input *input);
 char		*ft_strjoin_for_3(char *s1, char *s2, char *s3, t_input *input);
 char		*modif_strdup(char *src, t_input *input);
 char		*modif_substr(char *s, U_INT start, U_INT len, t_input *input);
+
 /*----utils_print - полезные функции для печати---*/
 void		print_error(t_input *input, U_INT error_num, char *msg, \
 			char *descrip);
-t_status	print_token(t_input *input, char *str);
+t_status	print_token(t_input *input, char *str, t_status flag);
 
 /*----utils_other - полезные функции для строк---*/
 U_INT		ft_strlen(char *s);
@@ -207,6 +213,7 @@ char		*modif_itoa(int n, t_input *input);
 t_status	ft_strcmp(char *s1, char *s2);
 long long	modif_atoi(char *s, int *flag, int i);
 int			ft_isalpha(int c);
+t_status	check_word(char *str);
 
 /*----utils_other2 - ПРОДОЛЖЕНИЕ: полезные функции для строк---*/
 int			ft_strncmp(const char *str1, const char *str2, size_t n);
@@ -221,11 +228,12 @@ void		iter_str(char *str, U_INT *i);
 void		my_gnl(char **new_line, t_input *input);
 
 /*----utils_list - ПРОДОЛЖЕНИЕ: полезные функции для строк---*/
-void		ft_lstadd_middle(t_env *new, t_env *tmp);
+void		ft_lstadd_middle(t_env **new, t_env **tmp);
 void		ft_lstadd_back(t_env **lst, t_env *new);
 void		ft_lstadd_front(t_env **lst, t_env *new);
 U_INT		ft_lstsize(t_env *lst);
 void		lstadd_back(t_templ **lst, t_templ *new);
+int			dellist(t_env **list, t_env **c_list);
 
 /*----pipes ---*/
 void		make_fork(t_input *input, t_comm *command, U_INT i);
@@ -235,21 +243,4 @@ void		close_fd(t_input *input, int *fd_file, U_INT counter, U_INT i);
 
 char		*path_home(t_input *input, t_comm *command);
 
-//mac:     gcc file.c -L/Users/$USER/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$USER/.brew/Cellar/readline/8.1.1/include -lreadline -o filename
-//linux:   gcc -L/usr/local/lib -I/usr/local/include *.c -lreadline
-
 #endif
-
-/* В обработку ошибок: 
-bash-3.2$ ytjy >>> gh
-bash: syntax error near unexpected token `>'
-bash-3.2$ ytjy <<< gh
-bash: ytjy: command not found
-bash-3.2$ ytjy ||| gh
-bash: syntax error near unexpected token `|'
-
-Проверить:
-- токены в кавычках
-- как выдает ls * | wc
-- как выдает ls i* * *i
-*/
