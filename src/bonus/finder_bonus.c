@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   finder.c                                           :+:      :+:    :+:   */
+/*   finder_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 20:44:38 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/15 23:50:50 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 00:10:23 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static inline t_status	check_quotes(t_input *input, char *str)
 {

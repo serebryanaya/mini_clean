@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 void	go_through_redirect(char *str, U_INT *i, char c, t_input *input)
 {

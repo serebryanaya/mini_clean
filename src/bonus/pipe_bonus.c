@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   pipe_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:16:49 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/15 23:56:15 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 00:10:51 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 void	close_fd(t_input *input, int *fd_file, U_INT counter, U_INT i)
 {

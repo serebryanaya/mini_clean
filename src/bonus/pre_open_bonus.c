@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pre_open.c                                         :+:      :+:    :+:   */
+/*   pre_open_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 21:17:22 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/15 23:56:34 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 00:10:54 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static inline t_status	try_open3(t_direct	*copy, t_input *input)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   quotes_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/16 00:01:23 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 00:11:02 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static inline char	*delete_quotes2(char *tmp, U_INT *i, t_input *input, char c)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   star2.c                                            :+:      :+:    :+:   */
+/*   star2_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 19:19:01 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/16 00:01:48 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 00:11:18 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 char	**easy_realloc2(char **old, t_input *input, U_INT *size_good_temp)
 {
