@@ -151,15 +151,15 @@ void try_open(t_input *input)
 		// printf("1num_of_command == %d, input->command->build_number == %d, first word = %s\n",
 		// 	   input->num_of_command, input->command->build_number, input->command->words[0]);
 	}
-	if (input->num_of_command == 1 && input->command->build_number != 0) // запуск билдинов!
+	if (input->num_of_command == 1 && (input->command->build_number != 0 && !input->command->direct_out)) // запуск билдинов!
 	{
-					printf("2num_of_command == %d, input->command->build_number == %d, first word = %s\n",
-			   input->num_of_command, input->command->build_number, input->command->words[0]);
-			fd = reverse_redir(input);
-			// reverse_redir(input);
+			// 		printf("2num_of_command == %d, input->command->build_number == %d, first word = %s\n",
+			//    input->num_of_command, input->command->build_number, input->command->words[0]);
+			// fd = reverse_redir(input);
+			reverse_redir(input);
 			input->num_error = launcher(input, input->command);
 			// close(fd);
-			reverse_redir2(input, fd);
+			// reverse_redir2(input, fd);
 			// free_all(input);
 			// exit(input->num_error);
 	}
@@ -170,7 +170,7 @@ void try_open(t_input *input)
 // 		pipes(input); //ft_pipe(arg);
 // //		printf("input->num_of_command = %d\n", input->num_of_command);
 // 	}
-	else if (input->num_of_command != 1 || input->command->words[0] != NULL)
+	else if (input->num_of_command != 1 || input->command->words[0] != NULL || (input->command->build_number && input->command->direct_out) || (input->command->build_number && input->command->direct_in))
 	{
 		printf("3num_of_command == %d, input->command->build_number == %d, first word = %s\n",
 			   input->num_of_command, input->command->build_number, input->command->words[0]);

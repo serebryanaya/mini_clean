@@ -103,25 +103,26 @@ int	reverse_redir(t_input *input) //void	open_dup(int i, t_cmd *cmd, t_arg *arg)
 	printf("2new_file = %d\n", new_file);
 	close(new_file);
 	printf("3new_file = %d\n", new_file);
-	return (new_file);
+	// return (new_file);
+	return (0);
 }
 
-void	reverse_redir2(t_input *input, int fd)
-{
-	int res;
+// void	reverse_redir2(t_input *input, int fd)
+// {
+// 	int res;
 
-	res = 0;
-	if (fd == -1)
-		return ;
-	res = dup2(fd, STDOUT_FILENO);
-	// res = dup(fd);
-	// // if (dup2(fd, STDOUT_FILENO) == -1) // STDOUT_FILENO = fd1 вернули станд.вывод
-	if (res == -1) // STDOUT_FILENO = fd1 вернули станд.вывод
-	{
-		printf("3error_dup2, fd = %d, res=%d\n", fd, res);
-		close(fd);
-		print_error(input, errno, "dup2", NULL);
-		return ;
-	}
-	close(fd);
-}
+// 	res = 0;
+// 	if (fd == -1)
+// 		return ;
+// 	res = dup2(fd, STDOUT_FILENO);
+// 	// res = dup(fd);
+// 	// // if (dup2(fd, STDOUT_FILENO) == -1) // STDOUT_FILENO = fd1 вернули станд.вывод
+// 	if (res == -1) // STDOUT_FILENO = fd1 вернули станд.вывод
+// 	{
+// 		printf("3error_dup2, fd = %d, res=%d\n", fd, res);
+// 		close(fd);
+// 		print_error(input, errno, "dup2", NULL);
+// 		return ;
+// 	}
+// 	close(fd);
+// }
