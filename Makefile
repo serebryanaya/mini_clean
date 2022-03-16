@@ -2,8 +2,7 @@ NAME_O 				= minishell
 NAME_B 				= minishell_bonus
 NAME				= minishell
 
-FLAGS 			= -Wall -Wextra -Werror -O2 -fsanitize=address
-# FLAGS 				= -Wall -Wextra -Werror
+FLAGS 				= -Wall -Wextra -Werror
 
 R_FLAGS				= -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include		
 
@@ -50,8 +49,6 @@ SRC_O 				= envp.c \
 					child_and_dups.c \
 					heredoc.c \
 					get_path.c
-
-
 
 SRC_B 				= envp_bonus.c \
 					free_struct_bonus.c \
@@ -137,10 +134,6 @@ clean:
 fclean: 			clean
 					$(RM) $(NAME_O) $(NAME_B)
 
-test:
-					make
-					bash ./test/test.sh all
-
 re: 				fclean all
 
-.PHONY: 			all bonus clean fclean re test
+.PHONY: 			all bonus clean fclean re

@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 14:14:27 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/16 00:10:39 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 19:53:36 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	choose_build(t_comm *command)
 			continue ;
 		}
 		else
-		copy = copy->next;
+			copy = copy->next;
 	}
+	choose_build2(&command);
 }
