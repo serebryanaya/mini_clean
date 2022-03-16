@@ -69,8 +69,8 @@ void	try_open(t_input *input)
 	}
 	if (input->num_of_command > 1)
 		open_pipes(input);
-	if (input->num_of_command == 1 && (input->command->build_number && \
-	!input->command->direct_out))
+	if ((input->num_of_command == 1 && (input->command->build_number && \
+	!input->command->direct_out)) || (input->command->build_number == 7))
 	{
 		// fd = reverse_redir(input);
 		input->num_error = launcher(input, input->command);

@@ -137,6 +137,10 @@ clean:
 fclean: 			clean
 					$(RM) $(NAME_O) $(NAME_B)
 
+test:
+					make
+					bash ./test/test.sh my
+
 re: 				fclean all
 
-.PHONY: 			all bonus clean fclean re
+.PHONY: 			all bonus clean fclean re test

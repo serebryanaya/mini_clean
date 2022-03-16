@@ -14,7 +14,9 @@
 
 static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 {
-	*command = readline("minishell-1.0$ ");
+	// *command = readline("minishell-1.0$ ");
+	*command = readline("\x1b[32mminishell$\x1b[0m ");
+	rl_outstream = stderr; //test
 	if (*command == NULL)
 	{
 		rl_on_new_line();

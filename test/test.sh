@@ -140,7 +140,7 @@ if [ "$1" == "my" ] || [ "$1" == "all" ]; then
   exec_test '/bin/ls retyu'
   exec_test 'cat test'
   exec_test 'pwd ghjk'
-  # exec_test 'export wewe' // !!!!
+  exec_test 'export wewe'
   exec_test 'sdfghjk'
   exec_test '$? + $?'
   exec_test 'echo "cat lol.c | cat > lol.c"'
@@ -148,7 +148,7 @@ if [ "$1" == "my" ] || [ "$1" == "all" ]; then
   exec_test '"env "'
   exec_test 'echo '$USER''
   exec_test 'unset ffff'
-  exec_test 'cd /bin/ls' // !!!
+  exec_test 'cd /bin/ls' //segfault
   exec_test 'cat file | grep bla | more'
   exec_test 'ls filethatdoesntexist | grep bla | more'
   exec_test '$? + $?'

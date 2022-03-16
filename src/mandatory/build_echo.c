@@ -43,8 +43,6 @@ static inline void	find_options(t_comm *command, U_INT *i, t_input *input)
 	{
 		if (command->words[w][0] != '-')
 			break ;
-		if (command->words[w][0] == '~')
-			printf("%s\n", path_home(input, command));
 		l = 1;
 		while (command->words[w][l] == 'n')
 			l++;
@@ -74,6 +72,8 @@ U_INT	launch_echo(t_input *input)
 		{
 			if (input->command->words[i][0] != '~')
 				printf("%s", input->command->words[i]);
+			else
+				printf("%s", path_home(input, input->command));
 		}
 		i++;
 	}

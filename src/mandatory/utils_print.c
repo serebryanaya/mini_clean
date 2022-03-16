@@ -27,7 +27,7 @@ void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 		write(2, descrip, ft_strlen(descrip));
 	write(2, "\n", 1);
 	free_all(input);
-	exit(error_num);
+	// exit(error_num);
 }
 
 t_status	print_token(t_input *input, char *str, t_status flag)

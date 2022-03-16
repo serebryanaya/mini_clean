@@ -39,7 +39,8 @@ U_INT	launcher(t_input *input, t_comm	*command)
 // 	if (!input->command->direct_out)
 // 		return (-1);
 // 	if (input->command->direct_out->twin == 1)
-// 		new_file = open(input->command->direct_out->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 		new_file = open(input->command->direct_out->name, \
+// 			O_WRONLY | O_CREAT | O_APPEND, 0644);
 // 	else
 // 		new_file = open(input->command->direct_out->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 // 	if (new_file == -1)

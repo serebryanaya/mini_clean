@@ -92,6 +92,7 @@ void	choose_build(t_comm *command)
 			continue ;
 		}
 		else
-		copy = copy->next;
+			copy = copy->next;
 	}
+	choose_build2(&command);
 }
