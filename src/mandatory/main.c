@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:20:45 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/15 23:51:09 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 18:10:58 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 static inline t_status	catch_str(char **command, t_input *input, U_INT i)
 {
-	// *command = readline("minishell-1.0$ ");
 	*command = readline("\x1b[32mminishell$\x1b[0m ");
 	rl_outstream = stderr; //test
 	if (*command == NULL)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
+		write(2, "\x1b[Aminishell$ exit\x1b[0m\n", \
+		ft_strlen("\x1b[Aminishell$ exit\x1b[0m\n"));
 		rl_redisplay();
-		write(2, "exit\n", 5);
 		free_all(input);
 		exit(0);
 	}

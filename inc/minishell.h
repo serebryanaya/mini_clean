@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/16 00:12:53 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 18:25:07 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ U_INT		launch_unset(t_input *input, t_comm *command);
 U_INT		launch_export(t_input *input, t_comm *command, U_INT i);
 U_INT		launch_exit(t_input *input, t_comm *command);
 U_INT		launch_echo(t_input *input);
-U_INT		launch_cd(t_input *input, t_comm *command);
+U_INT		launch_cd(t_input *input, t_comm *command, char	*path);
 U_INT		launch_exit(t_input *input, t_comm *command);
 void		cd_print_error(t_input *input, U_INT error_num, \
 			char *msg, char *descrip);

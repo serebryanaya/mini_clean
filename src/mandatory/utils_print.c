@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 15:55:36 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/15 21:12:53 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 18:14:24 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_error(t_input *input, U_INT error_num, char *msg, char *descrip)
 		write(2, descrip, ft_strlen(descrip));
 	write(2, "\n", 1);
 	free_all(input);
-	// exit(error_num);
+	exit(error_num);
 }
 
 t_status	print_token(t_input *input, char *str, t_status flag)
