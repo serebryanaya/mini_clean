@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 20:08:31 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/16 18:25:07 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 19:42:43 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,4 +244,5 @@ void		close_fd(t_input *input, int *fd_file, U_INT counter, U_INT i);
 char		*path_home(t_input *input, t_comm *command);
 t_status	put_envp(char **envp, t_input *input);
 void		make_env_array(t_input *input, char ***full_envp);
+
 #endif

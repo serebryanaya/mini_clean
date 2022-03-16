@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 21:20:59 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/15 23:20:22 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 19:02:49 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ U_INT	launch_export(t_input *input, t_comm *command, U_INT i)
 		else
 		{
 			input->num_error = 1;
-			printf("%s%s%s\n", "export: `", \
+			printf("%s%s%s%s\n", "minishell: ", "export: `", \
 				command->words[i], "': not a valid identifier");
 		}
 		i++;

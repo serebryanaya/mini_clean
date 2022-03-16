@@ -6,7 +6,7 @@
 /*   By: pveeta <pveeta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:42:03 by pveeta            #+#    #+#             */
-/*   Updated: 2022/03/16 00:01:23 by pveeta           ###   ########.fr       */
+/*   Updated: 2022/03/16 19:45:00 by pveeta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,33 +64,6 @@ static void	delete_quotes(char **str_command, t_input *input)
 	*str_command = cut;
 }
 
-char	**del_elem_from_arr(char **old, U_INT index, t_input *input, U_INT len)
-{
-	char	**new;
-	U_INT	i;
-	U_INT	j;
-
-	i = 0;
-	j = 0;
-	while (old[len])
-		len++;
-	new = malloc(sizeof(char *) * len);
-	while (old[j])
-	{
-		if (j != index)
-		{
-			new[i++] = modif_strdup(old[j], input);
-			free(old[j]);
-		}
-		else
-			free(old[j]);
-		j++;
-	}
-	free(old);
-	new[i] = NULL;
-	return (new);
-}
-
 void	clean_command(t_input *input)
 {
 	U_INT	i;
@@ -103,12 +76,7 @@ void	clean_command(t_input *input)
 		while (copy->words[i])
 		{
 			delete_quotes(&copy->words[i], input);
-			if (copy->words[i] && copy->words[i][0] == '\0')
-			{
-				copy->words = del_elem_from_arr(copy->words, i, input, 0);
-			}
-			else
-				i++;
+			++i;
 		}
 		copy = copy->next;
 	}
