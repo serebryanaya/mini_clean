@@ -34,4 +34,4 @@ This project is about creating a simple shell. The goal is to learn a lot about 
   + unset with no options
   + env with no options or arguments
   + exit with no options
-+ Implements wildcards * should work for the current working directory.
++ Implements wildcards *.
